@@ -23,6 +23,9 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   tags {
     Environment = "${var.environment}"
     Name = "Capacity Service Env"
+    Owner = "${var.nhs_owner}"
+    ProgrammeName = "${var.nhs_programme_name}"
+    ProjectName = "${var.nhs_project_name}"
     Terraform = "true"
   }
 }

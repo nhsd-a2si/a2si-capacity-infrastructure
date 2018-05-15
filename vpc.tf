@@ -4,6 +4,9 @@ resource "aws_vpc" "capacity" {
   tags = {
     Environment = "${var.environment}"
     Name = "Capacity"
+    Owner = "${var.nhs_owner}"
+    ProgrammeName = "${var.nhs_programme_name}"
+    ProjectName = "${var.nhs_project_name}"
     Terraform = "true"
   }
 }
@@ -17,6 +20,9 @@ resource "aws_subnet" "capacity-public-subnet" {
   tags {
     Environment = "${var.environment}"
     Name = "Capacity Public Subnet"
+    Owner = "${var.nhs_owner}"
+    ProgrammeName = "${var.nhs_programme_name}"
+    ProjectName = "${var.nhs_project_name}"
     Terraform = "true"
   }
 }
@@ -27,6 +33,9 @@ resource "aws_internet_gateway" "capacity-gw" {
   tags {
     Environment = "${var.environment}"
     Name = "Capacity VPC IGW"
+    Owner = "${var.nhs_owner}"
+    ProgrammeName = "${var.nhs_programme_name}"
+    ProjectName = "${var.nhs_project_name}"
     Terraform = "true"
   }
 }
@@ -42,6 +51,9 @@ resource "aws_route_table" "capacity-public-rt" {
   tags {
     Environment = "${var.environment}"
     Name = "Capacity Public Subnet RT"
+    Owner = "${var.nhs_owner}"
+    ProgrammeName = "${var.nhs_programme_name}"
+    ProjectName = "${var.nhs_project_name}"
     Terraform = "true"
   }
 }

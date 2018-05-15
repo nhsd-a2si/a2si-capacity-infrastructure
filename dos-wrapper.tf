@@ -23,6 +23,9 @@ resource "aws_elastic_beanstalk_environment" "dos-wrapper-env" {
   tags {
     Environment = "${var.environment}"
     Name = "DoS Wrapper Env"
+    Owner = "${var.nhs_owner}"
+    ProgrammeName = "${var.nhs_programme_name}"
+    ProjectName = "${var.nhs_project_name}"
     Terraform = "true"
   }
 }

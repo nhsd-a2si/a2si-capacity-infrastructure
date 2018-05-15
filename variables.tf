@@ -19,3 +19,15 @@ variable "public_subnet_cidr" {
 variable "environment" {
   default = "dev"
 }
+
+variable "nhs_owner" {
+  default = "mark.henwood1"
+}
+
+variable "nhs_programme_name" {
+  default = "a2si"
+}
+
+variable "nhs_project_name" {
+  default = "capacity"
+}
