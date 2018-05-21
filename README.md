@@ -35,14 +35,17 @@ Create the bucket:
 
   $ aws s3 mb s3://S3BUCKET
 
-# Deploying the Capacity Service application
+# Deploying the Capacity Service and DoS Wrapper applications
 
 ## Upload the zipped application assets to the S3 bucket
 
-  $ aws s3 cp <location of zip file> s3://S3BUCKET/capacity-service-latest.zip
+First upload the zip files of the latest versions to the S3 bucket:
 
-# Deploying the DoS Wrapper application
+  $ aws s3 cp <location of capacity service zip file> s3://S3BUCKET/capacity-service-latest.zip
+  $ aws s3 cp <location of dos wrapper zip file> s3://S3BUCKET/dos-wrapper-latest.zip
 
-## Upload the zipped application assets to the S3 bucket
+## Apply the Terraform
 
-  $ aws s3 cp <location of zip file> s3://S3BUCKET/dos-wrapper-latest.zip
+As you might expect:
+
+$ terraform apply
