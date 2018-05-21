@@ -11,8 +11,8 @@ resource "aws_elasticache_cluster" "capacity-cache" {
     Environment = "${var.environment}"
     Name = "Capacity Cache"
     Owner = "${var.nhs_owner}"
-    ProgrammeName = "${var.nhs_programme_name}"
-    ProjectName = "${var.nhs_project_name}"
+    Programme = "${var.nhs_programme_name}"
+    Project = "${var.nhs_project_name}"
     Terraform = "true"
   }
 }
