@@ -3,6 +3,14 @@ resource "aws_elastic_beanstalk_application" "capacity-service" {
   description = "Capacity Service"
 }
 
+resource "aws_elastic_beanstalk_application_version" "capacity-service-version-latest" {
+  name        = "capacity-service-version-latest"
+  application = "${aws_elastic_beanstalk_application.capacity-service.name}"
+  description = "Capacity Service latest version"
+  bucket      = "${data.aws_s3_bucket.eb_zip_versions_bucket.id}"
+  key         = "capacity-service-latest.zip"
+}
+
 resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   name                = "capacity-service-env"
   application         = "${aws_elastic_beanstalk_application.capacity-service.name}"
