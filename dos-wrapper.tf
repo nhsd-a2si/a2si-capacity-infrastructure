@@ -3,12 +3,12 @@ resource "aws_elastic_beanstalk_application" "dos-wrapper" {
   description = "DoS Wrapper"
 }
 
-resource "aws_elastic_beanstalk_application_version" "dos-wrapper-version-latest" {
-  name        = "dos-wrapper-version-latest"
+resource "aws_elastic_beanstalk_application_version" "dos-wrapper-version" {
+  name        = "${var.s3_dos_wrapper_object}"
   application = "${aws_elastic_beanstalk_application.dos-wrapper.name}"
   description = "Capacity Service latest version"
   bucket      = "${data.aws_s3_bucket.eb_zip_versions_bucket.id}"
-  key         = "dos-wrapper-latest.zip"
+  key         = "${var.s3_dos_wrapper_object}"
 }
 
 resource "aws_elastic_beanstalk_environment" "dos-wrapper-env" {

@@ -35,17 +35,37 @@ Create the bucket:
 
   $ aws s3 mb s3://S3BUCKET
 
+This is a once-only step. For future deployments you will not need to do this.
+
 # Deploying the Capacity Service and DoS Wrapper applications
 
 ## Upload the zipped application assets to the S3 bucket
 
-First upload the zip files of the latest versions to the S3 bucket:
+First upload the zip files of the versions to the S3 bucket:
 
-  $ aws s3 cp <location of capacity service zip file> s3://S3BUCKET/capacity-service-latest.zip
-  $ aws s3 cp <location of dos wrapper zip file> s3://S3BUCKET/dos-wrapper-latest.zip
+  $ aws s3 cp <location of capacity service zip file> s3://S3BUCKET/capacity-service-vXXX.zip
+  $ aws s3 cp <location of dos wrapper zip file> s3://S3BUCKET/dos-wrapper-vXXX.zip
+
+Note that it is expected that you will version the S3 object names somehow. Remember
+these object names because you will need them in the next step.
 
 ## Apply the Terraform
 
-As you might expect:
+  $ terraform apply --var 's3_capacity_service_object=capacity-service-v002.zip' --var 's3_dos_wrapper_object=dos-wrapper-v002.zip' .
 
-$ terraform apply
+In reality you can call those objects anything; they don't have to start
+"capacity-service-v". All that matters are the following:
+
+  1. You use a new, unique name each time (to ensure the version gets deployed)
+
+  2. The names you use in the `terraform apply` step match the names you used in
+     the `aws s3 cp` step immediately before it.
+
+## A note on versioning
+
+The Terraform uses the provided `s3_capacity_service_object` and
+`s3_dos_wrapper_object` variables to _name_ the app versions. This means
+that you will end up with application version names which are filename-like (e.g. ending in
+`.zip`) but this seems preferable to making loads of assumptions in the
+Terraform about filename formats, and similarly preferable to forcing a second
+pair of 'vars' to be used to specify a neater version name.
