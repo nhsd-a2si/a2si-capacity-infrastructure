@@ -20,6 +20,10 @@ variable "environment" {
   default = "dev"
 }
 
+variable "s3_app_versions_bucket" {
+  default = "a2si-capacity-eb-versions-markhenwood1"
+}
+
 variable "nhs_owner" {
   default = "mark.henwood1"
 }
