@@ -24,6 +24,16 @@ variable "s3_app_versions_bucket" {
   default = "a2si-capacity-eb-versions-markhenwood1"
 }
 
+variable "s3_capacity_service_object" {
+  description = "Object name of ZIP file containing Capacity Service version for deployment"
+  type = "string"
+}
+
+variable "s3_dos_wrapper_object" {
+  description = "Object name of ZIP file containing DoS Wrapper version for deployment"
+  type = "string"
+}
+
 variable "nhs_owner" {
   default = "mark.henwood1"
 }
