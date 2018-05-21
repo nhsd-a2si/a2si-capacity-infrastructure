@@ -1,5 +1,20 @@
 # a2si-capacity-infrastructure
 
+## CAVEAT
+
+Currently this is knowingly naive in _at least_ the following ways:
+
+  1. It doesn't support actual Beanstalk versioning. This is a really quick,
+     dirty set of Terraform scripts devised to support a beta implementation.
+
+  2. There is only a public subnet. This is bad because all the non-public facing
+     services are brought up in public. Sure we can limit the silliness through
+     diligent use of SecurityGroups (Note to self: TODO) but it would be nice to
+     throw up a private/public architecture before beta.
+
+  3. There is no multi AZ. This is bad for availability. It would be good to correct
+     this also.
+
 # Pre-requisites
 
 ## Create bucket for app version assets
