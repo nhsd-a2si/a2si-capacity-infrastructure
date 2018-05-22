@@ -15,7 +15,6 @@ resource "aws_subnet" "capacity-public-subnet" {
   vpc_id = "${aws_vpc.capacity.id}"
   cidr_block = "${var.public_subnet_cidr}"
   availability_zone = "${var.aws_az}"
-  map_public_ip_on_launch = true
 
   tags {
     Environment = "${var.environment}"

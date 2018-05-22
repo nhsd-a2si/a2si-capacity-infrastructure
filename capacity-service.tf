@@ -28,6 +28,12 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
     value     = "${aws_subnet.capacity-public-subnet.id}"
   }
 
+  setting {
+    namespace = "aws:ec2:vpc"
+    name      = "AssociatePublicIpAddress"
+    value     = "true"
+  }
+
   tags {
     Environment = "${var.environment}"
     Name = "Capacity Service Env"
