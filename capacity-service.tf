@@ -40,6 +40,12 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
     value     = "${aws_security_group.cache-client.id}"
   }
 
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "CACHE_ENDPOINT"
+    value     = "${aws_elasticache_cluster.capacity-cache.cache_nodes.0.address}" 
+  }
+
   tags {
     Environment = "${var.environment}"
     Name = "Capacity Service Env"
