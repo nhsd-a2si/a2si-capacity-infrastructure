@@ -34,6 +34,37 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
     value     = "true"
   }
 
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "SecurityGroups"
+    value     = "${aws_security_group.cache-client.id}"
+  }
+
+  # ENV vars for the service
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SPRING_REDIS_CLUSTER_NODES"
+    value     = "${aws_elasticache_cluster.capacity-cache.cache_nodes.0.address}"  # TODO make this a list of all
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "CAPACITY_SERVICE_API_USERNAME"
+    value     = "${var.capacity_service_api_username}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "CAPACITY_SERVICE_API_PASSWORD"
+    value     = "${var.capacity_service_api_password}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "CAPACITY_SERVICE_CACHE_TIMETOLIVEINSECONDS"
+    value     = "${var.capacity_service_cache_ttl_seconds}"
+  }
+
   tags {
     Environment = "${var.environment}"
     Name = "Capacity Service Env"
