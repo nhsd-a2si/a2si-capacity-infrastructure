@@ -7,7 +7,7 @@ resource "aws_elastic_beanstalk_application_version" "dos-wrapper-version" {
   name        = "${var.s3_dos_wrapper_object}"
   application = "${aws_elastic_beanstalk_application.dos-wrapper.name}"
   description = "Capacity Service latest version"
-  bucket      = "${data.aws_s3_bucket.eb_zip_versions_bucket.id}"
+  bucket      = "${var.s3_app_versions_bucket}"
   key         = "${var.s3_dos_wrapper_object}"
 }
 

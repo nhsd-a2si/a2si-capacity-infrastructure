@@ -7,7 +7,7 @@ resource "aws_elastic_beanstalk_application_version" "capacity-service-version" 
   name        = "${var.s3_capacity_service_object}"
   application = "${aws_elastic_beanstalk_application.capacity-service.name}"
   description = "Capacity Service latest version"
-  bucket      = "${data.aws_s3_bucket.eb_zip_versions_bucket.id}"
+  bucket      = "${var.s3_app_versions_bucket}"
   key         = "${var.s3_capacity_service_object}"
 }
 
@@ -37,13 +37,13 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:elbv2:loadbalancer"
     name      = "SecurityGroups"
-    value     = "${aws_security_group.cache-client.id}"
+    value     = "${aws_security_group.cache-client.id},${aws_security_group.allow-8080-all.id}"
   }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "CACHE_ENDPOINT"
-    value     = "${aws_elasticache_cluster.capacity-cache.cache_nodes.0.address}" 
+    value     = "${aws_elasticache_cluster.capacity-cache.cache_nodes.0.address}"
   }
 
   tags {
