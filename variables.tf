@@ -34,6 +34,25 @@ variable "s3_dos_wrapper_object" {
   type = "string"
 }
 
+variable "capacity_service_spring_profiles_active" {
+  default = "capacity-service-aws-redis"
+}
+
+variable "capacity_service_api_username" {
+  description = "Username accepted by the capacity service"  # Currently the service only recognises one account
+  type = "string"
+}
+
+variable "capacity_service_api_password" {
+  description = "Password accepted by the capacity service"  # Currently the service only recognises one account
+  type = "string"
+}
+
+variable "capacity_service_cache_ttl_seconds" {
+  default = "1800"  # Env var, sent as string
+  type = "string"
+}
+
 variable "nhs_owner" {
   default = "mark.henwood1"
 }
