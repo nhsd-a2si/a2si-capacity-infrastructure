@@ -14,6 +14,26 @@ Currently this is knowingly naive in _at least_ the following ways:
 
 # Pre-requisites
 
+## Tools
+
+You will need the following:
+
+  - Sufficient permissions to apply the Terraform configuration to your AWS
+    environment of choosing. Good luck.
+
+  - The AWS Command Line Interface runtime, correctly configured to access your
+    AWS environment of choosing, as the account who has the powers needed to run
+    such things. Get the AWS CLI from here: https://aws.amazon.com/cli/
+
+  - The Terraform runtime which you can get here: https://www.terraform.io/downloads.html
+
+Please note that there are alternatives to installing these packages on your machine.
+You may in particular like to look at running them as Docker containers because
+cleanliness.
+
+In the instructions which follow, commands that begin `$ aws` require the AWS CLI
+and commands that begin `$ terraform` require the Terraform runtime.
+
 ## Create bucket for app version assets
 
 Beanstalk will deploy app versions from an S3 bucket. That bucket needs
