@@ -73,3 +73,12 @@ that you will end up with application version names which are filename-like (e.g
 `.zip`) but this seems preferable to making loads of assumptions in the
 Terraform about filename formats, and similarly preferable to forcing a second
 pair of 'vars' to be used to specify a neater version name.
+
+## Getting Elastic Beanstalk to adopt the new application
+
+You will then need to issue the following command:
+
+    $ aws elasticbeanstalk update-environment \
+      --application-name capacity-service \
+      --environment-name capacity-service-env \
+      --version-label capacity-service-vXXX.zip
