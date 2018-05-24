@@ -48,7 +48,13 @@ these object names because you will need them in the next step.
 
 ## Apply the Terraform
 
-    $ terraform apply --var 's3_capacity_service_object=capacity-service-v002.zip' --var 's3_dos_wrapper_object=dos-wrapper-v002.zip' .
+    $ terraform apply \
+      --var 'capacity_service_api_username=dummyValue' \
+      --var 'capacity_service_api_password=dummyValue' \
+      --var 's3_capacity_service_object=capacity-service-v002.zip' \
+      --var 's3_dos_wrapper_object=dos-wrapper-v002.zip' .
+
+capacity_service_api_username capacity_service_api_password
 
 In reality you can call those objects anything; they don't have to start
 "capacity-service-v". All that matters are the following:
