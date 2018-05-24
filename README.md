@@ -25,8 +25,8 @@ running the TerraForm config)
 Decide on the S3 bucket name which will be used to hold the app version assets.
 For these instructions this will be _S3BUCKET_.
 
-*IMPORTANT*: This name will need to match the value of the TF variable "s3_app_versions_bucket"
-(whose default is set in `variables.tf`)
+*IMPORTANT*: You will need to remember this name in order to pass it into the
+`tf apply` command later in these instructions.
 
 Create the bucket:
 
@@ -51,6 +51,7 @@ these object names because you will need them in the next step.
     $ terraform apply \
       --var 'capacity_service_api_username=dummyValue' \
       --var 'capacity_service_api_password=dummyValue' \
+      --var 's3_app_versions_bucket=S3BUCKET' \
       --var 's3_capacity_service_object=capacity-service-v002.zip' \
       --var 's3_dos_wrapper_object=dos-wrapper-v002.zip' .
 

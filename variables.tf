@@ -21,7 +21,8 @@ variable "environment" {
 }
 
 variable "s3_app_versions_bucket" {
-  default = "a2si-capacity-eb-versions-markhenwood1"
+  description = "Name of S3 bucket in which app versions will be stored"
+  type = "string"
 }
 
 variable "s3_capacity_service_object" {
