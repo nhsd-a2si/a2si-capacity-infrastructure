@@ -3,6 +3,12 @@ resource "aws_elastic_beanstalk_application" "dos-wrapper" {
   description = "DoS Wrapper"
 }
 
+resource "aws_elastic_beanstalk_configuration_template" "dos-wrapper-config-template" {
+  name                = "dos-wrapper-config-template"
+  application         = "${aws_elastic_beanstalk_application.dos-wrapper.name}"
+  solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
+}
+
 resource "aws_elastic_beanstalk_application_version" "dos-wrapper-version" {
   name        = "${var.s3_dos_wrapper_object}"
   application = "${aws_elastic_beanstalk_application.dos-wrapper.name}"
