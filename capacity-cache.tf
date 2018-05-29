@@ -32,6 +32,15 @@ resource "aws_security_group" "cache-client" {
   name        = "cache-client"
   description = "Instances which act as clients of the cache"
   vpc_id      = "${aws_vpc.capacity.id}"
+
+  tags {
+    Environment = "${var.environment}"
+    Name = "cache-client Security Group"
+    Owner = "${var.nhs_owner}"
+    Programme = "${var.nhs_programme_name}"
+    Project = "${var.nhs_project_name}"
+    Terraform = "true"
+  }
 }
 
 resource "aws_security_group" "allow-cache-client" {
