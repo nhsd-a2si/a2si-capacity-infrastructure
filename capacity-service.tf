@@ -56,7 +56,7 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "SPRING_REDIS_CLUSTER_NODES"
-    value     = "${aws_elasticache_cluster.capacity-cache.cache_nodes.0.address}:6379"
+    value     = "${aws_elasticache_replication_group.capacity-cache.configuration_endpoint_address}:6379"
   }
 
   setting {
