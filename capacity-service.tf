@@ -34,6 +34,11 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
     value     = "true"
   }
 
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "SecurityGroups"
+    value     = "${aws_security_group.cache-client.id}"
+  }
   tags {
     Environment = "${var.environment}"
     Name = "Capacity Service Env"
