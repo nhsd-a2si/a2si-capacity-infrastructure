@@ -40,6 +40,38 @@ resource "aws_elastic_beanstalk_environment" "dos-wrapper-env" {
     value     = "true"
   }
 
+  # ENV vars for the service
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SPRING_PROFILES_ACTIVE"
+    value     = "${var.dos_wrapper_spring_profiles_active}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "CAPACITY_SERVICE_CLIENT_API_URL"
+    # TODO: Stop hardcoding the protocol and path stub if poss
+    value     = "http://${aws_elastic_beanstalk_environment.capacity-service-env.cname}/capacity"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "CAPACITY_SERVICE_CLIENT_API_USERNAME"
+    value     = "${var.capacity_service_api_username}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "CAPACITY_SERVICE_CLIENT_API_PASSWORD"
+    value     = "${var.capacity_service_api_password}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "DOS_SERVICE_URL"
+    value     = "${var.dos_service_url}"
+  }
+
   tags {
     Environment = "${var.environment}"
     Name = "DoS Wrapper Env"

@@ -54,6 +54,14 @@ variable "capacity_service_cache_ttl_seconds" {
   type = "string"
 }
 
+variable "dos_service_url" {
+  default = "https://uat.pathwaysdos.nhs.uk/app/api/webservices"
+}
+
+variable "dos_wrapper_spring_profiles_active" {
+  default = "doswrapper-aws-dos-soap-prod-cpsc-rest-aws"
+}
+
 variable "nhs_owner" {
   default = "mark.henwood1"
 }
