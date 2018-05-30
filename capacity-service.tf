@@ -79,7 +79,6 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
 
   tags {
     Environment = "${var.environment}"
-    Name = "Capacity Service Env"
     Owner = "${var.nhs_owner}"
     Programme = "${var.nhs_programme_name}"
     Project = "${var.nhs_project_name}"
