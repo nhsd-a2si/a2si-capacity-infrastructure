@@ -95,9 +95,18 @@ pair of 'vars' to be used to specify a neater version name.
 ## Getting Elastic Beanstalk to adopt the new application
 
 Performing the above will not actually get Elastic Beanstalk to _run_ the version
-you uploaded. To get that to happen, you will need to issue the following command:
+you uploaded. To get that to happen, you will need to issue the following commands.
+
+### To update the Capacity Service environment
 
     $ aws elasticbeanstalk update-environment \
       --application-name capacity-service \
       --environment-name capacity-service-env \
       --version-label capacity-service-vXXX.zip
+
+### To update the DoS Wrapper environment
+
+    $ aws elasticbeanstalk update-environment \
+      --application-name dos-wrapper \
+      --environment-name dos-wrapper-env \
+      --version-label dos-wrapper-vXXX.zip
