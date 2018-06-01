@@ -25,7 +25,7 @@ resource "aws_elasticache_replication_group" "capacity-cache" {
 resource "aws_elasticache_subnet_group" "capacity-cache-subnet-group" {
     name = "capacity-cache-subnet"
     description = "Subnet group for Elasticache"
-    subnet_ids = ["${aws_subnet.capacity-public-subnet.id}"]
+    subnet_ids = ["${aws_subnet.capacity-public-subnets.*.id}"]
 }
 
 resource "aws_security_group" "cache-client" {
