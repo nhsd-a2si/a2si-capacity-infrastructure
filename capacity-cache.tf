@@ -4,8 +4,8 @@ resource "aws_elasticache_replication_group" "capacity-cache" {
   replication_group_description = "Capacity Cache"
   node_type                     = "cache.t2.micro"
   cluster_mode {
-    replicas_per_node_group     = 2
-    num_node_groups             = 3
+    replicas_per_node_group     = 0
+    num_node_groups             = 2
   }
   parameter_group_name          = "default.redis3.2.cluster.on"
   port                          = 6379
