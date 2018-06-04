@@ -52,6 +52,78 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
     value     = "${aws_security_group.cache-client.id}"
   }
 
+  setting {
+    namespace = "aws:autoscaling:asg"
+    name = "Availability Zones"
+    value = "Any ${length(var.aws_azs)}"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:trigger"
+    name      = "MeasureName"
+    value     = "CPUUtilization"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:trigger"
+    name      = "Statistic"
+    value     = "Average"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:trigger"
+    name      = "Unit"
+    value     = "Percent"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:trigger"
+    name      = "UpperThreshold"
+    value     = "80"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:trigger"
+    name      = "UpperBreachScaleIncrement"
+    value     = "1"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:trigger"
+    name      = "LowerThreshold"
+    value     = "40"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:trigger"
+    name      = "LowerBreachScaleIncrement"
+    value     = "-1"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:trigger"
+    name      = "BreachDuration"
+    value     = "2"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:trigger"
+    name      = "Period"
+    value     = "2"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:asg"
+    name = "MinSize"
+    value = "1"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:asg"
+    name = "MaxSize"
+    value = "4"
+  }
+
   # ENV vars for the service
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
