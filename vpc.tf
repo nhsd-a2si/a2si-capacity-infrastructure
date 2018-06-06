@@ -11,14 +11,15 @@ resource "aws_vpc" "capacity" {
   }
 }
 
-resource "aws_subnet" "capacity-public-subnet" {
+resource "aws_subnet" "capacity-public-subnets" {
   vpc_id = "${aws_vpc.capacity.id}"
-  cidr_block = "${var.public_subnet_cidr}"
-  availability_zone = "${var.aws_az}"
+  count = 2
+  cidr_block = "${element(var.public_subnet_cidrs, count.index)}"
+  availability_zone = "${element(var.aws_azs, count.index)}"
 
   tags {
     Environment = "${var.environment}"
-    Name = "Capacity Public Subnet"
+    Name = "Capacity ${element(var.aws_azs, count.index)} Public Subnet"
     Owner = "${var.nhs_owner}"
     Programme = "${var.nhs_programme_name}"
     Project = "${var.nhs_project_name}"
@@ -58,6 +59,7 @@ resource "aws_route_table" "capacity-public-rt" {
 }
 
 resource "aws_route_table_association" "capacity-public-rt" {
-  subnet_id = "${aws_subnet.capacity-public-subnet.id}"
+  count = 2
+  subnet_id = "${element(aws_subnet.capacity-public-subnets.*.id, count.index)}"
   route_table_id = "${aws_route_table.capacity-public-rt.id}"
 }

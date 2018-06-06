@@ -31,7 +31,13 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:ec2:vpc"
     name      = "Subnets"
-    value     = "${aws_subnet.capacity-public-subnet.id}"
+    value     = "${join(",", aws_subnet.capacity-public-subnets.*.id)}"
+  }
+
+  setting {
+    namespace = "aws:ec2:vpc"
+    name      = "ELBSubnets"
+    value     = "${join(",", aws_subnet.capacity-public-subnets.*.id)}"
   }
 
   setting {
