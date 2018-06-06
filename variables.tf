@@ -2,8 +2,8 @@ variable "aws_region" {
   default = "eu-west-1"
 }
 
-variable "aws_az" {
-  default = "eu-west-1a"
+variable "aws_azs" {
+  default = ["eu-west-1a", "eu-west-1b"]
 }
 
 variable "vpc_cidr" {
@@ -11,9 +11,9 @@ variable "vpc_cidr" {
   default = "10.0.0.0/16"
 }
 
-variable "public_subnet_cidr" {
-  description = "CIDR for the public subnet"
-  default = "10.0.1.0/24"
+variable "public_subnet_cidrs" {
+  description = "CIDR ranges for the public subnets"
+  default = ["10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24"]
 }
 
 variable "environment" {
