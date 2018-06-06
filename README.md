@@ -66,9 +66,18 @@ First upload the zip files of the versions to the S3 bucket:
 Note that it is expected that you will version the S3 object names somehow. Remember
 these object names because you will need them in the next step.
 
+## Identify the correct sub domain
+
+Your AWS account will need to have a Route 53 record for a domain into which
+the service endpoint FQDNs and the Load Balancer certificates will be created.
+This domain record *needs to exist before running these scripts*.
+
+This value is referred to as 'PUBLICDOMAIN' in the command which follows.
+
 ## Apply the Terraform
 
     $ terraform apply \
+      --var 'public_domain=PUBLICDOMAIN'
       --var 'capacity_service_api_username=dummyValue' \
       --var 'capacity_service_api_password=dummyValue' \
       --var 's3_app_versions_bucket=S3BUCKET' \

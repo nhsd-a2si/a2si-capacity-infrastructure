@@ -124,6 +124,36 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
     value = "4"
   }
 
+  setting {
+    namespace = "aws:elb:listener"
+    name = "ListenerEnabled"
+    value = "false"
+  }
+
+  setting {
+    namespace = "aws:elb:listener:443"
+    name = "ListenerProtocol"
+    value = "HTTPS"
+  }
+
+  setting {
+    namespace = "aws:elb:listener:443"
+    name = "SSLCertificateId"
+    value = "${aws_acm_certificate_validation.capacity-service-lb.certificate_arn}"
+  }
+
+  setting {
+    namespace = "aws:elb:listener:443"
+    name = "InstancePort"
+    value = "80"
+  }
+
+  setting {
+    namespace = "aws:elb:listener:443"
+    name = "InstanceProtocol"
+    value = "HTTP"
+  }
+
   # ENV vars for the service
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"

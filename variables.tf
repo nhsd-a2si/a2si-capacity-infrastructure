@@ -20,6 +20,19 @@ variable "environment" {
   default = "dev"
 }
 
+variable "public_domain" {
+  description = "Public domain into which FQDN and certificates will be placed (no trailing dot)"
+  type = "string"
+}
+
+variable "capacity_service_hostname" {
+  default = "capacity-service"
+}
+
+variable "dos_wrapper_hostname" {
+  default = "dos-proxy"
+}
+
 variable "s3_app_versions_bucket" {
   description = "Name of S3 bucket in which app versions will be stored"
   type = "string"
