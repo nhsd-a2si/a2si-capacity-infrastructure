@@ -158,7 +158,6 @@ resource "aws_elastic_beanstalk_environment" "dos-wrapper-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "CAPACITY_SERVICE_CLIENT_API_URL"
-    # TODO: Stop hardcoding the protocol and path stub if poss
     value     = "https://${aws_route53_record.dos-wrapper-lb.fqdn}/capacity"
   }
 
