@@ -1,9 +1,9 @@
 variable "aws_region" {
-  default = "eu-west-1"
+  default = "eu-west-2"
 }
 
 variable "aws_azs" {
-  default = ["eu-west-1a", "eu-west-1b"]
+  default = ["eu-west-2a", "eu-west-2b"]
 }
 
 variable "vpc_cidr" {
