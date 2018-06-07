@@ -7,6 +7,8 @@ resource "aws_elasticache_replication_group" "capacity-cache" {
     replicas_per_node_group     = 0
     num_node_groups             = 2
   }
+  at_rest_encryption_enabled    = true
+  transit_encryption_enabled    = true
   parameter_group_name          = "default.redis3.2.cluster.on"
   port                          = 6379
   subnet_group_name             = "${aws_elasticache_subnet_group.capacity-cache-subnet-group.name}"
