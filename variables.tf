@@ -76,7 +76,8 @@ variable "dos_wrapper_spring_profiles_active" {
 }
 
 variable "nhs_owner" {
-  default = "mark.henwood1"
+  description = "Name of the person applying the changes"
+  type = "string"
 }
 
 variable "nhs_programme_name" {

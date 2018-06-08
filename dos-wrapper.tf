@@ -1,5 +1,5 @@
 resource "aws_elastic_beanstalk_application" "dos-wrapper" {
-  name        = "dos-wrapper"
+  name        = "${var.environment}-dos-proxy"
   description = "DoS Wrapper"
 }
 
@@ -18,7 +18,7 @@ resource "aws_elastic_beanstalk_application_version" "dos-wrapper-version" {
 }
 
 resource "aws_elastic_beanstalk_environment" "dos-wrapper-env" {
-  name                = "dos-wrapper-env"
+  name                = "${var.environment}-dos-proxy-env"
   application         = "${aws_elastic_beanstalk_application.dos-wrapper.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 
