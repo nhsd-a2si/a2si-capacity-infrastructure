@@ -3,6 +3,7 @@ variable "aws_region" {
 }
 
 variable "aws_azs" {
+  type = "list"
   default = ["eu-west-2a", "eu-west-2b"]
 }
 
@@ -13,6 +14,7 @@ variable "vpc_cidr" {
 
 variable "public_subnet_cidrs" {
   description = "CIDR ranges for the public subnets"
+  type = "list"
   default = ["10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24"]
 }
 
