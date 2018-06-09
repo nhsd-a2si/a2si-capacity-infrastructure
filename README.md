@@ -54,14 +54,14 @@ Create the bucket:
 
 This is a once-only step. For future deployments you will not need to do this.
 
-# Deploying the Capacity Service and DoS Wrapper applications
+# Deploying the Capacity Service and DoS Proxy applications
 
 ## Upload the zipped application assets to the S3 bucket
 
 First upload the zip files of the versions to the S3 bucket:
 
     $ aws s3 cp <location of capacity service zip file> s3://S3BUCKET/capacity-service-vXXX.zip
-    $ aws s3 cp <location of dos wrapper zip file> s3://S3BUCKET/dos-wrapper-vXXX.zip
+    $ aws s3 cp <location of dos proxy zip file> s3://S3BUCKET/dos-proxy-vXXX.zip
 
 Note that it is expected that you will version the S3 object names somehow. Remember
 these object names because you will need them in the next step.
@@ -82,7 +82,7 @@ This value is referred to as 'PUBLICDOMAIN' in the command which follows.
       --var 'capacity_service_api_password=dummyValue' \
       --var 's3_app_versions_bucket=S3BUCKET' \
       --var 's3_capacity_service_object=capacity-service-vXXX.zip' \
-      --var 's3_dos_wrapper_object=dos-wrapper-vXXX.zip' .
+      --var 's3_dos_proxy_object=dos-proxy-vXXX.zip' .
 
 In reality you can call those objects anything; they don't have to start
 "capacity-service-v". All that matters are the following:
@@ -95,7 +95,7 @@ In reality you can call those objects anything; they don't have to start
 ## A note on versioning
 
 The Terraform uses the provided `s3_capacity_service_object` and
-`s3_dos_wrapper_object` variables to _name_ the app versions. This means
+`s3_dos_proxy_object` variables to _name_ the app versions. This means
 that you will end up with application version names which are filename-like (e.g. ending in
 `.zip`) but this seems preferable to making loads of assumptions in the
 Terraform about filename formats, and similarly preferable to forcing a second
@@ -113,9 +113,9 @@ you uploaded. To get that to happen, you will need to issue the following comman
       --environment-name capacity-service-env \
       --version-label capacity-service-vXXX.zip
 
-### To update the DoS Wrapper environment
+### To update the DoS Proxy environment
 
     $ aws elasticbeanstalk update-environment \
-      --application-name dos-wrapper \
-      --environment-name dos-wrapper-env \
-      --version-label dos-wrapper-vXXX.zip
+      --application-name dos-proxy \
+      --environment-name dos-proxy-env \
+      --version-label dos-proxy-vXXX.zip

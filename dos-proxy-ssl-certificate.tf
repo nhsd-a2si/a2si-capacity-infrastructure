@@ -1,4 +1,4 @@
-resource "aws_acm_certificate" "dos-wrapper-lb" {
+resource "aws_acm_certificate" "dos-proxy-lb" {
   domain_name       = "${var.dos_proxy_hostname}.${var.public_domain}"
   validation_method = "DNS"
 
@@ -11,15 +11,15 @@ resource "aws_acm_certificate" "dos-wrapper-lb" {
   }
 }
 
-resource "aws_route53_record" "dos-wrapper-lb-cert-validation" {
-  name = "${aws_acm_certificate.dos-wrapper-lb.domain_validation_options.0.resource_record_name}"
-  type = "${aws_acm_certificate.dos-wrapper-lb.domain_validation_options.0.resource_record_type}"
+resource "aws_route53_record" "dos-proxy-lb-cert-validation" {
+  name = "${aws_acm_certificate.dos-proxy-lb.domain_validation_options.0.resource_record_name}"
+  type = "${aws_acm_certificate.dos-proxy-lb.domain_validation_options.0.resource_record_type}"
   zone_id = "${data.aws_route53_zone.capacity_public_domain.id}"
-  records = ["${aws_acm_certificate.dos-wrapper-lb.domain_validation_options.0.resource_record_value}"]
+  records = ["${aws_acm_certificate.dos-proxy-lb.domain_validation_options.0.resource_record_value}"]
   ttl = 60
 }
 
-resource "aws_acm_certificate_validation" "dos-wrapper-lb" {
-  certificate_arn = "${aws_acm_certificate.dos-wrapper-lb.arn}"
-  validation_record_fqdns = ["${aws_route53_record.dos-wrapper-lb-cert-validation.fqdn}"]
+resource "aws_acm_certificate_validation" "dos-proxy-lb" {
+  certificate_arn = "${aws_acm_certificate.dos-proxy-lb.arn}"
+  validation_record_fqdns = ["${aws_route53_record.dos-proxy-lb-cert-validation.fqdn}"]
 }

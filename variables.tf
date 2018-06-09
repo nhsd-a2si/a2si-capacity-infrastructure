@@ -39,7 +39,7 @@ variable "capacity_service_hostname" {
   default = "capacity-service"
 }
 
-variable "dos_wrapper_hostname" {
+variable "dos_proxy_hostname" {
   description = "Hostname to use for the dos proxy service - will be appended to public_domain to create FQDN"
   default = "dos-proxy"
 }
@@ -54,8 +54,7 @@ variable "s3_capacity_service_object" {
   type = "string"
 }
 
-variable "s3_dos_wrapper_object" {
-  description = "Object name of ZIP file containing DoS Wrapper version for deployment"
+variable "s3_dos_proxy_object" {
   description = "Object name of ZIP file containing DoS Proxy version for deployment"
   type = "string"
 }
@@ -80,12 +79,13 @@ variable "capacity_service_cache_ttl_seconds" {
   type = "string"
 }
 
+# DoS Proxy
 variable "dos_service_url" {
   description = "Endpoint URL to forward DoS CheckCapacitySummary SOAP requests on to"
   default = "https://uat.pathwaysdos.nhs.uk/app/api/webservices"
 }
 
-variable "dos_wrapper_spring_profiles_active" {
+variable "dos_proxy_spring_profiles_active" {
   default = "doswrapper-aws-dos-soap-prod-cpsc-rest-aws"
 }
 

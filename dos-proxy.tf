@@ -1,25 +1,25 @@
-resource "aws_elastic_beanstalk_application" "dos-wrapper" {
+resource "aws_elastic_beanstalk_application" "dos-proxy" {
   name        = "${var.environment}-dos-proxy"
-  description = "DoS Wrapper"
+  description = "DoS Proxy"
 }
 
-resource "aws_elastic_beanstalk_configuration_template" "dos-wrapper-config-template" {
-  name                = "dos-wrapper-config-template"
-  application         = "${aws_elastic_beanstalk_application.dos-wrapper.name}"
+resource "aws_elastic_beanstalk_configuration_template" "dos-proxy-config-template" {
+  name                = "dos-proxy-config-template"
+  application         = "${aws_elastic_beanstalk_application.dos-proxy.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 }
 
-resource "aws_elastic_beanstalk_application_version" "dos-wrapper-version" {
+resource "aws_elastic_beanstalk_application_version" "dos-proxy-version" {
   name        = "${var.s3_dos_proxy_object}"
-  application = "${aws_elastic_beanstalk_application.dos-wrapper.name}"
-  description = "DoS Wrapper current version"
+  application = "${aws_elastic_beanstalk_application.dos-proxy.name}"
+  description = "DoS Proxy current version"
   bucket      = "${data.aws_s3_bucket.eb_zip_versions_bucket.id}"
   key         = "${var.s3_dos_proxy_object}"
 }
 
-resource "aws_elastic_beanstalk_environment" "dos-wrapper-env" {
+resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
   name                = "${var.environment}-dos-proxy-env"
-  application         = "${aws_elastic_beanstalk_application.dos-wrapper.name}"
+  application         = "${aws_elastic_beanstalk_application.dos-proxy.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 
   setting {
@@ -133,7 +133,7 @@ resource "aws_elastic_beanstalk_environment" "dos-wrapper-env" {
   setting {
     namespace = "aws:elb:listener:443"
     name = "SSLCertificateId"
-    value = "${aws_acm_certificate_validation.dos-wrapper-lb.certificate_arn}"
+    value = "${aws_acm_certificate_validation.dos-proxy-lb.certificate_arn}"
   }
 
   setting {
