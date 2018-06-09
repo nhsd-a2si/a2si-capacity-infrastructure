@@ -18,7 +18,7 @@ resource "aws_elastic_beanstalk_application_version" "capacity-service-version" 
 }
 
 resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
-  name                = "${var.environment}capacity-service-env"
+  name                = "${var.environment}-capacity-service-env"
   application         = "${aws_elastic_beanstalk_application.capacity-service.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 
