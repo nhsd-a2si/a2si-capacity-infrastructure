@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "dos-wrapper-lb" {
-  domain_name       = "${var.dos_wrapper_hostname}.${var.public_domain}"
+  domain_name       = "${var.dos_proxy_hostname}.${var.public_domain}"
   validation_method = "DNS"
 
   tags {

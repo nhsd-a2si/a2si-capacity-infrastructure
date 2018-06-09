@@ -10,11 +10,11 @@ resource "aws_elastic_beanstalk_configuration_template" "dos-wrapper-config-temp
 }
 
 resource "aws_elastic_beanstalk_application_version" "dos-wrapper-version" {
-  name        = "${var.s3_dos_wrapper_object}"
+  name        = "${var.s3_dos_proxy_object}"
   application = "${aws_elastic_beanstalk_application.dos-wrapper.name}"
   description = "DoS Wrapper current version"
   bucket      = "${data.aws_s3_bucket.eb_zip_versions_bucket.id}"
-  key         = "${var.s3_dos_wrapper_object}"
+  key         = "${var.s3_dos_proxy_object}"
 }
 
 resource "aws_elastic_beanstalk_environment" "dos-wrapper-env" {
@@ -152,7 +152,7 @@ resource "aws_elastic_beanstalk_environment" "dos-wrapper-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "SPRING_PROFILES_ACTIVE"
-    value     = "${var.dos_wrapper_spring_profiles_active}"
+    value     = "${var.dos_proxy_spring_profiles_active}"
   }
 
   setting {
