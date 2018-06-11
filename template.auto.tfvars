@@ -8,3 +8,7 @@
 //capacity_service_hostname = "capacity-service"
 //capacity_service_api_password = "dummyValue"
 //capacity_service_api_username = "dummyValue"
+
+// Leave these commented out unless you want to override the region and AZs for the deployment
+//aws_region = "eu-west-2"
+//aws_azs = ["eu-west-2a", "eu-west-2b"]
