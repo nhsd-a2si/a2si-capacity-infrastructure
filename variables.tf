@@ -1,22 +1,31 @@
 variable "aws_region" {
-  default = "eu-west-1"
+  description = "Region within which the resources will be deployed"
+  default = "eu-west-2"
 }
 
+# Different availability zones are essentially different 'datacentres'
 variable "aws_azs" {
-  default = ["eu-west-1a", "eu-west-1b"]
+  description = "Availability zones within which the resources will be deployed"
+  type = "list"
+  default = ["eu-west-2a", "eu-west-2b"]
 }
+
 
 variable "vpc_cidr" {
-  description = "CIDR for the VPC"
+  description = "IP range (CIDR) to use for the VPC"
   default = "10.0.0.0/16"
 }
 
+# Note that these are subnets of the vpc_cidr range
 variable "public_subnet_cidrs" {
-  description = "CIDR ranges for the public subnets"
+  description = "IP ranges (CIDR ranges) to use for the public subnets"
+  type = "list"
   default = ["10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24"]
 }
 
+
 variable "environment" {
+  description = "Short name to differentiate this environment from others"
   default = "dev"
 }
 
@@ -26,10 +35,12 @@ variable "public_domain" {
 }
 
 variable "capacity_service_hostname" {
+  description = "Hostname to use for the capacity service - will be appended to public_domain to create FQDN"
   default = "capacity-service"
 }
 
-variable "dos_wrapper_hostname" {
+variable "dos_proxy_hostname" {
+  description = "Hostname to use for the dos proxy service - will be appended to public_domain to create FQDN"
   default = "dos-proxy"
 }
 
@@ -43,11 +54,12 @@ variable "s3_capacity_service_object" {
   type = "string"
 }
 
-variable "s3_dos_wrapper_object" {
-  description = "Object name of ZIP file containing DoS Wrapper version for deployment"
+variable "s3_dos_proxy_object" {
+  description = "Object name of ZIP file containing DoS Proxy version for deployment"
   type = "string"
 }
 
+# Capacity Service
 variable "capacity_service_spring_profiles_active" {
   default = "capacity-service-aws-redis"
 }
@@ -67,16 +79,20 @@ variable "capacity_service_cache_ttl_seconds" {
   type = "string"
 }
 
+# DoS Proxy
 variable "dos_service_url" {
+  description = "Endpoint URL to forward DoS CheckCapacitySummary SOAP requests on to"
   default = "https://uat.pathwaysdos.nhs.uk/app/api/webservices"
 }
 
-variable "dos_wrapper_spring_profiles_active" {
+variable "dos_proxy_spring_profiles_active" {
   default = "doswrapper-aws-dos-soap-prod-cpsc-rest-aws"
 }
 
+# The following variables will be used to tag resources that are created by this Terraform configuration
 variable "nhs_owner" {
-  default = "mark.henwood1"
+  description = "Name of the person applying the changes"
+  type = "string"
 }
 
 variable "nhs_programme_name" {

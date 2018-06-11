@@ -34,18 +34,19 @@ cleanliness.
 In the instructions which follow, commands that begin `$ aws` require the AWS CLI
 and commands that begin `$ terraform` require the Terraform runtime.
 
-## Create bucket for app version assets
+## Create a bucket for app version assets
 
 Beanstalk will deploy app versions from an S3 bucket. That bucket needs
-creating _manually_ before you can run any of the Terraform config.
+creating **manually** before you can run any of the Terraform config.
 
-(We are creating it manually so that you can upload the zipped app assets before
-running the TerraForm config)
+*We are creating it manually so that you can upload the zipped app assets before
+running the TerraForm config.*
 
 Decide on the S3 bucket name which will be used to hold the app version assets.
-For these instructions this will be _S3BUCKET_.
 
-*IMPORTANT*: You will need to remember this name in order to pass it into the
+For these instructions this will be `S3BUCKET`.
+
+**IMPORTANT**: You will need to remember this name in order to pass it into the
 `tf apply` command later in these instructions.
 
 Create the bucket:
@@ -54,14 +55,14 @@ Create the bucket:
 
 This is a once-only step. For future deployments you will not need to do this.
 
-# Deploying the Capacity Service and DoS Wrapper applications
+# Deploying the Capacity Service and DoS Proxy applications
 
 ## Upload the zipped application assets to the S3 bucket
 
 First upload the zip files of the versions to the S3 bucket:
 
     $ aws s3 cp <location of capacity service zip file> s3://S3BUCKET/capacity-service-vXXX.zip
-    $ aws s3 cp <location of dos wrapper zip file> s3://S3BUCKET/dos-wrapper-vXXX.zip
+    $ aws s3 cp <location of dos proxy zip file> s3://S3BUCKET/dos-proxy-vXXX.zip
 
 Note that it is expected that you will version the S3 object names somehow. Remember
 these object names because you will need them in the next step.
@@ -70,19 +71,20 @@ these object names because you will need them in the next step.
 
 Your AWS account will need to have a Route 53 record for a domain into which
 the service endpoint FQDNs and the Load Balancer certificates will be created.
-This domain record *needs to exist before running these scripts*.
 
-This value is referred to as 'PUBLICDOMAIN' in the command which follows.
+This domain record **needs to exist before running these scripts**.
+
+This value is referred to as `publicdomain.com` in the command which follows.
 
 ## Apply the Terraform
 
     $ terraform apply \
-      --var 'public_domain=PUBLICDOMAIN'
+      --var 'public_domain=publicdomain.com'
       --var 'capacity_service_api_username=dummyValue' \
       --var 'capacity_service_api_password=dummyValue' \
       --var 's3_app_versions_bucket=S3BUCKET' \
       --var 's3_capacity_service_object=capacity-service-vXXX.zip' \
-      --var 's3_dos_wrapper_object=dos-wrapper-vXXX.zip' .
+      --var 's3_dos_proxy_object=dos-proxy-vXXX.zip' .
 
 In reality you can call those objects anything; they don't have to start
 "capacity-service-v". All that matters are the following:
@@ -92,11 +94,24 @@ In reality you can call those objects anything; they don't have to start
   2. The names you use in the `terraform apply` step match the names you used in
      the `aws s3 cp` step immediately before it.
 
-## A note on versioning
+### Using *.auto.tfvars files
+
+As opposed to passing variables on the command line each time you run a `terraform ???` command, Terraform can automatically read variables in from files ending in `auto.tfvars`.
+
+There is a `template.auto.tfvars` files containing the variables you will need to apply the Terraform configuration.
+These are commented out by default and so won't be used.
+
+1. Make a copy of `template.auto.tfvars` and call it `local.auto.tfvars`
+2. Uncomment the lines in `local.auto.tfvars` and set the variables to your own values
+
+Now when you run a `terraform ???` command, this is the equivalent of passing these variables in on the command line as `--var "variable_name=value"` 
+
+### A note on versioning
 
 The Terraform uses the provided `s3_capacity_service_object` and
-`s3_dos_wrapper_object` variables to _name_ the app versions. This means
-that you will end up with application version names which are filename-like (e.g. ending in
+`s3_dos_proxy_object` variables to _name_ the app versions. 
+
+This means that you will end up with application version names which are filename-like (e.g. ending in
 `.zip`) but this seems preferable to making loads of assumptions in the
 Terraform about filename formats, and similarly preferable to forcing a second
 pair of 'vars' to be used to specify a neater version name.
@@ -106,6 +121,11 @@ pair of 'vars' to be used to specify a neater version name.
 Performing the above will not actually get Elastic Beanstalk to _run_ the version
 you uploaded. To get that to happen, you will need to issue the following commands.
 
+Below you will need to identify the correct values for the `environment_name` and `application-name` variables.
+These names will be the below example values (e.g. **capacity-service-env**) prefixed with the `environment` value.
+
+e.g. if your `environment` value is **dev** the `application-name` will be **dev-capacity-service** and the `environment_name` will be **dev-capacity-service-env** 
+
 ### To update the Capacity Service environment
 
     $ aws elasticbeanstalk update-environment \
@@ -113,9 +133,9 @@ you uploaded. To get that to happen, you will need to issue the following comman
       --environment-name capacity-service-env \
       --version-label capacity-service-vXXX.zip
 
-### To update the DoS Wrapper environment
+### To update the DoS Proxy environment
 
     $ aws elasticbeanstalk update-environment \
-      --application-name dos-wrapper \
-      --environment-name dos-wrapper-env \
-      --version-label dos-wrapper-vXXX.zip
+      --application-name dos-proxy \
+      --environment-name dos-proxy-env \
+      --version-label dos-proxy-vXXX.zip

@@ -1,25 +1,25 @@
-resource "aws_elastic_beanstalk_application" "dos-wrapper" {
-  name        = "dos-wrapper"
-  description = "DoS Wrapper"
+resource "aws_elastic_beanstalk_application" "dos-proxy" {
+  name        = "${var.environment}-dos-proxy"
+  description = "DoS Proxy"
 }
 
-resource "aws_elastic_beanstalk_configuration_template" "dos-wrapper-config-template" {
-  name                = "dos-wrapper-config-template"
-  application         = "${aws_elastic_beanstalk_application.dos-wrapper.name}"
+resource "aws_elastic_beanstalk_configuration_template" "dos-proxy-config-template" {
+  name                = "dos-proxy-config-template"
+  application         = "${aws_elastic_beanstalk_application.dos-proxy.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 }
 
-resource "aws_elastic_beanstalk_application_version" "dos-wrapper-version" {
-  name        = "${var.s3_dos_wrapper_object}"
-  application = "${aws_elastic_beanstalk_application.dos-wrapper.name}"
-  description = "DoS Wrapper current version"
+resource "aws_elastic_beanstalk_application_version" "dos-proxy-version" {
+  name        = "${var.s3_dos_proxy_object}"
+  application = "${aws_elastic_beanstalk_application.dos-proxy.name}"
+  description = "DoS Proxy current version"
   bucket      = "${data.aws_s3_bucket.eb_zip_versions_bucket.id}"
-  key         = "${var.s3_dos_wrapper_object}"
+  key         = "${var.s3_dos_proxy_object}"
 }
 
-resource "aws_elastic_beanstalk_environment" "dos-wrapper-env" {
-  name                = "dos-wrapper-env"
-  application         = "${aws_elastic_beanstalk_application.dos-wrapper.name}"
+resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
+  name                = "${var.environment}-dos-proxy-env"
+  application         = "${aws_elastic_beanstalk_application.dos-proxy.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 
   setting {
@@ -133,7 +133,7 @@ resource "aws_elastic_beanstalk_environment" "dos-wrapper-env" {
   setting {
     namespace = "aws:elb:listener:443"
     name = "SSLCertificateId"
-    value = "${aws_acm_certificate_validation.dos-wrapper-lb.certificate_arn}"
+    value = "${aws_acm_certificate_validation.dos-proxy-lb.certificate_arn}"
   }
 
   setting {
@@ -152,13 +152,13 @@ resource "aws_elastic_beanstalk_environment" "dos-wrapper-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "SPRING_PROFILES_ACTIVE"
-    value     = "${var.dos_wrapper_spring_profiles_active}"
+    value     = "${var.dos_proxy_spring_profiles_active}"
   }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "CAPACITY_SERVICE_CLIENT_API_URL"
-    value     = "https://${aws_route53_record.dos-wrapper-lb.fqdn}/capacity"
+    value     = "https://${aws_route53_record.capacity-service-lb.fqdn}/capacity"
   }
 
   setting {
