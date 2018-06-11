@@ -1,25 +1,25 @@
-resource "aws_elastic_beanstalk_application" "capacity-service" {
-  name        = "${var.environment}-capacity-service"
-  description = "Capacity Service"
+resource "aws_elastic_beanstalk_application" "dos-proxy" {
+  name        = "${var.environment}-dos-proxy"
+  description = "DoS Proxy"
 }
 
-resource "aws_elastic_beanstalk_configuration_template" "capacity-service-config-template" {
-  name                = "capacity-service-config-template"
-  application         = "${aws_elastic_beanstalk_application.capacity-service.name}"
+resource "aws_elastic_beanstalk_configuration_template" "dos-proxy-config-template" {
+  name                = "dos-proxy-config-template"
+  application         = "${aws_elastic_beanstalk_application.dos-proxy.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 }
 
-resource "aws_elastic_beanstalk_application_version" "capacity-service-version" {
-  name        = "${var.s3_capacity_service_object}"
-  application = "${aws_elastic_beanstalk_application.capacity-service.name}"
-  description = "Capacity Service current version"
+resource "aws_elastic_beanstalk_application_version" "dos-proxy-version" {
+  name        = "${var.s3_dos_proxy_object}"
+  application = "${aws_elastic_beanstalk_application.dos-proxy.name}"
+  description = "DoS Proxy current version"
   bucket      = "${data.aws_s3_bucket.eb_zip_versions_bucket.id}"
-  key         = "${var.s3_capacity_service_object}"
+  key         = "${var.s3_dos_proxy_object}"
 }
 
-resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
-  name                = "${var.environment}-capacity-service-env"
-  application         = "${aws_elastic_beanstalk_application.capacity-service.name}"
+resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
+  name                = "${var.environment}-dos-proxy-env"
+  application         = "${aws_elastic_beanstalk_application.dos-proxy.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 
   setting {
@@ -44,12 +44,6 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
     namespace = "aws:ec2:vpc"
     name      = "AssociatePublicIpAddress"
     value     = "true"
-  }
-
-  setting {
-    namespace = "aws:autoscaling:launchconfiguration"
-    name      = "SecurityGroups"
-    value     = "${aws_security_group.cache-client.id}"
   }
 
   setting {
@@ -139,7 +133,7 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:elb:listener:443"
     name = "SSLCertificateId"
-    value = "${aws_acm_certificate_validation.capacity-service-lb.certificate_arn}"
+    value = "${aws_acm_certificate_validation.dos-proxy-lb.certificate_arn}"
   }
 
   setting {
@@ -158,31 +152,31 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "SPRING_PROFILES_ACTIVE"
-    value     = "${var.capacity_service_spring_profiles_active}"
+    value     = "${var.dos_proxy_spring_profiles_active}"
   }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "SPRING_REDIS_CLUSTER_NODES"
-    value     = "${aws_elasticache_replication_group.capacity-cache.configuration_endpoint_address}:6379"
+    name      = "CAPACITY_SERVICE_CLIENT_API_URL"
+    value     = "https://${aws_route53_record.capacity-service-lb.fqdn}/capacity"
   }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "CAPACITY_SERVICE_API_USERNAME"
+    name      = "CAPACITY_SERVICE_CLIENT_API_USERNAME"
     value     = "${var.capacity_service_api_username}"
   }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "CAPACITY_SERVICE_API_PASSWORD"
+    name      = "CAPACITY_SERVICE_CLIENT_API_PASSWORD"
     value     = "${var.capacity_service_api_password}"
   }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "CAPACITY_SERVICE_CACHE_TIMETOLIVEINSECONDS"
-    value     = "${var.capacity_service_cache_ttl_seconds}"
+    name      = "DOS_SERVICE_URL"
+    value     = "${var.dos_service_url}"
   }
 
   tags {
