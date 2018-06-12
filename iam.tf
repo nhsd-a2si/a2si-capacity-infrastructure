@@ -1,4 +1,4 @@
-resource "aws_iam_role" "ebs-role" {
+resource "aws_iam_role" "a2si-eb" {
   name        = "a2si-elasticbeanstalk-ec2-role"
   description = ""
 
@@ -18,17 +18,17 @@ resource "aws_iam_role" "ebs-role" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "AWSElasticBeanstalkWebTier-attach" {
-  role       = "${aws_iam_role.ebs-role.name}"
+resource "aws_iam_role_policy_attachment" "AWSElasticBeanstalkWebTier" {
+  role       = "${aws_iam_role.a2si-eb.name}"
   policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier"
 }
 
-resource "aws_iam_role_policy_attachment" "AWSElasticBeanstalkService-attach" {
-  role       = "${aws_iam_role.ebs-role.name}"
+resource "aws_iam_role_policy_attachment" "AWSElasticBeanstalkService" {
+  role       = "${aws_iam_role.a2si-eb.name}"
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSElasticBeanstalkService"
 }
 
-resource "aws_iam_instance_profile" "eb-instance-profile" {
-  name = "a2si-elasticbeanstalk-ec2-role-instance-profile"
-  role = "${aws_iam_role.ebs-role.name}"
+resource "aws_iam_instance_profile" "a2si-eb" {
+  name = "a2si-elasticbeanstalk-ec2-role"
+  role = "${aws_iam_role.a2si-eb.name}"
 }
