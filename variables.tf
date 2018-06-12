@@ -89,6 +89,26 @@ variable "dos_proxy_spring_profiles_active" {
   default = "doswrapper-aws-dos-soap-prod-cpsc-rest-aws"
 }
 
+#
+# Variables for the capacity reader MySQL DB
+#
+
+variable "mysql_db_instance" {
+  default = "quartz-instance"
+}
+
+variable "mysql_db_name" {
+  default = "QUARTZ_DB"
+}
+
+variable "mysql_username" {
+  default = "QuartzRoot"
+}
+
+variable "mysql_password" {
+  default = "QuartzRoot"
+}
+
 # The following variables will be used to tag resources that are created by this Terraform configuration
 variable "nhs_owner" {
   description = "Name of the person applying the changes"
