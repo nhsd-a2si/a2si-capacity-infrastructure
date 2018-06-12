@@ -1,0 +1,54 @@
+# Create a database server
+resource "aws_db_instance" "capacity_reader_mysql" {
+  engine            = "mysql"
+  engine_version    = "5.6.39"
+  instance_class    = "db.t2.micro"
+  identifier        = "${var.mysql_db_instance}"
+  name              = "${var.mysql_db_name}"
+  username          = "${var.mysql_username}"
+  password          = "${var.mysql_password}"
+  port              = "3306"
+  allocated_storage = 5
+  storage_type      = "gp2"
+  #availability_zone = ["${var.aws_azs}"]
+  publicly_accessible = "false"
+  skip_final_snapshot = "true"
+  db_subnet_group_name   = "${aws_db_subnet_group.capacity-reader-mysql-subnet-group.name}"
+  vpc_security_group_ids  = ["${aws_security_group.allow-capacity-reader-mysql.id}"]
+
+  tags {
+    Environment = "${var.environment}"
+    Name = "Capacity Reader MySQL Instance"
+    Owner = "${var.nhs_owner}"
+    Programme = "${var.nhs_programme_name}"
+    Project = "${var.nhs_project_name}"
+    Terraform = "true"
+  }
+}
+
+resource "aws_db_subnet_group" "capacity-reader-mysql-subnet-group" {
+  name        = "capacity-reader-mysql-subnet-group"
+  description = "Subnet group for Capacity Reader MySQL"
+  subnet_ids = ["${aws_subnet.capacity-public-subnets.*.id}"]
+}
+
+resource "aws_security_group" "allow-capacity-reader-mysql" {
+  name        = "allow-capacity-reader-mysql"
+  description = "Allow connection by appointed capacity-reader-mysql clients"
+  vpc_id      = "${aws_vpc.capacity.id}"
+
+  ingress {
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+  }
+
+  tags {
+    Environment = "${var.environment}"
+    Name = "allow-cache-client Security Group"
+    Owner = "${var.nhs_owner}"
+    Programme = "${var.nhs_programme_name}"
+    Project = "${var.nhs_project_name}"
+    Terraform = "true"
+  }
+}
