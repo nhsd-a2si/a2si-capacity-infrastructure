@@ -49,7 +49,7 @@ resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "IamInstanceProfile"
-    value     = "${aws_iam_instance_profile.eb-instance-profile.name}"
+    value     = "${aws_iam_instance_profile.a2si-eb.name}"
   }
 
   setting {
