@@ -39,6 +39,11 @@ variable "capacity_service_hostname" {
   default = "capacity-service"
 }
 
+variable "info_reader_hostname" {
+  description = "Hostname to use for the info reader - will be appended to public_domain to create FQDN"
+  default = "info-reader"
+}
+
 variable "dos_proxy_hostname" {
   description = "Hostname to use for the dos proxy service - will be appended to public_domain to create FQDN"
   default = "dos-proxy"
@@ -51,6 +56,11 @@ variable "s3_app_versions_bucket" {
 
 variable "s3_capacity_service_object" {
   description = "Object name of ZIP file containing Capacity Service version for deployment"
+  type = "string"
+}
+
+variable "s3_info_reader_object" {
+  description = "Object name of ZIP file containing Info Reader version for deployment"
   type = "string"
 }
 
@@ -77,6 +87,39 @@ variable "capacity_service_api_password" {
 variable "capacity_service_cache_ttl_seconds" {
   default = "1800"  # Env var, sent as string
   type = "string"
+}
+
+# Info Reader
+variable "info_reader_spring_profiles_active" {
+  default = "capacity-info-reader-aws"
+}
+
+variable "info_reader_dhuftpjob_repeatinterval" {
+  default = "300000"
+}
+
+variable "info_reader_dhuftpjob_ftpserver" {
+  type = "string"
+}
+
+variable "info_reader_dhuftpjob_ftpport" {
+  default = "22"
+}
+
+variable "info_reader_dhuftpjob_ftpusername" {
+  type = "string"
+}
+
+variable "info_reader_dhuftpjob_privatekeyfile" {
+  type = "string"
+}
+
+variable "info_reader_ekhuftpaijob_repeatinterval" {
+  default = "300000"
+}
+
+variable "info_reader_ekhuftpaijob_apiurl" {
+  default = "Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 }
 
 # DoS Proxy

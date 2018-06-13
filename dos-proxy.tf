@@ -185,6 +185,12 @@ resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
     value     = "${var.dos_service_url}"
   }
 
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name = "EC2KeyName"
+    value = "${aws_key_pair.key-pair-dev.id}"
+  }
+
   tags {
     Environment = "${var.environment}"
     Owner = "${var.nhs_owner}"
