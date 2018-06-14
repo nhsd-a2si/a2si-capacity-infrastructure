@@ -4,3 +4,10 @@
 
 # Local tfvars files not to be checked in to the repository
 local.auto.tfvars
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+

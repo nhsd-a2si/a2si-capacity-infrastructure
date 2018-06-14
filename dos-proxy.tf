@@ -145,13 +145,13 @@ resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
   setting {
     namespace = "aws:elb:listener:443"
     name = "InstancePort"
-    value = "80"
+    value = "443"
   }
 
   setting {
     namespace = "aws:elb:listener:443"
     name = "InstanceProtocol"
-    value = "HTTP"
+    value = "HTTPS"
   }
 
   # ENV vars for the service
