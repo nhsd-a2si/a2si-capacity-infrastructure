@@ -14,7 +14,7 @@ resource "aws_db_instance" "capacity_reader_mysql" {
   publicly_accessible = "false"
   skip_final_snapshot = "true"
   db_subnet_group_name   = "${aws_db_subnet_group.capacity-reader-mysql-subnet-group.name}"
-  vpc_security_group_ids  = ["${aws_security_group.allow-capacity-reader-mysql.id}"]
+  vpc_security_group_ids  = ["${aws_security_group.allow-mysql-client.id}"]
 
   tags {
     Environment = "${var.environment}"
@@ -32,20 +32,37 @@ resource "aws_db_subnet_group" "capacity-reader-mysql-subnet-group" {
   subnet_ids = ["${aws_subnet.capacity-public-subnets.*.id}"]
 }
 
-resource "aws_security_group" "allow-capacity-reader-mysql" {
-  name        = "allow-capacity-reader-mysql"
-  description = "Allow connection by appointed capacity-reader-mysql clients"
+
+resource "aws_security_group" "mysql-client" {
+  name        = "mysql-client"
+  description = "Instances which act as clients of mysql"
+  vpc_id      = "${aws_vpc.capacity.id}"
+
+  tags {
+    Environment = "${var.environment}"
+    Name = "mysql-client Security Group"
+    Owner = "${var.nhs_owner}"
+    Programme = "${var.nhs_programme_name}"
+    Project = "${var.nhs_project_name}"
+    Terraform = "true"
+  }
+}
+
+resource "aws_security_group" "allow-mysql-client" {
+  name        = "allow-mysql-client"
+  description = "Allow connection by appointed mysql clients"
   vpc_id      = "${aws_vpc.capacity.id}"
 
   ingress {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
+    security_groups = ["${aws_security_group.mysql-client.id}"]
   }
 
   tags {
     Environment = "${var.environment}"
-    Name = "allow-cache-client Security Group"
+    Name = "allow-mysql-client Security Group"
     Owner = "${var.nhs_owner}"
     Programme = "${var.nhs_programme_name}"
     Project = "${var.nhs_project_name}"
