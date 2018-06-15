@@ -130,6 +130,12 @@ resource "aws_elastic_beanstalk_environment" "info-reader-env" {
     value = "4"
   }
 
+  setting {
+    namespace = "aws:elasticbeanstalk:application"
+    name      = "Application Healthcheck URL"
+    value     = "${var.healthcheck_url}"
+  }
+
 #  setting {
 #    namespace = "aws:elb:listener"
 #    name = "ListenerEnabled"
@@ -148,19 +154,40 @@ resource "aws_elastic_beanstalk_environment" "info-reader-env" {
     value = "${aws_acm_certificate_validation.info-reader-lb.certificate_arn}"
   }
 
+  #  For encrypting between Load Balancer and application
+  #  setting {
+  #    namespace = "aws:elb:listener:443"
+  #    name = "InstancePort"
+  #    value = "443"
+  #  }
+
+  #  setting {
+  #    namespace = "aws:elb:listener:443"
+  #    name = "InstanceProtocol"
+  #    value = "HTTPS"
+  #  }
+
+  #  For NOT encrypting between Load Balancer and application
   setting {
     namespace = "aws:elb:listener:443"
     name = "InstancePort"
-    value = "443"
+    value = "80"
   }
 
   setting {
     namespace = "aws:elb:listener:443"
     name = "InstanceProtocol"
-    value = "HTTPS"
+    value = "HTTP"
   }
 
   # ENV vars for the service
+#  For NOT encrypting between Load Balancer and application
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SERVER_SSL_ENABLED"
+    value     = "false"
+  }
+
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "SPRING_PROFILES_ACTIVE"
