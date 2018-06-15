@@ -175,6 +175,12 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SPRING_REDIS_SSL"
+    value     = "true"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
     name      = "CAPACITY_SERVICE_API_USERNAME"
     value     = "${var.capacity_service_api_username}"
   }
