@@ -34,6 +34,18 @@ cleanliness.
 In the instructions which follow, commands that begin `$ aws` require the AWS CLI
 and commands that begin `$ terraform` require the Terraform runtime.
 
+## Customise the project Terraform state settings to match your own
+
+  1. Copy file terraform.tf.template to location terraform.tf
+
+  2. Change the `bucket` property to match the name of the S3 bucket in which
+     you will be keeping Terraform state data.
+
+  3. Change the `dynamodb_table` property to match the name of the DynamoDB
+     table you will use for the state lock.
+
+See file `README.tfstate.md` for details on this process.
+
 ## Create a bucket for app version assets
 
 Beanstalk will deploy app versions from an S3 bucket. That bucket needs
