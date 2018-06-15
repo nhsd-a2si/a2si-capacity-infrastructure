@@ -7,7 +7,7 @@ resource "aws_elasticache_replication_group" "capacity-cache" {
     replicas_per_node_group     = 0
     num_node_groups             = 2
   }
-  parameter_group_name          = "default.redis3.2.cluster.on"
+  parameter_group_name          = "default.redis4.0.cluster.on"
   port                          = 6379
   subnet_group_name             = "${aws_elasticache_subnet_group.capacity-cache-subnet-group.name}"
   security_group_ids            = ["${aws_security_group.allow-cache-client.id}"]
