@@ -165,3 +165,7 @@ variable "nhs_programme_name" {
 variable "nhs_project_name" {
   default = "capacity"
 }
+
+variable "healthcheck_url" {
+  default = "/healthcheck"
+}
