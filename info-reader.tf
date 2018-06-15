@@ -49,7 +49,7 @@ resource "aws_elastic_beanstalk_environment" "info-reader-env" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "SecurityGroups"
-    value     = "${aws_security_group.cache-client.id}"
+    value     = "${aws_security_group.mysql-client.id}"
   }
 
   setting {
@@ -268,7 +268,7 @@ resource "aws_elastic_beanstalk_environment" "info-reader-env" {
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "CAPACITY_SERVICE_CLIENT_API_USERNAME"
+    name      = "CAPACITY_SERVICE_CLIENT_API_PASSWORD"
     value     = "${var.capacity_service_api_password}"
   }
 
