@@ -9,9 +9,6 @@ Currently this is knowingly naive in _at least_ the following ways:
      diligent use of SecurityGroups (Note to self: TODO) but it would be nice to
      throw up a private/public architecture before beta.
 
-  2. There is no multi AZ. This is bad for availability. It would be good to correct
-     this also.
-
 # Pre-requisites
 
 ## Tools
