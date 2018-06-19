@@ -91,7 +91,7 @@ In reality you can call those objects anything; they don't have to start
   2. The names you use in the `terraform apply` step match the names you used in
      the `aws s3 cp` step immediately before it.
 
-### Using *.auto.tfvars files
+### Using \*.auto.tfvars files
 
 As opposed to passing variables on the command line each time you run a `terraform ???` command, Terraform can automatically read variables in from files ending in `auto.tfvars`.
 
