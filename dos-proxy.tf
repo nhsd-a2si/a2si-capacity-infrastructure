@@ -1,10 +1,10 @@
 resource "aws_elastic_beanstalk_application" "dos-proxy" {
-  name        = "${var.environment}-dos-proxy"
+  name        = "${var.nhs_owner_shortcode}-dos-proxy"
   description = "DoS Proxy"
 }
 
 resource "aws_elastic_beanstalk_configuration_template" "dos-proxy-config-template" {
-  name                = "dos-proxy-config-template"
+  name                = "${var.nhs_owner}-dos-proxy-config-template"
   application         = "${aws_elastic_beanstalk_application.dos-proxy.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 }
@@ -18,7 +18,7 @@ resource "aws_elastic_beanstalk_application_version" "dos-proxy-version" {
 }
 
 resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
-  name                = "${var.environment}-dos-proxy-env"
+  name                = "${var.nhs_owner_shortcode}-dos-proxy-env"
   application         = "${aws_elastic_beanstalk_application.dos-proxy.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 
