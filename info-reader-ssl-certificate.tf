@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "info-reader-lb" {
-  domain_name       = "${var.info_reader_hostname}.${var.public_domain}"
+  domain_name       = "${var.info_reader_fq_domain_name}"
   validation_method = "DNS"
 
   tags {
@@ -14,7 +14,7 @@ resource "aws_acm_certificate" "info-reader-lb" {
 resource "aws_route53_record" "info-reader-lb-cert-validation" {
   name = "${aws_acm_certificate.info-reader-lb.domain_validation_options.0.resource_record_name}"
   type = "${aws_acm_certificate.info-reader-lb.domain_validation_options.0.resource_record_type}"
-  zone_id = "${data.aws_route53_zone.capacity_public_domain.id}"
+  zone_id = "${data.aws_route53_zone.capacity_hosted_zone.id}"
   records = ["${aws_acm_certificate.info-reader-lb.domain_validation_options.0.resource_record_value}"]
   ttl = 60
 }

@@ -36,7 +36,7 @@ resource "aws_instance" "sftpserver" {
 
 
 resource "aws_security_group" "sftp-sg" {
-  name   = "sftp-security-group"
+  name   = "${var.nhs_owner}-sftp-security-group"
   vpc_id = "${aws_vpc.capacity.id}"
 
   ingress {

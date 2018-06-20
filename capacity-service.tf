@@ -1,10 +1,10 @@
 resource "aws_elastic_beanstalk_application" "capacity-service" {
-  name        = "${var.environment}-capacity-service"
+  name        = "${var.nhs_owner_shortcode}-capacity-service"
   description = "Capacity Service"
 }
 
 resource "aws_elastic_beanstalk_configuration_template" "capacity-service-config-template" {
-  name                = "capacity-service-config-template"
+  name                = "${var.nhs_owner}-capacity-service-config-template"
   application         = "${aws_elastic_beanstalk_application.capacity-service.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 }
@@ -18,7 +18,7 @@ resource "aws_elastic_beanstalk_application_version" "capacity-service-version" 
 }
 
 resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
-  name                = "${var.environment}-capacity-service-env"
+  name                = "${var.nhs_owner_shortcode}-capacity-service-env"
   application         = "${aws_elastic_beanstalk_application.capacity-service.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 
