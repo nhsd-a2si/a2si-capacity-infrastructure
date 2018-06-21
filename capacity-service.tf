@@ -8,7 +8,7 @@ output "capacity-service-application" {
 }
 
 resource "aws_elastic_beanstalk_configuration_template" "capacity-service-config-template" {
-  name                = "${var.nhs_owner}-capacity-service-config-template"
+  name                = "${var.nhs_owner_shortcode}-capacity-service-config-template"
   application         = "${aws_elastic_beanstalk_application.capacity-service.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 }

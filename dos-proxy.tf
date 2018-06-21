@@ -8,7 +8,7 @@ output "dos-proxy-application" {
 }
 
 resource "aws_elastic_beanstalk_configuration_template" "dos-proxy-config-template" {
-  name                = "${var.nhs_owner}-dos-proxy-config-template"
+  name                = "${var.nhs_owner_shortcode}-dos-proxy-config-template"
   application         = "${aws_elastic_beanstalk_application.dos-proxy.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 }

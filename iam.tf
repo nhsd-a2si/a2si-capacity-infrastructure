@@ -1,5 +1,5 @@
 resource "aws_iam_role" "a2si-eb" {
-  name        = "${var.nhs_owner}-a2si-elasticbeanstalk-ec2-role"
+  name        = "${var.nhs_owner_shortcode}-a2si-elasticbeanstalk-ec2-role"
   description = ""
 
   assume_role_policy = <<EOF
@@ -29,6 +29,6 @@ resource "aws_iam_role_policy_attachment" "AWSElasticBeanstalkService" {
 }
 
 resource "aws_iam_instance_profile" "a2si-eb" {
-  name = "${var.nhs_owner}-a2si-elasticbeanstalk-ec2-role"
+  name = "${var.nhs_owner_shortcode}-a2si-elasticbeanstalk-ec2-role"
   role = "${aws_iam_role.a2si-eb.name}"
 }
