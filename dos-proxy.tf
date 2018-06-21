@@ -3,6 +3,10 @@ resource "aws_elastic_beanstalk_application" "dos-proxy" {
   description = "DoS Proxy"
 }
 
+output "dos-proxy-application" {
+  value = "${aws_elastic_beanstalk_application.dos-proxy.name}"
+}
+
 resource "aws_elastic_beanstalk_configuration_template" "dos-proxy-config-template" {
   name                = "${var.nhs_owner}-dos-proxy-config-template"
   application         = "${aws_elastic_beanstalk_application.dos-proxy.name}"
@@ -225,4 +229,8 @@ resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
     Project = "${var.nhs_project_name}"
     Terraform = "true"
   }
+}
+
+output "dos-proxy-env" {
+  value = "${aws_elastic_beanstalk_environment.dos-proxy-env.name}"
 }
