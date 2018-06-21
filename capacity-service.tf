@@ -3,6 +3,10 @@ resource "aws_elastic_beanstalk_application" "capacity-service" {
   description = "Capacity Service"
 }
 
+output "capacity-service-application" {
+  value = "${aws_elastic_beanstalk_application.capacity-service.name}"
+}
+
 resource "aws_elastic_beanstalk_configuration_template" "capacity-service-config-template" {
   name                = "${var.nhs_owner}-capacity-service-config-template"
   application         = "${aws_elastic_beanstalk_application.capacity-service.name}"
@@ -233,4 +237,8 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
     Project = "${var.nhs_project_name}"
     Terraform = "true"
   }
+}
+
+output "capacity-service-env" {
+  value = "${aws_elastic_beanstalk_environment.capacity-service-env.name}"
 }

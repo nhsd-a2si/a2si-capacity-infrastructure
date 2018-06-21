@@ -3,6 +3,10 @@ resource "aws_elastic_beanstalk_application" "info-reader" {
   description = "Info Reader"
 }
 
+output "info-reader-application" {
+  value = "${aws_elastic_beanstalk_application.info-reader.name}"
+}
+
 resource "aws_elastic_beanstalk_configuration_template" "info-reader-config-template" {
   name                = "${var.nhs_owner}-info-reader-config-template"
   application         = "${aws_elastic_beanstalk_application.info-reader.name}"
@@ -285,4 +289,8 @@ resource "aws_elastic_beanstalk_environment" "info-reader-env" {
     Project = "${var.nhs_project_name}"
     Terraform = "true"
   }
+}
+
+output "info-reader-env" {
+  value = "${aws_elastic_beanstalk_environment.info-reader-env.name}"
 }
