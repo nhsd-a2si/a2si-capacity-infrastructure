@@ -27,14 +27,14 @@ resource "aws_db_instance" "capacity_reader_mysql" {
 }
 
 resource "aws_db_subnet_group" "capacity-reader-mysql-subnet-group" {
-  name        = "${var.nhs_owner}-capacity-reader-mysql-subnet-group"
+  name        = "${var.nhs_owner_shortcode}-capacity-reader-mysql-subnet-group"
   description = "Subnet group for Capacity Reader MySQL"
   subnet_ids = ["${aws_subnet.capacity-public-subnets.*.id}"]
 }
 
 
 resource "aws_security_group" "mysql-client" {
-  name        = "${var.nhs_owner}-mysql-client"
+  name        = "${var.nhs_owner_shortcode}-mysql-client"
   description = "Instances which act as clients of mysql"
   vpc_id      = "${aws_vpc.capacity.id}"
 
@@ -49,7 +49,7 @@ resource "aws_security_group" "mysql-client" {
 }
 
 resource "aws_security_group" "allow-mysql-client" {
-  name        = "${var.nhs_owner}-allow-mysql-client"
+  name        = "${var.nhs_owner_shortcode}-allow-mysql-client"
   description = "Allow connection by appointed mysql clients"
   vpc_id      = "${aws_vpc.capacity.id}"
 

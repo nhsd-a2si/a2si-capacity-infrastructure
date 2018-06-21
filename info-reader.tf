@@ -8,7 +8,7 @@ output "info-reader-application" {
 }
 
 resource "aws_elastic_beanstalk_configuration_template" "info-reader-config-template" {
-  name                = "${var.nhs_owner}-info-reader-config-template"
+  name                = "${var.nhs_owner_shortcode}-info-reader-config-template"
   application         = "${aws_elastic_beanstalk_application.info-reader.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 }
