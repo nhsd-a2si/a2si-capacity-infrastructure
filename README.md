@@ -3,15 +3,6 @@
 Please follow all of the following steps before attempting to apply the TerraForm
 config contained herein.
 
-## CAVEAT
-
-Currently this is knowingly naive in _at least_ the following ways:
-
-  1. There is only a public subnet. This is bad because all the non-public facing
-     services are brought up in public. Sure we can limit the silliness through
-     diligent use of SecurityGroups (Note to self: TODO) but it would be nice to
-     throw up a private/public architecture before beta.
-
 ## Tools
 
 Before you can do anything, you will need the following:
