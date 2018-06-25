@@ -1,10 +1,14 @@
 resource "aws_elastic_beanstalk_application" "dos-proxy" {
-  name        = "${var.environment}-dos-proxy"
+  name        = "${var.nhs_owner_shortcode}-dos-proxy"
   description = "DoS Proxy"
 }
 
+output "dos-proxy-application" {
+  value = "${aws_elastic_beanstalk_application.dos-proxy.name}"
+}
+
 resource "aws_elastic_beanstalk_configuration_template" "dos-proxy-config-template" {
-  name                = "dos-proxy-config-template"
+  name                = "${var.nhs_owner_shortcode}-dos-proxy-config-template"
   application         = "${aws_elastic_beanstalk_application.dos-proxy.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 }
@@ -18,7 +22,7 @@ resource "aws_elastic_beanstalk_application_version" "dos-proxy-version" {
 }
 
 resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
-  name                = "${var.environment}-dos-proxy-env"
+  name                = "${var.nhs_owner_shortcode}-dos-proxy-env"
   application         = "${aws_elastic_beanstalk_application.dos-proxy.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 
@@ -44,6 +48,12 @@ resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
     namespace = "aws:ec2:vpc"
     name      = "AssociatePublicIpAddress"
     value     = "true"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "IamInstanceProfile"
+    value     = "${aws_iam_instance_profile.a2si-eb.name}"
   }
 
   setting {
@@ -119,10 +129,16 @@ resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
   }
 
   setting {
-    namespace = "aws:elb:listener"
-    name = "ListenerEnabled"
-    value = "false"
+    namespace = "aws:elasticbeanstalk:application"
+    name      = "Application Healthcheck URL"
+    value     = "${var.healthcheck_url}"
   }
+
+#  setting {
+#    namespace = "aws:elb:listener"
+#    name = "ListenerEnabled"
+#    value = "false"
+#  }
 
   setting {
     namespace = "aws:elb:listener:443"
@@ -136,6 +152,20 @@ resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
     value = "${aws_acm_certificate_validation.dos-proxy-lb.certificate_arn}"
   }
 
+  #  For encrypting between Load Balancer and application
+  #  setting {
+  #    namespace = "aws:elb:listener:443"
+  #    name = "InstancePort"
+  #    value = "443"
+  #  }
+
+  #  setting {
+  #    namespace = "aws:elb:listener:443"
+  #    name = "InstanceProtocol"
+  #    value = "HTTPS"
+  #  }
+
+  #  For NOT encrypting between Load Balancer and application
   setting {
     namespace = "aws:elb:listener:443"
     name = "InstancePort"
@@ -149,6 +179,13 @@ resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
   }
 
   # ENV vars for the service
+
+#  For NOT encrypting between Load Balancer and application
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SERVER_SSL_ENABLED"
+    value     = "false"
+  }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "SPRING_PROFILES_ACTIVE"
@@ -179,6 +216,12 @@ resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
     value     = "${var.dos_service_url}"
   }
 
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name = "EC2KeyName"
+    value = "${aws_key_pair.key-pair-dev.id}"
+  }
+
   tags {
     Environment = "${var.environment}"
     Owner = "${var.nhs_owner}"
@@ -186,4 +229,8 @@ resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
     Project = "${var.nhs_project_name}"
     Terraform = "true"
   }
+}
+
+output "dos-proxy-env" {
+  value = "${aws_elastic_beanstalk_environment.dos-proxy-env.name}"
 }

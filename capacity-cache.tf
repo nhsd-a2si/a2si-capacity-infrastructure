@@ -1,13 +1,13 @@
 resource "aws_elasticache_replication_group" "capacity-cache" {
   automatic_failover_enabled    = true
-  replication_group_id          = "capacity-cache-gp-1"
+  replication_group_id          = "${var.nhs_owner_shortcode}-cc-gp"
   replication_group_description = "Capacity Cache"
   node_type                     = "cache.t2.micro"
   cluster_mode {
     replicas_per_node_group     = 0
     num_node_groups             = 2
   }
-  parameter_group_name          = "default.redis3.2.cluster.on"
+  parameter_group_name          = "default.redis4.0.cluster.on"
   port                          = 6379
   subnet_group_name             = "${aws_elasticache_subnet_group.capacity-cache-subnet-group.name}"
   security_group_ids            = ["${aws_security_group.allow-cache-client.id}"]
@@ -23,13 +23,13 @@ resource "aws_elasticache_replication_group" "capacity-cache" {
 }
 
 resource "aws_elasticache_subnet_group" "capacity-cache-subnet-group" {
-    name = "capacity-cache-subnet"
+    name = "${var.nhs_owner_shortcode}-capacity-cache-subnet"
     description = "Subnet group for Elasticache"
     subnet_ids = ["${aws_subnet.capacity-public-subnets.*.id}"]
 }
 
 resource "aws_security_group" "cache-client" {
-  name        = "cache-client"
+  name        = "${var.nhs_owner_shortcode}-cache-client"
   description = "Instances which act as clients of the cache"
   vpc_id      = "${aws_vpc.capacity.id}"
 
@@ -44,7 +44,7 @@ resource "aws_security_group" "cache-client" {
 }
 
 resource "aws_security_group" "allow-cache-client" {
-  name        = "allow-cache-client"
+  name        = "${var.nhs_owner_shortcode}-allow-cache-client"
   description = "Allow connection by appointed cache clients"
   vpc_id      = "${aws_vpc.capacity.id}"
 

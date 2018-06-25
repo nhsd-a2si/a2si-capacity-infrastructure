@@ -1,29 +1,29 @@
-resource "aws_elastic_beanstalk_application" "capacity-service" {
-  name        = "${var.nhs_owner_shortcode}-capacity-service"
-  description = "Capacity Service"
+resource "aws_elastic_beanstalk_application" "info-reader" {
+  name        = "${var.nhs_owner_shortcode}-info-reader"
+  description = "Info Reader"
 }
 
-output "capacity-service-application" {
-  value = "${aws_elastic_beanstalk_application.capacity-service.name}"
+output "info-reader-application" {
+  value = "${aws_elastic_beanstalk_application.info-reader.name}"
 }
 
-resource "aws_elastic_beanstalk_configuration_template" "capacity-service-config-template" {
-  name                = "${var.nhs_owner_shortcode}-capacity-service-config-template"
-  application         = "${aws_elastic_beanstalk_application.capacity-service.name}"
+resource "aws_elastic_beanstalk_configuration_template" "info-reader-config-template" {
+  name                = "${var.nhs_owner_shortcode}-info-reader-config-template"
+  application         = "${aws_elastic_beanstalk_application.info-reader.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 }
 
-resource "aws_elastic_beanstalk_application_version" "capacity-service-version" {
-  name        = "${var.s3_capacity_service_object}"
-  application = "${aws_elastic_beanstalk_application.capacity-service.name}"
-  description = "Capacity Service current version"
+resource "aws_elastic_beanstalk_application_version" "info-reader-version" {
+  name        = "${var.s3_info_reader_object}"
+  application = "${aws_elastic_beanstalk_application.info-reader.name}"
+  description = "info Reader current version"
   bucket      = "${data.aws_s3_bucket.eb_zip_versions_bucket.id}"
-  key         = "${var.s3_capacity_service_object}"
+  key         = "${var.s3_info_reader_object}"
 }
 
-resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
-  name                = "${var.nhs_owner_shortcode}-capacity-service-env"
-  application         = "${aws_elastic_beanstalk_application.capacity-service.name}"
+resource "aws_elastic_beanstalk_environment" "info-reader-env" {
+  name                = "${var.nhs_owner_shortcode}-info-reader-env"
+  application         = "${aws_elastic_beanstalk_application.info-reader.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 
   setting {
@@ -53,7 +53,7 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "SecurityGroups"
-    value     = "${aws_security_group.cache-client.id}"
+    value     = "${aws_security_group.mysql-client.id}"
   }
 
   setting {
@@ -155,23 +155,23 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:elb:listener:443"
     name = "SSLCertificateId"
-    value = "${aws_acm_certificate_validation.capacity-service-lb.certificate_arn}"
+    value = "${aws_acm_certificate_validation.info-reader-lb.certificate_arn}"
   }
 
-#  For encrypting between Load Balancer and application
-#  setting {
-#    namespace = "aws:elb:listener:443"
-#    name = "InstancePort"
-#    value = "443"
-#  }
+  #  For encrypting between Load Balancer and application
+  #  setting {
+  #    namespace = "aws:elb:listener:443"
+  #    name = "InstancePort"
+  #    value = "443"
+  #  }
 
-#  setting {
-#    namespace = "aws:elb:listener:443"
-#    name = "InstanceProtocol"
-#    value = "HTTPS"
-#  }
+  #  setting {
+  #    namespace = "aws:elb:listener:443"
+  #    name = "InstanceProtocol"
+  #    value = "HTTPS"
+  #  }
 
-#  For NOT encrypting between Load Balancer and application
+  #  For NOT encrypting between Load Balancer and application
   setting {
     namespace = "aws:elb:listener:443"
     name = "InstancePort"
@@ -185,7 +185,6 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   }
 
   # ENV vars for the service
-
 #  For NOT encrypting between Load Balancer and application
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -195,47 +194,88 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "SPRING_REDIS_SSL"
-    value     = "false"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "SPRING_REDIS_AUTHENTICATION_KEY"
-    value     = "4NpqqsdCQSQZ8M2dufgCgV35TNeJ5V"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
     name      = "SPRING_PROFILES_ACTIVE"
-    value     = "${var.capacity_service_spring_profiles_active}"
+    value     = "${var.info_reader_spring_profiles_active}"
   }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "SPRING_REDIS_CLUSTER_NODES"
-    value     = "${aws_elasticache_replication_group.capacity-cache.configuration_endpoint_address}:6379"
+    name      = "SPRING_DATASOURCE_URL"
+    value     = "jdbc:mysql://${aws_db_instance.capacity_reader_mysql.endpoint}/${var.mysql_db_name}?autoReconnect=true&useSSL=false"
   }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "CAPACITY_SERVICE_API_USERNAME"
+    name      = "SPRING_DATASOURCE_USERNAME"
+    value     = "${var.mysql_username}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SPRING_DATASOURCE_PASSWORD"
+    value     = "${var.mysql_password}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "DHUFTPJOB_REPEATINTERVAL"
+    value     = "${var.info_reader_dhuftpjob_repeatinterval}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "DHUFTPJOB_FTPSERVER"
+    value     = "${var.info_reader_dhuftpjob_ftpserver}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "DHUFTPJOB_FTPPORT"
+    value     = "${var.info_reader_dhuftpjob_ftpport}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "DHUFTPJOB_FTPUSERNAME"
+    value     = "${var.info_reader_dhuftpjob_ftpusername}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "DHUFTPJOB_PRIVATEKEYFILENAME"
+    value     = "${var.info_reader_dhuftpjob_privatekeyfile}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "EKHUFTAPIJOB_REPEATINTERVAL"
+    value     = "${var.info_reader_ekhuftpaijob_repeatinterval}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "EKHUFTAPIJOB_APIURL"
+    value     = "${var.info_reader_ekhuftpaijob_apiurl}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "CAPACITY_SERVICE_CLIENT_API_URL"
+    value     = "https://${aws_route53_record.capacity-service-lb.fqdn}/capacity"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "CAPACITY_SERVICE_CLIENT_API_USERNAME"
     value     = "${var.capacity_service_api_username}"
   }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "CAPACITY_SERVICE_API_PASSWORD"
+    name      = "CAPACITY_SERVICE_CLIENT_API_PASSWORD"
     value     = "${var.capacity_service_api_password}"
   }
 
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "CAPACITY_SERVICE_CACHE_TIMETOLIVEINSECONDS"
-    value     = "${var.capacity_service_cache_ttl_seconds}"
-  }
-
-# key-pair for ssh
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name = "EC2KeyName"
@@ -251,6 +291,6 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   }
 }
 
-output "capacity-service-env" {
-  value = "${aws_elastic_beanstalk_environment.capacity-service-env.name}"
+output "info-reader-env" {
+  value = "${aws_elastic_beanstalk_environment.info-reader-env.name}"
 }
