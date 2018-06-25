@@ -1,0 +1,35 @@
+/* Please copy this file to location `local.auto.tfvars` and adjust the
+   values of the supplied variables as appropriate.
+
+   You *must* alter the initial "mandatory" section below.
+*/
+/*******************
+ * MANDATORY SECTION
+ *
+ * These variables have been left commented out to force you to come here and
+ * adjust them. Please uncomment and substitute the upper case sections as
+ * appropriate:
+ ******************/
+//nhs_owner = "YOUR_IAM_ID"
+//nhs_owner_shortcode = "YOUR_NHS_SHORTCODE"
+//dos_proxy_fq_domain_name = "dos-proxy.YOUR_NHS_SHORTCODE.a2si-sandbox.wt.dos-tools.tech"
+//capacity_service_fq_domain_name = "capacity-service.YOUR_NHS_SHORTCODE.a2si-sandbox.wt.dos-tools.tech"
+//info_reader_fq_domain_name = "info-reader.YOUR_NHS_SHORTCODE.a2si-sandbox.wt.dos-tools.tech"
+//s3_app_versions_bucket = "YOUR_S3_BUCKET_FOR_APP_VERSIONS"
+//s3_capacity_service_object = "capacity-service-X.X.X-SNAPSHOT.zip"
+//s3_dos_proxy_object = "a2si-dos-wrapper-X.X.X-SNAPSHOT-zip.zip"
+//s3_info_reader_object = "a2si-capacity-info-reader-X.X.X-SNAPSHOT.zip"
+//info_reader_dhuftpjob_ftpserver = "CHANGE THIS"
+//info_reader_dhuftpjob_ftpusername = "CHANGE THIS"
+//info_reader_dhuftpjob_privatekeyfile = "CHANGE THIS"
+/**************************
+ * END OF MANDATORY SECTION
+ **************************/
+capacity_hosted_zone = "a2si-sandbox.wt.dos-tools.tech"
+environment = "dev"
+capacity_service_api_password = "dummyValue"
+capacity_service_api_username = "dummyValue"
+
+// Leave these commented out unless you want to override the region and AZs for the deployment
+//aws_region = "eu-west-2"
+//aws_azs = ["eu-west-2a", "eu-west-2b"]

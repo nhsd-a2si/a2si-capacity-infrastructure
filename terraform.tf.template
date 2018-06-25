@@ -1,0 +1,12 @@
+# To configure your Terraform state backend you will need to copy this
+# file to `terraform.tf` and update the arguments to match your own setup.
+# See the project README for more details.
+#
+terraform {
+  backend "s3" {
+    bucket         = "BUCKET FOR STATE"
+    key            = "dev"
+    dynamodb_table = "TABLE FOR LOCK RECORD"
+    region         = "eu-west-2"
+   }
+ }
