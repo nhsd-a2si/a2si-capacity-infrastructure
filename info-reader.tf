@@ -201,7 +201,7 @@ resource "aws_elastic_beanstalk_environment" "info-reader-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "SPRING_DATASOURCE_URL"
-    value     = "jdbc:mysql://${aws_db_instance.capacity_reader_mysql.endpoint}/${var.mysql_db_name}?autoReconnect=true&useSSL=false"
+    value     = "jdbc:mysql://${aws_db_instance.capacity_reader_mysql.endpoint}/${aws_db_instance.capacity_reader_mysql.name}?autoReconnect=true&useSSL=false"
   }
 
   setting {
