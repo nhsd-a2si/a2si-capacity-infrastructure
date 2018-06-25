@@ -29,18 +29,23 @@ variable "environment" {
   default = "dev"
 }
 
-variable "public_domain" {
-  description = "Public domain into which FQDN and certificates will be placed (no trailing dot)"
+variable "capacity_hosted_zone" {
+  description = "The domain name for the existing Route53 Hosted Zone into which services and certificates will be placed (no trailing dot)"
   type = "string"
 }
 
-variable "capacity_service_hostname" {
-  description = "Hostname to use for the capacity service - will be appended to public_domain to create FQDN"
+variable "capacity_service_fq_domain_name" {
+  description = "Hostname to use for the capacity service - fully qualified. Must be 'within' the capacity_hosted_zone namespace"
   default = "capacity-service"
 }
 
-variable "dos_proxy_hostname" {
-  description = "Hostname to use for the dos proxy service - will be appended to public_domain to create FQDN"
+variable "info_reader_fq_domain_name" {
+  description = "Hostname to use for the info reader - fully qualified. Must be 'within' the capacity_hosted_zone namespace"
+  default = "info-reader"
+}
+
+variable "dos_proxy_fq_domain_name" {
+  description = "Hostname to use for the dos proxy service - fully qualified. Must be 'within' the capacity_hosted_zone namespace"
   default = "dos-proxy"
 }
 
@@ -51,6 +56,11 @@ variable "s3_app_versions_bucket" {
 
 variable "s3_capacity_service_object" {
   description = "Object name of ZIP file containing Capacity Service version for deployment"
+  type = "string"
+}
+
+variable "s3_info_reader_object" {
+  description = "Object name of ZIP file containing Info Reader version for deployment"
   type = "string"
 }
 
@@ -79,6 +89,39 @@ variable "capacity_service_cache_ttl_seconds" {
   type = "string"
 }
 
+# Info Reader
+variable "info_reader_spring_profiles_active" {
+  default = "capacity-info-reader-aws"
+}
+
+variable "info_reader_dhuftpjob_repeatinterval" {
+  default = "300000"
+}
+
+variable "info_reader_dhuftpjob_ftpserver" {
+  type = "string"
+}
+
+variable "info_reader_dhuftpjob_ftpport" {
+  default = "22"
+}
+
+variable "info_reader_dhuftpjob_ftpusername" {
+  type = "string"
+}
+
+variable "info_reader_dhuftpjob_privatekeyfile" {
+  type = "string"
+}
+
+variable "info_reader_ekhuftpaijob_repeatinterval" {
+  default = "300000"
+}
+
+variable "info_reader_ekhuftpaijob_apiurl" {
+  default = "Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+}
+
 # DoS Proxy
 variable "dos_service_url" {
   description = "Endpoint URL to forward DoS CheckCapacitySummary SOAP requests on to"
@@ -89,10 +132,35 @@ variable "dos_proxy_spring_profiles_active" {
   default = "doswrapper-aws-dos-soap-prod-cpsc-rest-aws"
 }
 
+#
+# Variables for the capacity reader MySQL DB
+#
+
+variable "mysql_db_instance" {
+  default = "quartz-instance"
+}
+
+variable "mysql_db_name" {
+  default = "QUARTZ_DB"
+}
+
+variable "mysql_username" {
+  default = "QuartzRoot"
+}
+
+variable "mysql_password" {
+  default = "QuartzRoot"
+}
+
 # The following variables will be used to tag resources that are created by this Terraform configuration
 variable "nhs_owner" {
   description = "Name of the person applying the changes"
   type = "string"
+}
+
+variable "nhs_owner_shortcode" {
+    description = "Shortcode of the person applying the changes"
+    type = "string"
 }
 
 variable "nhs_programme_name" {
@@ -101,4 +169,8 @@ variable "nhs_programme_name" {
 
 variable "nhs_project_name" {
   default = "capacity"
+}
+
+variable "healthcheck_url" {
+  default = "/healthcheck"
 }
