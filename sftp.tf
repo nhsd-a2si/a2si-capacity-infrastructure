@@ -52,4 +52,12 @@ resource "aws_security_group" "sftp-sg" {
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags {
+    Environment = "${var.environment}"
+    Owner = "${var.nhs_owner}"
+    Programme = "${var.nhs_programme_name}"
+    Project = "${var.nhs_project_name}"
+    Terraform = "true"
+  }
 }
