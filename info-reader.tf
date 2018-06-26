@@ -1,10 +1,14 @@
 resource "aws_elastic_beanstalk_application" "info-reader" {
-  name        = "${var.environment}-info-reader"
+  name        = "${var.nhs_owner_shortcode}-info-reader"
   description = "Info Reader"
 }
 
+output "info-reader-application" {
+  value = "${aws_elastic_beanstalk_application.info-reader.name}"
+}
+
 resource "aws_elastic_beanstalk_configuration_template" "info-reader-config-template" {
-  name                = "info-reader-config-template"
+  name                = "${var.nhs_owner_shortcode}-info-reader-config-template"
   application         = "${aws_elastic_beanstalk_application.info-reader.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 }
@@ -18,7 +22,7 @@ resource "aws_elastic_beanstalk_application_version" "info-reader-version" {
 }
 
 resource "aws_elastic_beanstalk_environment" "info-reader-env" {
-  name                = "${var.environment}-info-reader-env"
+  name                = "${var.nhs_owner_shortcode}-info-reader-env"
   application         = "${aws_elastic_beanstalk_application.info-reader.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 
@@ -285,4 +289,8 @@ resource "aws_elastic_beanstalk_environment" "info-reader-env" {
     Project = "${var.nhs_project_name}"
     Terraform = "true"
   }
+}
+
+output "info-reader-env" {
+  value = "${aws_elastic_beanstalk_environment.info-reader-env.name}"
 }
