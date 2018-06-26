@@ -29,23 +29,23 @@ variable "environment" {
   default = "dev"
 }
 
-variable "public_domain" {
-  description = "Public domain into which FQDN and certificates will be placed (no trailing dot)"
+variable "capacity_hosted_zone" {
+  description = "The domain name for the existing Route53 Hosted Zone into which services and certificates will be placed (no trailing dot)"
   type = "string"
 }
 
-variable "capacity_service_hostname" {
-  description = "Hostname to use for the capacity service - will be appended to public_domain to create FQDN"
+variable "capacity_service_fq_domain_name" {
+  description = "Hostname to use for the capacity service - fully qualified. Must be 'within' the capacity_hosted_zone namespace"
   default = "capacity-service"
 }
 
-variable "info_reader_hostname" {
-  description = "Hostname to use for the info reader - will be appended to public_domain to create FQDN"
+variable "info_reader_fq_domain_name" {
+  description = "Hostname to use for the info reader - fully qualified. Must be 'within' the capacity_hosted_zone namespace"
   default = "info-reader"
 }
 
-variable "dos_proxy_hostname" {
-  description = "Hostname to use for the dos proxy service - will be appended to public_domain to create FQDN"
+variable "dos_proxy_fq_domain_name" {
+  description = "Hostname to use for the dos proxy service - fully qualified. Must be 'within' the capacity_hosted_zone namespace"
   default = "dos-proxy"
 }
 
@@ -156,6 +156,11 @@ variable "mysql_password" {
 variable "nhs_owner" {
   description = "Name of the person applying the changes"
   type = "string"
+}
+
+variable "nhs_owner_shortcode" {
+    description = "Shortcode of the person applying the changes"
+    type = "string"
 }
 
 variable "nhs_programme_name" {
