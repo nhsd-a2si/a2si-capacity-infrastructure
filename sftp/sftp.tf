@@ -25,7 +25,7 @@ resource "aws_instance" "sftpserver" {
 
   tags {
     Environment = "${var.environment}"
-    Name = "SFTP Server"
+    Name = "${var.nhs_owner_shortcode}-SFTP Server"
     Owner = "${var.nhs_owner}"
     Programme = "${var.nhs_programme_name}"
     Project = "${var.nhs_project_name}"
