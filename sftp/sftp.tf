@@ -23,6 +23,32 @@ resource "aws_instance" "sftpserver" {
   vpc_security_group_ids = ["${aws_security_group.sftp-sg.id}"]
   associate_public_ip_address = true
 
+  provisioner "remote-exec" {
+    connection {
+      type     = "ssh"
+      user     = "ubuntu"
+      private_key = "${file("key-pair-dev.pem")}"
+    }
+
+    script = "sftp_configure.sh"
+#    inline = [
+#      "sudo apt-get update -y",
+#      "sudo apt-get install vsftpd",
+#      "sudo mkdir /sftp",
+#      "sudo chmod 755 /sftp",
+#      "sudo groupadd sftpusers",
+#      "sudo sed -e '/Subsystem sftp \\/usr\\/lib\\/openssh\\/sftp-server/ s/^#*/#/' -i /etc/ssh/sshd_config",
+#      "sudo echo 'Subsystem sftp internal-sftp' >> /etc/ssh/sshd_config",
+#      "sudo echo 'Match group sftpusers' >> /etc/ssh/sshd_config",
+#      "sudo echo 'ChrootDirectory /sftp/' >> /etc/ssh/sshd_config",
+#      "sudo echo 'X11Forwarding no' >> /etc/ssh/sshd_config",
+#      "sudo echo 'AllowTcpForwarding no' >> /etc/ssh/sshd_config",
+#      "sudo echo 'ForceCommand internal-sftp' >> /etc/ssh/sshd_config",
+#      "sudo /etc/init.d/ssh restart",
+#      "exit"
+#    ]
+  }
+
   tags {
     Environment = "${var.environment}"
     Name = "${var.nhs_owner_shortcode}-SFTP Server"
