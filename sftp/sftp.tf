@@ -23,9 +23,19 @@ resource "aws_instance" "sftpserver" {
   vpc_security_group_ids = ["${aws_security_group.sftp-sg.id}"]
   associate_public_ip_address = true
 
+  provisioner "remote-exec" {
+    connection {
+      type     = "ssh"
+      user     = "ubuntu"
+      private_key = "${file("key-pair-dev.pem")}"
+    }
+
+    script = "sftp_configure.sh"
+  }
+
   tags {
     Environment = "${var.environment}"
-    Name = "SFTP Server"
+    Name = "${var.nhs_owner_shortcode}-SFTP Server"
     Owner = "${var.nhs_owner}"
     Programme = "${var.nhs_programme_name}"
     Project = "${var.nhs_project_name}"
