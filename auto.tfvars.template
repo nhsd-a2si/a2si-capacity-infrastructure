@@ -25,6 +25,7 @@
 /**************************
  * END OF MANDATORY SECTION
  **************************/
+//aws_profile = "default"
 capacity_hosted_zone = "a2si-sandbox.wt.dos-tools.tech"
 environment = "dev"
 capacity_service_api_password = "dummyValue"

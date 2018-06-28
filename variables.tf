@@ -1,3 +1,8 @@
+variable "aws_profile" {
+  description = "AWS credentials and config profile to use for acting user"
+  default = "default"
+}
+
 variable "aws_region" {
   description = "Region within which the resources will be deployed"
   default = "eu-west-2"
