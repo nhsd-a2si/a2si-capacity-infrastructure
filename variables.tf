@@ -1,3 +1,8 @@
+variable "aws_profile" {
+  description = "AWS credentials and config profile to use for acting user"
+  default = "default"
+}
+
 variable "aws_region" {
   description = "Region within which the resources will be deployed"
   default = "eu-west-2"
@@ -72,6 +77,10 @@ variable "s3_dos_proxy_object" {
 # Capacity Service
 variable "capacity_service_spring_profiles_active" {
   default = "capacity-service-aws-redis"
+}
+
+variable "redis_transit_encryption_enabled" {
+  default = "true"
 }
 
 variable "capacity_service_api_username" {
@@ -172,5 +181,5 @@ variable "nhs_project_name" {
 }
 
 variable "healthcheck_url" {
-  default = "/healthcheck"
+  default = "healthcheck"
 }

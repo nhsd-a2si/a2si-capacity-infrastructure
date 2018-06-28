@@ -137,14 +137,20 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application"
     name      = "Application Healthcheck URL"
-    value     = "${var.healthcheck_url}"
+    value     = "HTTPS:443/${var.healthcheck_url}"
   }
 
-#  setting {
-#    namespace = "aws:elb:listener"
-#    name = "ListenerEnabled"
-#    value = "false"
-#  }
+  setting {
+    namespace = "aws:elasticbeanstalk:environment:proxy"
+    name      = "ProxyServer"
+    value     = "none"
+  }
+
+  setting {
+    namespace = "aws:elb:listener"
+    name = "ListenerEnabled"
+    value = "false"
+  }
 
   setting {
     namespace = "aws:elb:listener:443"
@@ -159,30 +165,18 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   }
 
 #  For encrypting between Load Balancer and application
-#  setting {
-#    namespace = "aws:elb:listener:443"
-#    name = "InstancePort"
-#    value = "443"
-#  }
-
-#  setting {
-#    namespace = "aws:elb:listener:443"
-#    name = "InstanceProtocol"
-#    value = "HTTPS"
-#  }
-
-#  For NOT encrypting between Load Balancer and application
   setting {
     namespace = "aws:elb:listener:443"
     name = "InstancePort"
-    value = "80"
+    value = "443"
   }
 
   setting {
     namespace = "aws:elb:listener:443"
     name = "InstanceProtocol"
-    value = "HTTP"
+    value = "HTTPS"
   }
+
 
   # ENV vars for the service
 
@@ -190,19 +184,13 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "SERVER_SSL_ENABLED"
-    value     = "false"
+    value     = "true"
   }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "SPRING_REDIS_SSL"
-    value     = "false"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "SPRING_REDIS_AUTHENTICATION_KEY"
-    value     = "4NpqqsdCQSQZ8M2dufgCgV35TNeJ5V"
+    value     = "${var.redis_transit_encryption_enabled}"
   }
 
   setting {
