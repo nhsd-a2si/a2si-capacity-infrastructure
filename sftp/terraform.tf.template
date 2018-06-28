@@ -1,0 +1,15 @@
+# To configure your Terraform state backend you will need to copy this
+# file to `terraform.tf` and update the arguments to match your own setup.
+# See the project README for more details.
+#
+# NOTE THAT THE BUCKER AND DYNAMODB_TABLE MUST BE DIFFERENT IN THIS SFTP DIRECTORY TO THOSE IN THE PARENT DIRECTORY
+# otherwise each "terraform apply" will remove the other's artifacts.
+#
+terraform {
+  backend "s3" {
+    bucket         = "SFTP BUCKET FOR STATE"
+    key            = "dev"
+    dynamodb_table = "SFTP TABLE FOR LOCK RECORD"
+    region         = "eu-west-2"
+   }
+ }
