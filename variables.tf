@@ -172,5 +172,5 @@ variable "nhs_project_name" {
 }
 
 variable "healthcheck_url" {
-  default = "/healthcheck"
+  default = "healthcheck"
 }
