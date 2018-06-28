@@ -196,13 +196,7 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "SPRING_REDIS_SSL"
-    value     = "false"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "SPRING_REDIS_AUTHENTICATION_KEY"
-    value     = "4NpqqsdCQSQZ8M2dufgCgV35TNeJ5V"
+    value     = "${var.redis_transit_encryption_enabled}"
   }
 
   setting {
