@@ -37,6 +37,17 @@ of both your state data and your AWS resources.
   2. Edit the newly-created terraform.tf file and alter the `dynamodb_table` property to
      match whatever you supplied for YOUR_DYNAMODB_TABLE_NAME above.
 
+## Setting up the certificates
+
+Create an S3 bucket (if not done) that resolves to ${var.environment}-certificates. Inside this bucket add (if not done) a corresponding public and private key
+named as follows:
+
+- ${var.environment}_rsa
+- ${var.environment}_rsa.pub
+
+> Note the private key is not used by Terraform; however it is stored in S3 so that the team can download it as needed. 
+This manly applies to { prod, uat }, therefore in other environments the private upload into S3 key can be skipped if no one else will need it.
+
 ## Verify the backend setup
 
 Run the command:
