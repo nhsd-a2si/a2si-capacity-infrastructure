@@ -45,6 +45,8 @@ named as follows:
 - ${var.environment}_rsa
 - ${var.environment}_rsa.pub
 
+The content type of these files needs to be set to 'text/plan'.
+
 > Note the private key is not used by Terraform; however it is stored in S3 so that the team can download it as needed. 
 This manly applies to { prod, uat }, therefore in other environments the private upload into S3 key can be skipped if no one else will need it.
 
