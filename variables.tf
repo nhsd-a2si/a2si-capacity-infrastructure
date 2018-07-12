@@ -79,10 +79,6 @@ variable "capacity_service_spring_profiles_active" {
   default = "capacity-service-aws-redis"
 }
 
-variable "redis_transit_encryption_enabled" {
-  default = "true"
-}
-
 variable "capacity_service_api_username" {
   description = "Username accepted by the capacity service"  # Currently the service only recognises one account
   type = "string"
