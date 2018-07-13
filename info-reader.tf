@@ -217,7 +217,7 @@ resource "aws_elastic_beanstalk_environment" "info-reader-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name = "DHUFTPJOB_FTPSERVER"
-    value = "${var.info_reader_dhuftpjob_ftpserver}"
+    value = "${var.sftp_fq_domain_name}"
   }
 
   setting {
