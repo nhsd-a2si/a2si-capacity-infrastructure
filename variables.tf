@@ -39,6 +39,11 @@ variable "capacity_hosted_zone" {
   type = "string"
 }
 
+variable "sftp_fq_domain_name" {
+  description = "Hostname to use for the sftp server - fully qualified. Must be 'within' the capacity_hosted_zone namespace"
+  default = "sftp"
+}
+
 variable "capacity_service_fq_domain_name" {
   description = "Hostname to use for the capacity service - fully qualified. Must be 'within' the capacity_hosted_zone namespace"
   default = "capacity-service"
@@ -103,9 +108,8 @@ variable "info_reader_dhuftpjob_repeatinterval" {
   default = "300000"
 }
 
-variable "info_reader_dhuftpjob_ftpserver" {
-  type = "string"
-}
+#variable "info_reader_dhuftpjob_ftpserver" {
+#  type = "}
 
 variable "info_reader_dhuftpjob_ftpport" {
   default = "22"
