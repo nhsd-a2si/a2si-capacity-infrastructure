@@ -40,8 +40,8 @@ Note that the `terraform.tf` file should contain values for `bucket` and `dynamo
 
 After running `terraform apply`, the public key files can be copied back to your local machine using:
 e.g.
-`scp -i "key-pair-dev.pem" ubuntu@<sftp-ip-address>:/home/ubuntu/files/dhu.pem <your-path>/<your-userprofile>-dhu.pem`
-`scp -i "key-pair-dev.pem" ubuntu@<sftp-ip-address>:/home/ubuntu/files/capacity_reader.pem <your-path>/<your-userprofile>-capacity_reader.pem`
+`scp -i "key-pair-dev.pem" ubuntu@<sftp-ip-or-name>:/home/ubuntu/files/dhu.pem <your-path>/<your-userprofile>-dhu.pem`
+`scp -i "key-pair-dev.pem" ubuntu@<sftp-ip-or-name>:/home/ubuntu/files/capacity_reader.pem <your-path>/<your-userprofile>-capacity_reader.pem`
 
 If you want to use pre-existing key pairs then you can copy the private key into `/home/ubuntu/files` using `scp` and reversing the two
 paths in the above command.
