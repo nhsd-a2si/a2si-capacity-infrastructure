@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket         = "a2si-capacity-terraform-state"
+    bucket         = "jp-tf-state-bucket"
     key            = "dev"
-    dynamodb_table = "a2si-capacity-terraform-state"
-    region         = "eu-west-2"
+    dynamodb_table = "tf_lock"
+    region         = "us-east-1"
   }
 }

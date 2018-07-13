@@ -3,7 +3,7 @@ resource "aws_elasticache_replication_group" "capacity-cache" {
   replication_group_id          = "${var.nhs_owner_shortcode}-cc-gp"
   replication_group_description = "Capacity Cache"
   node_type                     = "cache.t2.micro"
-  transit_encryption_enabled    = "${var.redis_transit_encryption_enabled}"
+  transit_encryption_enabled    = false
   cluster_mode {
     replicas_per_node_group     = 0
     num_node_groups             = 2
