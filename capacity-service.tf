@@ -217,6 +217,13 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
     value     = "${var.capacity_service_cache_ttl_seconds}"
   }
 
+  setting {
+    namespace = "aws:elasticbeanstalk:healthreporting:system"
+    name = "SystemType"
+    value = "enhanced"
+  }
+
+
 # key-pair for ssh
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
