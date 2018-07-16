@@ -215,12 +215,6 @@ resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
     value = "${aws_key_pair.key-pair-dev.id}"
   }
 
-  setting {
-    namespace = "aws:elasticbeanstalk:healthreporting:system"
-    name = "SystemType"
-    value = "enhanced"
-  }
-
   tags {
     Environment = "${var.environment}"
     Owner = "${var.nhs_owner}"
