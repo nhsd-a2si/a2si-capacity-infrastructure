@@ -132,6 +132,30 @@ resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
     namespace = "aws:elasticbeanstalk:application"
     name = "Application Healthcheck URL"
     value = "HTTPS:443/${var.healthcheck_url}"
+  } 
+
+  setting {
+    namespace = "aws:elb:healthcheck"
+    name = "HealthyThreshold"
+    value = "2"
+  }
+
+  setting {
+    namespace = "aws:elb:healthcheck"
+    name = "UnhealthyThreshold"
+    value = "2"
+  }
+
+  setting {
+    namespace = "aws:elb:healthcheck"
+    name = "Timeout"
+    value = "2"
+  }
+
+  setting {
+    namespace = "aws:elb:healthcheck"
+    name = "Interval"
+    value = "5"
   }
 
   setting {
