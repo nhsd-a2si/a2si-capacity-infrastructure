@@ -2,11 +2,15 @@
 # file to `terraform.tf` and update the arguments to match your own setup.
 # See the project README for more details.
 #
+# Note - if you are using a different AWS CLI profile other than the default
+# "default", you will need to name that profile in the block below and also to
+# override the main variable `aws_profile` in your `local.auto.tfvars` file.
 terraform {
   backend "s3" {
     bucket         = "BUCKET FOR STATE"
     key            = "dev"
     dynamodb_table = "TABLE FOR LOCK RECORD"
     region         = "eu-west-2"
+    profile        = "default"
    }
  }
