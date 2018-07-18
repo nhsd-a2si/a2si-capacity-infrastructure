@@ -3,7 +3,7 @@ resource "aws_route53_record" "dos-proxy-lb" {
   type    = "CNAME"
   name    = "${var.dos_proxy_fq_domain_name}"
   records = ["${aws_elastic_beanstalk_environment.dos-proxy-env.cname}"]
-  ttl     = 60
+  ttl     = 5
 }
 
 output "dos_proxy_lb_fqdn" {
