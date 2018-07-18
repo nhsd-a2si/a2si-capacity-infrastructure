@@ -1,3 +1,6 @@
+# Note - if you are using a different AWS CLI profile other than the default
+# "default", you will need to override this variable in your `local.auto.tfvars`
+# and name that same profile in the file `terraform.tf`.
 variable "aws_profile" {
   description = "AWS credentials and config profile to use for acting user"
   default = "default"
