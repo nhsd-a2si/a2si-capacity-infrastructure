@@ -16,7 +16,7 @@ resource "aws_route53_record" "dos-proxy-lb-cert-validation" {
   type = "${aws_acm_certificate.dos-proxy-lb.domain_validation_options.0.resource_record_type}"
   zone_id = "${data.aws_route53_zone.capacity_hosted_zone.id}"
   records = ["${aws_acm_certificate.dos-proxy-lb.domain_validation_options.0.resource_record_value}"]
-  ttl = 60
+  ttl = 5
 }
 
 resource "aws_acm_certificate_validation" "dos-proxy-lb" {
