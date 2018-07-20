@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket         = "nima-tf-state"
+    bucket         = "uat-terraform-state"
     key            = "dev"
-    dynamodb_table = "nima-tf-state"
+    dynamodb_table = "uat-terraformstate"
     region         = "eu-west-2"
   }
 }

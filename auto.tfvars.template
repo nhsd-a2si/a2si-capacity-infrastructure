@@ -15,6 +15,7 @@
 //dos_proxy_fq_domain_name = "dos-proxy.YOUR_NHS_SHORTCODE.a2si-sandbox.wt.dos-tools.tech"
 //capacity_service_fq_domain_name = "capacity-service.YOUR_NHS_SHORTCODE.a2si-sandbox.wt.dos-tools.tech"
 //info_reader_fq_domain_name = "info-reader.YOUR_NHS_SHORTCODE.a2si-sandbox.wt.dos-tools.tech"
+//sftp_fq_domain_name = "sftp.YOUR_NHS_SHORTCODE.a2si-sandbox.wt.dos-tools.tech"
 //s3_app_versions_bucket = "YOUR_S3_BUCKET_FOR_APP_VERSIONS"
 //s3_capacity_service_object = "capacity-service-X.X.X-SNAPSHOT.zip"
 //s3_dos_proxy_object = "a2si-dos-wrapper-X.X.X-SNAPSHOT-zip.zip"
@@ -25,6 +26,7 @@
 /**************************
  * END OF MANDATORY SECTION
  **************************/
+//aws_profile = "default"
 capacity_hosted_zone = "a2si-sandbox.wt.dos-tools.tech"
 environment = "dev"
 capacity_service_api_password = "dummyValue"

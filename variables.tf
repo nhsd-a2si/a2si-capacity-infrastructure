@@ -1,3 +1,11 @@
+# Note - if you are using a different AWS CLI profile other than the default
+# "default", you will need to override this variable in your `local.auto.tfvars`
+# and name that same profile in the file `terraform.tf`.
+variable "aws_profile" {
+  description = "AWS credentials and config profile to use for acting user"
+  default = "default"
+}
+
 variable "aws_region" {
   description = "Region within which the resources will be deployed"
   default = "eu-west-2"
@@ -32,6 +40,11 @@ variable "environment" {
 variable "capacity_hosted_zone" {
   description = "The domain name for the existing Route53 Hosted Zone into which services and certificates will be placed (no trailing dot)"
   type = "string"
+}
+
+variable "sftp_fq_domain_name" {
+  description = "Hostname to use for the sftp server - fully qualified. Must be 'within' the capacity_hosted_zone namespace"
+  default = "sftp"
 }
 
 variable "capacity_service_fq_domain_name" {
@@ -98,9 +111,8 @@ variable "info_reader_dhuftpjob_repeatinterval" {
   default = "300000"
 }
 
-variable "info_reader_dhuftpjob_ftpserver" {
-  type = "string"
-}
+#variable "info_reader_dhuftpjob_ftpserver" {
+#  type = "}
 
 variable "info_reader_dhuftpjob_ftpport" {
   default = "22"
@@ -123,9 +135,13 @@ variable "info_reader_ekhuftpaijob_apiurl" {
 }
 
 # DoS Proxy
-variable "dos_service_url" {
-  description = "Endpoint URL to forward DoS CheckCapacitySummary SOAP requests on to"
-  default = "https://uat.pathwaysdos.nhs.uk/app/api/webservices"
+variable "dos_service_domain" {
+  description = "Endpoint Domain of the DoS"
+  default = "uat.pathwaysdos.nhs.uk"
+}
+
+locals {
+  dos_service_url = "https://${var.dos_service_domain}/app/api/webservices"
 }
 
 variable "dos_proxy_spring_profiles_active" {
@@ -172,5 +188,5 @@ variable "nhs_project_name" {
 }
 
 variable "healthcheck_url" {
-  default = "/healthcheck"
+  default = "healthcheck"
 }

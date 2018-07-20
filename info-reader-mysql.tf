@@ -30,6 +30,14 @@ resource "aws_db_subnet_group" "capacity-reader-mysql-subnet-group" {
   name        = "${var.nhs_owner_shortcode}-capacity-reader-mysql-subnet-group"
   description = "Subnet group for Capacity Reader MySQL"
   subnet_ids = ["${aws_subnet.capacity-public-subnets.*.id}"]
+
+  tags {
+    Environment = "${var.environment}"
+    Owner = "${var.nhs_owner}"
+    Programme = "${var.nhs_programme_name}"
+    Project = "${var.nhs_project_name}"
+    Terraform = "true"
+  }
 }
 
 
