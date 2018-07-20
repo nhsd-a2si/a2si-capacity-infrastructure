@@ -135,14 +135,13 @@ variable "info_reader_ekhuftpaijob_apiurl" {
 }
 
 # DoS Proxy
-variable "dos_service_url" {
-  description = "Endpoint URL to forward DoS CheckCapacitySummary SOAP requests on to"
-  default = "https://uat.pathwaysdos.nhs.uk/app/api/webservices"
-}
-
 variable "dos_service_domain" {
   description = "Endpoint Domain of the DoS"
   default = "uat.pathwaysdos.nhs.uk"
+}
+
+locals {
+  dos_service_url = "https://${var.dos_service_domain}/app/api/webservices"
 }
 
 variable "dos_proxy_spring_profiles_active" {
