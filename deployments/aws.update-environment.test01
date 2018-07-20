@@ -1,0 +1,17 @@
+aws elasticbeanstalk update-environment \
+  --application-name dos-proxy \
+  --environment-name test1-dos-proxy-env \
+  --region eu-west-2 \
+  --version-label a2si-dos-wrapper-0.0.7-SNAPSHOT.zip
+
+aws elasticbeanstalk update-environment \
+  --application-name capacity-service \
+  --environment-name test1-capacity-service-env \
+  --region eu-west-2 \
+  --version-label a2si-capacity-service-0.0.6-SNAPSHOT.zip
+
+aws elasticbeanstalk update-environment \
+  --application-name info-reader \
+  --environment-name test1-info-reader-env \
+  --region eu-west-2 \
+  --version-label a2si-capacity-info-reader-0.0.16-SNAPSHOT.zip
