@@ -140,6 +140,11 @@ variable "dos_service_url" {
   default = "https://uat.pathwaysdos.nhs.uk/app/api/webservices"
 }
 
+variable "dos_service_domain" {
+  description = "Endpoint Domain of the DoS"
+  default = "uat.pathwaysdos.nhs.uk"
+}
+
 variable "dos_proxy_spring_profiles_active" {
   default = "doswrapper-aws-dos-soap-prod-cpsc-rest-aws"
 }
