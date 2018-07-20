@@ -35,7 +35,7 @@ resource "aws_route53_health_check" "dos-proxy-heathcheck" {
   failure_threshold = "1"
   search_string = "UP"
   tags {
-    Name = "Dos Proxy Terraform"
+    Name = "Dos Proxy Healthcheck"
   }
 }
 
