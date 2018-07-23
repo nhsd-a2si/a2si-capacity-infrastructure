@@ -110,10 +110,11 @@
         {
             "Effect": "Allow",
             "Action": [
-                "acm:DescribeCertificate"
+                "acm:DescribeCertificate",
+                "acm:ListTagsForCertificate"
             ],
             "Resource": [
-                "arn:aws:acm:eu-west-2:962310933334:certificate/*"
+                "arn:aws:acm:*:962310933334:certificate/*"
             ]
         },
         {
