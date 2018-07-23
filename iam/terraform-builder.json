@@ -1,0 +1,210 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:CreateBucket",
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:DeleteObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::*"
+            ]
+        },
+        {
+            "Sid": "AllowDynamoDbStateTable",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:CreateTable",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:eu-west-2:962310933334:*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "route53:ListHostedZones"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "route53:GetHostedZone"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "acm:RequestCertificate"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "elasticbeanstalk:CreateApplication"
+            ],
+            "Resource": [
+                "arn:aws:elasticbeanstalk:eu-west-2:962310933334:application/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "elasticbeanstalk:CreateEnvironment"
+            ],
+            "Resource": [
+                "arn:aws:elasticbeanstalk:eu-west-2:962310933334:environment/*/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "elasticbeanstalk:CreateApplicationVersion"
+            ],
+            "Resource": [
+                "arn:aws:elasticbeanstalk:eu-west-2:962310933334:applicationversion/*/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "elasticbeanstalk:CreateConfigurationTemplate"
+            ],
+            "Resource": [
+                "arn:aws:elasticbeanstalk:eu-west-2:962310933334:configurationtemplate/*/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:ImportKeyPair"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "acm:AddTagsToCertificate"
+            ],
+            "Resource": [
+                "arn:aws:acm:*:962310933334:certificate/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateRole",
+                "iam:GetRole"
+            ],
+            "Resource": [
+                "arn:aws:iam::962310933334:role/*-a2si-elasticbeanstalk-ec2-role"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateInstanceProfile",
+                "iam:AddRoleToInstanceProfile"
+            ],
+            "Resource": [
+                "arn:aws:iam::962310933334:instance-profile/*-a2si-elasticbeanstalk-ec2-role"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:AttachRolePolicy",
+                "iam:PassRole"
+            ],
+            "Resource": [
+                "arn:aws:iam::962310933334:role/*-a2si-elasticbeanstalk-ec2-role"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "route53:ChangeResourceRecordSets"
+            ],
+            "Resource": [
+                "arn:aws:route53:::hostedzone/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "route53:GetChange"
+            ],
+            "Resource": [
+                "arn:aws:route53:::change/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:CreateVpc",
+                "ec2:ModifyVpcAttribute",
+                "ec2:CreateTags",
+                "ec2:CreateSecurityGroup",
+                "ec2:CreateInternetGateway",
+                "ec2:CreateRole",
+                "ec2:CreateRoute",
+                "ec2:CreateSubnet",
+                "ec2:CreateRouteTable",
+                "ec2:AssociateRouteTable",
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:RevokeSecurityGroupEgress",
+                "ec2:AttachInternetGateway",
+                "ec2:RunInstances"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "rds:CreateDBSubnetGroup"
+            ],
+            "Resource": [
+                "arn:aws:rds:eu-west-2:962310933334:subgrp:*-capacity-reader-mysql-subnet-group"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "rds:CreateDBInstance"
+            ],
+            "Resource": [
+                "arn:aws:rds:eu-west-2:962310933334:db:*",
+                "arn:aws:rds:eu-west-2:962310933334:subgrp:*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "elasticache:CreateCacheSubnetGroup",
+                "elasticache:CreateReplicationGroup"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}

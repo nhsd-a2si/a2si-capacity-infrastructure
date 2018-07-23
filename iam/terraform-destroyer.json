@@ -1,0 +1,101 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "elasticache:DeleteCacheCluster",
+                "elasticache:DeleteCacheParameterGroup",
+                "elasticache:DeleteCacheSecurityGroup",
+                "elasticache:DeleteCacheSubnetGroup",
+                "elasticache:DeleteReplicationGroup",
+                "elasticache:DeleteSnapshot"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "acm:DeleteCertificate",
+                "acm:RemoveTagsFromCertificate"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:DeleteRole",
+                "iam:DetachRolePolicy",
+                "iam:RemoveRoleFromInstanceProfile",
+                "iam:DeleteInstanceProfile"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "rds:DeleteDBInstance",
+                "rds:DeleteDBSubnetGroup"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DisassociateRouteTable",
+                "ec2:DeleteRouteTable",
+                "ec2:DeleteSubnet",
+                "ec2:DetachInternetGateway",
+                "ec2:DeleteKeyPair",
+                "ec2:DeleteVpc"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DeleteSecurityGroup"
+            ],
+            "Resource": [
+                "arn:aws:elasticbeanstalk:eu-west-2:962310933334:security-group/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DeleteInternetGateway"
+            ],
+            "Resource": [
+                "arn:aws:elasticbeanstalk:eu-west-2:962310933334:internet-gateway/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "elasticbeanstalk:DeleteConfigurationTemplate"
+            ],
+            "Resource": [
+                "arn:aws:elasticbeanstalk:eu-west-2:962310933334:configurationtemplate/*/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "elasticbeanstalk:DeleteApplication"
+            ],
+            "Resource": [
+                "arn:aws:elasticbeanstalk:eu-west-2:962310933334:application/*"
+            ]
+        }
+    ]
+}
