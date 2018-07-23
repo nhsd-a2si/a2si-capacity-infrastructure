@@ -67,7 +67,7 @@
                 "ec2:DeleteSecurityGroup"
             ],
             "Resource": [
-                "arn:aws:elasticbeanstalk:eu-west-2:962310933334:security-group/*"
+                "arn:aws:ec2:eu-west-2:962310933334:security-group/*"
             ]
         },
         {
@@ -76,7 +76,7 @@
                 "ec2:DeleteInternetGateway"
             ],
             "Resource": [
-                "arn:aws:elasticbeanstalk:eu-west-2:962310933334:internet-gateway/*"
+                "arn:aws:ec2:eu-west-2:962310933334:internet-gateway/*"
             ]
         },
         {
