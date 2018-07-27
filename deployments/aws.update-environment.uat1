@@ -1,6 +1,6 @@
-ZIP_LOCATION=/Users/Nigel/Downloads/a2si-test-sandbox
-S3_ASSET_BUCKET=test-sandbox-a2si-assets
-OWNER_SHORTCODE=test1
+ZIP_LOCATION="../deployed-artifacts/a2si-sandbox (used for uat)"
+S3_ASSET_BUCKET=uat1-deploy
+OWNER_SHORTCODE=uat1
 
 #-----------------------------------------------------------------------------------------------------------
 ZIP_FILE=a2si-dos-proxy-1.0.0-SNAPSHOT.zip
@@ -8,10 +8,14 @@ aws s3 cp \
   $ZIP_LOCATION/$ZIP_FILE \
   s3://$S3_ASSET_BUCKET/$ZIP_FILE
 
-aws elasticbeanstalk update-application-version \
+aws elasticbeanstalk create-application-version \
   --application-name $OWNER_SHORTCODE-dos-proxy \
   --version-label $ZIP_FILE \
   --source-bundle S3Bucket=$S3_ASSET_BUCKET,S3Key=$ZIP_FILE
+
+aws elasticbeanstalk update-application-version \
+  --application-name $OWNER_SHORTCODE-dos-proxy \
+  --version-label $ZIP_FILE
 
 aws elasticbeanstalk update-environment \
   --application-name $OWNER_SHORTCODE-dos-proxy \
@@ -25,10 +29,15 @@ aws s3 cp \
   $ZIP_LOCATION/$ZIP_FILE \
   s3://$S3_ASSET_BUCKET/$ZIP_FILE
 
-aws elasticbeanstalk update-application-version \
+aws elasticbeanstalk create-application-version \
   --application-name $OWNER_SHORTCODE-capacity-service \
   --version-label $ZIP_FILE \
   --source-bundle S3Bucket=$S3_ASSET_BUCKET,S3Key=$ZIP_FILE
+
+aws elasticbeanstalk update-application-version \
+  --application-name $OWNER_SHORTCODE-capacity-service \
+  --version-label $ZIP_FILE
+
 
 aws elasticbeanstalk update-environment \
   --application-name $OWNER_SHORTCODE-capacity-service \
@@ -42,14 +51,17 @@ aws s3 cp \
   $ZIP_LOCATION/$ZIP_FILE \
   s3://$S3_ASSET_BUCKET/$ZIP_FILE
 
-aws elasticbeanstalk update-application-version \
+aws elasticbeanstalk create-application-version \
   --application-name $OWNER_SHORTCODE-info-reader \
   --version-label $ZIP_FILE \
   --source-bundle S3Bucket=$S3_ASSET_BUCKET,S3Key=$ZIP_FILE
+
+aws elasticbeanstalk update-application-version \
+  --application-name $OWNER_SHORTCODE-info-reader \
+  --version-label $ZIP_FILE
 
 aws elasticbeanstalk update-environment \
   --application-name $OWNER_SHORTCODE-info-reader \
   --environment-name $OWNER_SHORTCODE-info-reader-env \
   --region eu-west-2 \
   --version-label $ZIP_FILE
-

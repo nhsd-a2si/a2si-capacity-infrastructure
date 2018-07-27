@@ -1,9 +1,9 @@
-ZIP_LOCATION=/Users/Nigel/Downloads/a2si-test-sandbox
-S3_ASSET_BUCKET=test-sandbox-a2si-assets
-OWNER_SHORTCODE=test1
+ZIP_LOCATION=/Users/Nigel/Downloads/a2si-cd-testp
+S3_ASSET_BUCKET=a2si-cd-testp-assets
+OWNER_SHORTCODE=a2si-cd-testp
 
 #-----------------------------------------------------------------------------------------------------------
-ZIP_FILE=a2si-dos-proxy-1.0.0-SNAPSHOT.zip
+ZIP_FILE=a2si-dos-wrapper-0.0.7.zip
 aws s3 cp \
   $ZIP_LOCATION/$ZIP_FILE \
   s3://$S3_ASSET_BUCKET/$ZIP_FILE
@@ -20,7 +20,7 @@ aws elasticbeanstalk update-environment \
   --version-label $ZIP_FILE
 
 #-----------------------------------------------------------------------------------------------------------
-ZIP_FILE=a2si-capacity-service-0.0.6-SNAPSHOT.zip
+ZIP_FILE=a2si-capacity-service-0.0.6.zip
 aws s3 cp \
   $ZIP_LOCATION/$ZIP_FILE \
   s3://$S3_ASSET_BUCKET/$ZIP_FILE
@@ -37,7 +37,7 @@ aws elasticbeanstalk update-environment \
   --version-label $ZIP_FILE
 
 #-----------------------------------------------------------------------------------------------------------
-ZIP_FILE=a2si-capacity-info-reader-0.0.16-SNAPSHOT.zip
+ZIP_FILE=a2si-capacity-info-reader-0.0.16.zip
 aws s3 cp \
   $ZIP_LOCATION/$ZIP_FILE \
   s3://$S3_ASSET_BUCKET/$ZIP_FILE
@@ -52,4 +52,3 @@ aws elasticbeanstalk update-environment \
   --environment-name $OWNER_SHORTCODE-info-reader-env \
   --region eu-west-2 \
   --version-label $ZIP_FILE
-
