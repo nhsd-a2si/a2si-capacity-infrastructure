@@ -94,7 +94,8 @@
                 "elasticbeanstalk:DescribeApplications"
             ],
             "Resource": [
-                "arn:aws:elasticbeanstalk:eu-west-2:962310933334:application/*"
+                "arn:aws:iam::410123189863:instance-profile/*",
+                "arn:aws:iam::410123189863:role/*"
             ]
         },
         {
@@ -114,7 +115,6 @@
                 "acm:ListTagsForCertificate"
             ],
             "Resource": [
-                "arn:aws:acm:*:962310933334:certificate/*"
             ]
         },
         {
@@ -123,7 +123,7 @@
                 "iam:GetInstanceProfile"
             ],
             "Resource": [
-                "arn:aws:iam::962310933334:instance-profile/*"
+                "arn:aws:iam::410123189863:instance-profile/*"
             ]
         },
         {
@@ -132,7 +132,7 @@
                 "iam:ListAttachedRolePolicies"
             ],
             "Resource": [
-                "arn:aws:iam::962310933334:role/*"
+                "arn:aws:iam::410123189863:role/*"
             ]
         },
         {
