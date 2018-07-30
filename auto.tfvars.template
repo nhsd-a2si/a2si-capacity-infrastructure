@@ -32,6 +32,8 @@ environment = "dev"
 capacity_service_api_password = "dummyValue"
 capacity_service_api_username = "dummyValue"
 
+//elasticbeanstalk_ec2_role_name = "???-a2si-elasticbeanstalk-ec2-role"
+
 // Leave these commented out unless you want to override the region and AZs for the deployment
 //aws_region = "eu-west-2"
 //aws_azs = ["eu-west-2a", "eu-west-2b"]

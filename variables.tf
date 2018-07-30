@@ -190,3 +190,9 @@ variable "nhs_project_name" {
 variable "healthcheck_url" {
   default = "healthcheck"
 }
+
+variable "elasticbeanstalk_ec2_role_name" {
+  description = "The name of the IAM role to attach to Elasticbeanstalk apps to allow EC2 autoscaling etc."
+  default     = "a2si-elasticbeanstalk-ec2-role"
+  type        = "string"
+}
