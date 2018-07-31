@@ -1,4 +1,4 @@
-ZIP_LOCATION=/Users/Nigel/Downloads/a2si-cd-testp
+ZIP_LOCATION=../deployed-artifacts/a2si-cd-testp
 S3_ASSET_BUCKET=a2si-cd-testp-assets
 OWNER_SHORTCODE=a2si-cd-testp
 
