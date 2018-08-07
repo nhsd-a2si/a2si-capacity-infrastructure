@@ -17,7 +17,6 @@ aws elasticbeanstalk create-application-version \
 aws elasticbeanstalk update-application-version \
   --application-name $OWNER_SHORTCODE-dos-proxy \
   --version-label $ZIP_FILE \
-  --source-bundle S3Bucket=$S3_ASSET_BUCKET,S3Key=$ZIP_FILE
 
 aws elasticbeanstalk update-environment \
   --application-name $OWNER_SHORTCODE-dos-proxy \
@@ -39,7 +38,6 @@ aws elasticbeanstalk create-application-version \
 aws elasticbeanstalk update-application-version \
   --application-name $OWNER_SHORTCODE-capacity-service \
   --version-label $ZIP_FILE \
-  --source-bundle S3Bucket=$S3_ASSET_BUCKET,S3Key=$ZIP_FILE
 
 aws elasticbeanstalk update-environment \
   --application-name $OWNER_SHORTCODE-capacity-service \
@@ -61,7 +59,6 @@ aws elasticbeanstalk create-application-version \
 aws elasticbeanstalk update-application-version \
   --application-name $OWNER_SHORTCODE-info-reader \
   --version-label $ZIP_FILE \
-  --source-bundle S3Bucket=$S3_ASSET_BUCKET,S3Key=$ZIP_FILE
 
 aws elasticbeanstalk update-environment \
   --application-name $OWNER_SHORTCODE-info-reader \
