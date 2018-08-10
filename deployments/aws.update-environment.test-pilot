@@ -31,7 +31,7 @@ aws s3 cp \
   s3://$S3_ASSET_BUCKET/$ZIP_FILE
 
 aws elasticbeanstalk create-application-version \
-  --application-name $OWNER_SHORTCODE-dos-proxy \
+  --application-name $OWNER_SHORTCODE-capacity-service \
   --version-label $ZIP_FILE \
   --source-bundle S3Bucket=$S3_ASSET_BUCKET,S3Key=$ZIP_FILE
 ####OOOOORRRRR####
@@ -52,7 +52,7 @@ aws s3 cp \
   s3://$S3_ASSET_BUCKET/$ZIP_FILE
 
 aws elasticbeanstalk create-application-version \
-  --application-name $OWNER_SHORTCODE-dos-proxy \
+  --application-name $OWNER_SHORTCODE-info-reader \
   --version-label $ZIP_FILE \
   --source-bundle S3Bucket=$S3_ASSET_BUCKET,S3Key=$ZIP_FILE
 ####OOOOORRRRR####
