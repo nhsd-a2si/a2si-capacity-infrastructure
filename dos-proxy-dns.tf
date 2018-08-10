@@ -3,7 +3,7 @@ resource "aws_route53_record" "dos-proxy-lb" {
   type    = "CNAME"
   name    = "${var.dos_proxy_fq_domain_name}"
   records = ["${aws_elastic_beanstalk_environment.dos-proxy-env.cname}"]
-  ttl     = 5
+  ttl     = "5"
   health_check_id = "${aws_route53_health_check.dos-proxy-heathcheck.id}"
   set_identifier = "Primary"
   failover_routing_policy {
