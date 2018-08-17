@@ -2,7 +2,7 @@
 if [ ! -d /sftp ]
 then
    sudo apt-get update -y
-   sudo apt-get install vsftpd
+   sudo apt-get install -y vsftpd
    sudo mkdir /sftp
    sudo chmod 755 /sftp
    sudo groupadd sftpusers
@@ -23,6 +23,13 @@ then
    sudo sh -c "echo 'ForceCommand internal-sftp' >> /etc/ssh/sshd_config"
    sudo /etc/init.d/ssh restart
 fi
+
+# Stop the vsftpd service so we can update the vsftpd config file to stop it from
+# listening in on port 21. This is a security recommendation (CD-597)
+sudo service vsftpd stop
+sudo sed -i 's/listen=YES/listen=NO/' /etc/vsftpd.conf
+sudo sed -i 's/listen_ipv6=YES/listen_ipv6=NO/' /etc/vsftpd.conf
+sudo service vsftpd start
 
 # Create a script to add a new user (if it doesnt exist)
 if [ ! -f /home/ubuntu/addnewuser.sh ]
@@ -50,7 +57,5 @@ fi
 
 /home/ubuntu/addnewuser.sh "capacity_reader" "NO_FOLDER"
 /home/ubuntu/addnewuser.sh "dhu"
-
-
 
 exit
