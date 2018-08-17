@@ -3,7 +3,7 @@ S3_ASSET_BUCKET=uat1-deploy
 OWNER_SHORTCODE=uat1
 
 #-----------------------------------------------------------------------------------------------------------
-ZIP_FILE=a2si-dos-proxy-1.0.0-SNAPSHOT.zip
+ZIP_FILE=a2si-dos-proxy-1.0.1-SNAPSHOT.zip
 aws s3 cp \
   $ZIP_LOCATION/$ZIP_FILE \
   s3://$S3_ASSET_BUCKET/$ZIP_FILE
@@ -24,7 +24,7 @@ aws elasticbeanstalk update-environment \
   --version-label $ZIP_FILE
 
 #-----------------------------------------------------------------------------------------------------------
-ZIP_FILE=a2si-capacity-service-0.0.6-SNAPSHOT.zip
+ZIP_FILE=a2si-capacity-service-0.0.7-SNAPSHOT.zip
 aws s3 cp \
   $ZIP_LOCATION/$ZIP_FILE \
   s3://$S3_ASSET_BUCKET/$ZIP_FILE
