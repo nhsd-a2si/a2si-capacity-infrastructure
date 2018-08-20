@@ -21,6 +21,12 @@ then
    sudo sh -c "echo 'X11Forwarding no' >> /etc/ssh/sshd_config"
    sudo sh -c "echo 'AllowTcpForwarding no' >> /etc/ssh/sshd_config"
    sudo sh -c "echo 'ForceCommand internal-sftp' >> /etc/ssh/sshd_config"
+
+   # Add SFTP security banner
+   sudo mv /tmp/sftp-banner.txt /etc/ssh
+   sudo sed -i "\$a#Banner\nBanner /etc/ssh/sftp-banner.txt" /etc/ssh/sshd_config
+
+   # Restart SSH for changes to take effect
    sudo /etc/init.d/ssh restart
 fi
 

@@ -24,6 +24,17 @@ resource "aws_instance" "sftpserver" {
   vpc_security_group_ids = ["${aws_security_group.sftp-sg.id}"]
   associate_public_ip_address = true
 
+  provisioner "file" {
+    connection {
+      type     = "ssh"
+      user     = "ubuntu"
+      private_key = "${file("key-pair-dev.pem")}"
+    }
+    
+    source      = "sftp-banner.txt"
+    destination = "/tmp/sftp-banner.txt"
+  }
+
   provisioner "remote-exec" {
     connection {
       type     = "ssh"
