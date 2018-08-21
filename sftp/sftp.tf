@@ -6,7 +6,8 @@ data "aws_ami" "ubuntu" {
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"]
+
   }
 
   filter {
@@ -22,6 +23,17 @@ resource "aws_instance" "sftpserver" {
   subnet_id     = "${element(aws_subnet.capacity-public-subnets.*.id, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.sftp-sg.id}"]
   associate_public_ip_address = true
+
+  provisioner "file" {
+    connection {
+      type     = "ssh"
+      user     = "ubuntu"
+      private_key = "${file("key-pair-dev.pem")}"
+    }
+
+    source      = "sftp-banner.txt"
+    destination = "/tmp/sftp-banner.txt"
+  }
 
   provisioner "remote-exec" {
     connection {
