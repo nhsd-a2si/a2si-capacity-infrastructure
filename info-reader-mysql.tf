@@ -4,7 +4,7 @@ resource "aws_db_instance" "capacity_reader_mysql" {
   engine_version    = "5.6.39"
   instance_class    = "db.t2.micro"
   identifier        = "${var.nhs_owner_shortcode}${var.mysql_db_instance}"
-  name              = "${var.nhs_owner_shortcode}${var.mysql_db_name}"
+  name              = "${replace(var.nhs_owner_shortcode, "-", "_")}${var.mysql_db_name}"
   username          = "${var.mysql_username}"
   password          = "${var.mysql_password}"
   port              = "3306"

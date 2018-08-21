@@ -1,0 +1,66 @@
+ZIP_LOCATION="../deployed-artifacts/a2si-test-sandbox"
+S3_ASSET_BUCKET=test-sandbox-a2si-assets
+OWNER_SHORTCODE=test1
+
+#-----------------------------------------------------------------------------------------------------------
+ZIP_FILE=a2si-dos-proxy-1.0.1-SNAPSHOT.zip
+aws s3 cp \
+  $ZIP_LOCATION/$ZIP_FILE \
+  s3://$S3_ASSET_BUCKET/$ZIP_FILE
+
+aws elasticbeanstalk create-application-version \
+  --application-name $OWNER_SHORTCODE-dos-proxy \
+  --version-label $ZIP_FILE \
+  --source-bundle S3Bucket=$S3_ASSET_BUCKET,S3Key=$ZIP_FILE
+####OOOOORRRRR####
+aws elasticbeanstalk update-application-version \
+  --application-name $OWNER_SHORTCODE-dos-proxy \
+  --version-label $ZIP_FILE \
+
+aws elasticbeanstalk update-environment \
+  --application-name $OWNER_SHORTCODE-dos-proxy \
+  --environment-name $OWNER_SHORTCODE-dos-proxy-env \
+  --region eu-west-2 \
+  --version-label $ZIP_FILE
+
+#-----------------------------------------------------------------------------------------------------------
+ZIP_FILE=a2si-capacity-service-0.0.7-SNAPSHOT.zip
+aws s3 cp \
+  $ZIP_LOCATION/$ZIP_FILE \
+  s3://$S3_ASSET_BUCKET/$ZIP_FILE
+
+aws elasticbeanstalk create-application-version \
+  --application-name $OWNER_SHORTCODE-capacity-service \
+  --version-label $ZIP_FILE \
+  --source-bundle S3Bucket=$S3_ASSET_BUCKET,S3Key=$ZIP_FILE
+####OOOOORRRRR####
+aws elasticbeanstalk update-application-version \
+  --application-name $OWNER_SHORTCODE-capacity-service \
+  --version-label $ZIP_FILE \
+
+aws elasticbeanstalk update-environment \
+  --application-name $OWNER_SHORTCODE-capacity-service \
+  --environment-name $OWNER_SHORTCODE-capacity-service-env \
+  --region eu-west-2 \
+  --version-label $ZIP_FILE
+
+#-----------------------------------------------------------------------------------------------------------
+ZIP_FILE=a2si-capacity-info-reader-0.0.17-SNAPSHOT.zip
+aws s3 cp \
+  $ZIP_LOCATION/$ZIP_FILE \
+  s3://$S3_ASSET_BUCKET/$ZIP_FILE
+
+aws elasticbeanstalk create-application-version \
+  --application-name $OWNER_SHORTCODE-info-reader \
+  --version-label $ZIP_FILE \
+  --source-bundle S3Bucket=$S3_ASSET_BUCKET,S3Key=$ZIP_FILE
+####OOOOORRRRR####
+aws elasticbeanstalk update-application-version \
+  --application-name $OWNER_SHORTCODE-info-reader \
+  --version-label $ZIP_FILE \
+
+aws elasticbeanstalk update-environment \
+  --application-name $OWNER_SHORTCODE-info-reader \
+  --environment-name $OWNER_SHORTCODE-info-reader-env \
+  --region eu-west-2 \
+  --version-label $ZIP_FILE
