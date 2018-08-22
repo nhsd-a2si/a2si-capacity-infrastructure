@@ -6,7 +6,7 @@ data "aws_ami" "ubuntu" {
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*"]
 
   }
 
@@ -30,7 +30,7 @@ resource "aws_instance" "sftpserver" {
       user     = "ubuntu"
       private_key = "${file("key-pair-dev.pem")}"
     }
-    
+
     source      = "sftp-banner.txt"
     destination = "/tmp/sftp-banner.txt"
   }
