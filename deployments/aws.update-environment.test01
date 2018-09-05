@@ -15,7 +15,7 @@ aws elasticbeanstalk create-application-version \
 ####OOOOORRRRR####
 aws elasticbeanstalk update-application-version \
   --application-name $OWNER_SHORTCODE-dos-proxy \
-  --version-label $ZIP_FILE \
+  --version-label $ZIP_FILE
 
 aws elasticbeanstalk update-environment \
   --application-name $OWNER_SHORTCODE-dos-proxy \
@@ -36,7 +36,7 @@ aws elasticbeanstalk create-application-version \
 ####OOOOORRRRR####
 aws elasticbeanstalk update-application-version \
   --application-name $OWNER_SHORTCODE-capacity-service \
-  --version-label $ZIP_FILE \
+  --version-label $ZIP_FILE
 
 aws elasticbeanstalk update-environment \
   --application-name $OWNER_SHORTCODE-capacity-service \
@@ -57,7 +57,7 @@ aws elasticbeanstalk create-application-version \
 ####OOOOORRRRR####
 aws elasticbeanstalk update-application-version \
   --application-name $OWNER_SHORTCODE-info-reader \
-  --version-label $ZIP_FILE \
+  --version-label $ZIP_FILE
 
 aws elasticbeanstalk update-environment \
   --application-name $OWNER_SHORTCODE-info-reader \
