@@ -25,6 +25,8 @@ then
    # Add SFTP security banner
    sudo mv /tmp/sftp-banner.txt /etc/ssh
    sudo sed -i "\$a#Banner\nBanner /etc/ssh/sftp-banner.txt" /etc/ssh/sshd_config
+   sudo sed -i 's/PrintLastLog yes/PrintLastLog no/' /etc/ssh/sshd_config
+   sudo sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config
 
    # Restart SSH for changes to take effect
    sudo /etc/init.d/ssh restart
