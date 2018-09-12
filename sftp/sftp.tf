@@ -18,7 +18,7 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "sftpserver" {
   ami           = "${data.aws_ami.ubuntu.id}"
-  instance_type = "t2.micro"
+  instance_type = "t2.small"
   key_name      = "${aws_key_pair.key-pair-dev.id}"
   subnet_id     = "${element(aws_subnet.capacity-public-subnets.*.id, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.sftp-sg.id}"]
