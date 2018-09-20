@@ -264,14 +264,14 @@ resource "aws_elastic_beanstalk_environment" "info-reader-env" {
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name = "CAPACITY_SERVICE_CLIENT_API_USERNAME"
-    value = "${var.capacity_service_api_username}"
+    name = "CAPACITY_SERVICE_USERNAME"
+    value = "${var.capacity_service_username}"
   }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name = "CAPACITY_SERVICE_CLIENT_API_PASSWORD"
-    value = "${var.capacity_service_api_password}"
+    name = "CAPACITY_SERVICE_PASSWORD"
+    value = "${var.capacity_service_password}"
   }
 
   setting {
