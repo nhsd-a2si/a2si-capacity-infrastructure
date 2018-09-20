@@ -3,7 +3,7 @@ resource "aws_route53_record" "sftpserver" {
   name    = "${var.sftp_fq_domain_name}"
   type    = "A"
   ttl     = 60
-  records = ["${aws_instance.sftpserver.public_ip}"]
+  records = ["${aws_eip.sftp-elastic-ip.public_ip}"]
 }
 
 output "sftp_fqdn" {
