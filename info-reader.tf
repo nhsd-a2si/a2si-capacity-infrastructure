@@ -52,6 +52,12 @@ resource "aws_elastic_beanstalk_environment" "info-reader-env" {
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
+    name = "InstanceType"
+    value = "t2.medium"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
     name = "SecurityGroups"
     value = "${aws_security_group.mysql-client.id}"
   }
@@ -125,7 +131,7 @@ resource "aws_elastic_beanstalk_environment" "info-reader-env" {
   setting {
     namespace = "aws:autoscaling:asg"
     name = "MinSize"
-    value = "1"
+    value = "2"
   }
 
   setting {
