@@ -207,18 +207,6 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "CAPACITY_SERVICE_API_USERNAME"
-    value     = "${var.capacity_service_api_username}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "CAPACITY_SERVICE_API_PASSWORD"
-    value     = "${var.capacity_service_api_password}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
     name      = "CAPACITY_SERVICE_CACHE_TIMETOLIVEINSECONDS"
     value     = "${var.capacity_service_cache_ttl_seconds}"
   }
@@ -230,7 +218,7 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   }
 
 
-# key-pair for ssh
+  # key-pair for ssh
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name = "EC2KeyName"
@@ -244,6 +232,39 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
     Project = "${var.nhs_project_name}"
     Terraform = "true"
   }
+
+  # Basic Auth
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "AMAZON_AWS_DYNAMO_TABLE"
+    value     = "${var.amazon_aws_dynamo_table}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "AMAZON_AWS_DYNAMO_ENDPOINT"
+    value     = "${var.amazon_aws_dynamo_endpoint}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "AMAZON_AWS_DYNAMO_REGION"
+    value     = "${var.amazon_aws_dynamo_region}"
+  }
+
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "AMAZON_AWS_DYNAMO_ACCESSKEY"
+    value     = "${var.amazon_aws_dynamo_accesskey}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "AMAZON_AWS_DYNAMO_SECRETKEY"
+    value     = "${var.amazon_aws_dynamo_secretkey}"
+  }
+
 }
 
 output "capacity-service-env" {

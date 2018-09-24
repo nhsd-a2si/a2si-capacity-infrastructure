@@ -87,14 +87,14 @@ variable "capacity_service_spring_profiles_active" {
   default = "capacity-service-aws-redis"
 }
 
-variable "capacity_service_api_username" {
-  description = "Username accepted by the capacity service"  # Currently the service only recognises one account
-  type = "string"
+variable "capacity_service_username" {
+  description = "Basic auth username accepted by the capacity service"
+  default = ""
 }
 
-variable "capacity_service_api_password" {
-  description = "Password accepted by the capacity service"  # Currently the service only recognises one account
-  type = "string"
+variable "capacity_service_password" {
+  description = "Basic auth password accepted by the capacity service"
+  default = ""
 }
 
 variable "capacity_service_cache_ttl_seconds" {
@@ -189,4 +189,24 @@ variable "nhs_project_name" {
 
 variable "healthcheck_url" {
   default = "healthcheck"
+}
+
+variable "amazon_aws_dynamo_table" {
+  default = "a2si-cd-geha1-authentication"
+}
+
+variable "amazon_aws_dynamo_endpoint" {
+  default = "https://dynamodb.eu-west-2.amazonaws.com"
+}
+
+variable "amazon_aws_dynamo_region" {
+  default = "eu-west-2"
+}
+
+variable "amazon_aws_dynamo_accesskey" {
+  default = ""
+}
+
+variable "amazon_aws_dynamo_secretkey" {
+  default = ""
 }
