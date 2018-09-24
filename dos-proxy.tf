@@ -119,7 +119,7 @@ resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
   setting {
     namespace = "aws:autoscaling:asg"
     name = "MinSize"
-    value = "1"
+    value = "2"
   }
 
   setting {
@@ -231,6 +231,12 @@ resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
     namespace = "aws:elasticbeanstalk:application:environment"
     name = "DOS_SERVICE_URL"
     value = "${local.dos_service_url}"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name = "InstanceType"
+    value = "t2.medium"
   }
 
   setting {
