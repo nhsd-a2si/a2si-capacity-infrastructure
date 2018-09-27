@@ -7,5 +7,5 @@ data "aws_s3_bucket_object" "certificate_rsa_pub" {
 
 resource "aws_key_pair" "key-pair-dev" {
   key_name = "${var.environment}_rsa"
-  public_key = "${file("/Users/jonathanpearce/Development/A2SI/AWS Deployed Keys/JP Private/jp-sftp-key.pub")}"
+  public_key = "${data.aws_s3_bucket_object.certificate_rsa_pub.body}"
 }
