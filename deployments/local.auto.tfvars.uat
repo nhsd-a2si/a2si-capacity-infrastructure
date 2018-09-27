@@ -1,0 +1,24 @@
+nhs_owner = "a2si-cd-uat"
+nhs_owner_shortcode = "a2si-cd-uat"
+dos_proxy_fq_domain_name = "dos-proxy.directoryofservices.nhs.uk"
+capacity_service_fq_domain_name = "capacity-service.directoryofservices.nhs.uk"
+info_reader_fq_domain_name = "info-reader.directoryofservices.nhs.uk"
+s3_app_versions_bucket = "test-sandbox-a2si-assets"
+s3_capacity_service_object = "a2si-capacity-service-0.2.0.zip"
+s3_dos_proxy_object = "a2si-dos-proxy-1.1.0.zip"
+s3_info_reader_object = "a2si-capacity-info-reader-0.1.0.zip"
+info_reader_dhuftpjob_ftpserver = "dhu"
+info_reader_dhuftpjob_ftpusername = "reader"
+info_reader_dhuftpjob_privatekeyfile = "key_rsa"
+/**************************
+ * END OF MANDATORY SECTION
+ **************************/
+aws_profile = "default"
+capacity_hosted_zone = "directoryofservices.nhs.uk"
+environment = "a2si-cd-uat"
+capacity_service_api_password = "dummyValue"
+capacity_service_api_username = "dummyValue"
+
+// Leave these commented out unless you want to override the region and AZs for the deployment
+aws_region = "eu-west-2"
+aws_azs = ["eu-west-2a", "eu-west-2b"]
