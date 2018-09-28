@@ -212,7 +212,7 @@ resource "aws_elastic_beanstalk_environment" "dos-proxy-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name = "CAPACITY_SERVICE_CLIENT_API_URL"
-    value = "https://${aws_route53_record.capacity-service-lb.fqdn}/capacity"
+    value = "https://${aws_route53_record.capacity-service-lb.fqdn}"
   }
 
   setting {
