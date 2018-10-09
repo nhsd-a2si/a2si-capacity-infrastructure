@@ -3,7 +3,7 @@ S3_ASSET_BUCKET=a2si-cd-uat-assets
 OWNER_SHORTCODE=a2si-cd-uat
 
 #-----------------------------------------------------------------------------------------------------------
-ZIP_FILE=a2si-dos-proxy-1.1.0.zip
+ZIP_FILE=a2si-dos-proxy-1.1.1.zip
 
 aws s3 cp \
   $ZIP_LOCATION/$ZIP_FILE \
@@ -46,7 +46,7 @@ aws elasticbeanstalk update-environment \
   --version-label $ZIP_FILE
 
 #-----------------------------------------------------------------------------------------------------------
-ZIP_FILE=a2si-capacity-info-reader-0.1.0.zip
+ZIP_FILE=a2si-capacity-info-reader-0.1.1.zip
 aws s3 cp \
   $ZIP_LOCATION/$ZIP_FILE \
   s3://$S3_ASSET_BUCKET/$ZIP_FILE
