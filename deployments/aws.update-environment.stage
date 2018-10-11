@@ -1,9 +1,9 @@
-ZIP_LOCATION="../deployed-artifacts/a2si-cd-livep"
-S3_ASSET_BUCKET=a2si-cd-livep-assets
-OWNER_SHORTCODE=a2si-cd-livep
+ZIP_LOCATION="../deployed-artifacts/a2si-cd-stage"
+S3_ASSET_BUCKET=a2si-cd-stage-assets
+OWNER_SHORTCODE=a2si-cd-stage
 
 #-----------------------------------------------------------------------------------------------------------
-ZIP_FILE=a2si-dos-proxy-1.0.1.zip
+ZIP_FILE=a2si-dos-proxy-1.0.4.zip
 
 aws s3 cp \
   $ZIP_LOCATION/$ZIP_FILE \
@@ -46,7 +46,7 @@ aws elasticbeanstalk update-environment \
   --version-label $ZIP_FILE
 
 #-----------------------------------------------------------------------------------------------------------
-ZIP_FILE=a2si-capacity-info-reader-0.0.17.zip
+ZIP_FILE=a2si-capacity-info-reader-0.0.19.zip
 aws s3 cp \
   $ZIP_LOCATION/$ZIP_FILE \
   s3://$S3_ASSET_BUCKET/$ZIP_FILE
