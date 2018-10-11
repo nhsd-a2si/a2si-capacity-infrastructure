@@ -1,0 +1,8 @@
+terraform {
+  backend "s3" {
+    bucket         = "a2si-cd-livep-sftp-tf-state"
+    key            = "live-pilot"
+    dynamodb_table = "a2si-cd-livep-sftp-tf-state"
+    region         = "eu-west-2"
+  }
+}
