@@ -1,8 +1,0 @@
-terraform {
-  backend "s3" {
-    bucket         = "test1-sftp-tf-state"
-    key            = "test1"
-    dynamodb_table = "test1-sftp-tf-state"
-    region         = "eu-west-2"
-  }
-}
