@@ -65,21 +65,26 @@ variable "dos_proxy_fq_domain_name" {
 variable "s3_app_versions_bucket" {
   description = "Name of S3 bucket in which app versions will be stored"
   type = "string"
+  default = "" // texas
 }
 
 variable "s3_capacity_service_object" {
   description = "Object name of ZIP file containing Capacity Service version for deployment"
   type = "string"
+  default = "" // texas
 }
+
 
 variable "s3_info_reader_object" {
   description = "Object name of ZIP file containing Info Reader version for deployment"
   type = "string"
+  default = "" // texas
 }
 
 variable "s3_dos_proxy_object" {
   description = "Object name of ZIP file containing DoS Proxy version for deployment"
   type = "string"
+  default = "" // texas
 }
 
 # Capacity Service
@@ -120,10 +125,12 @@ variable "info_reader_dhuftpjob_ftpport" {
 
 variable "info_reader_dhuftpjob_ftpusername" {
   type = "string"
+  default = "" // texas
 }
 
 variable "info_reader_dhuftpjob_privatekeyfile" {
   type = "string"
+  default = "" // texas
 }
 
 variable "info_reader_ekhuftpaijob_repeatinterval" {
