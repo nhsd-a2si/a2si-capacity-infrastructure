@@ -11,6 +11,7 @@ variable "aws_region" {
   default = "eu-west-2"
 }
 
+
 # Different availability zones are essentially different 'datacentres'
 variable "aws_azs" {
   description = "Availability zones within which the resources will be deployed"
@@ -166,6 +167,26 @@ variable "mysql_username" {
 
 variable "mysql_password" {
   default = "QuartzRoot"
+}
+
+#
+# Variables for the capacity Postgres DB
+#
+
+variable "postgres_db_instance" {
+  default = "capacity-data"
+}
+
+variable "postgres_db_name" {
+  default = "CapacityService"
+}
+
+variable "postgres_username" {
+  default = "root"
+}
+
+variable "postgres_password" {
+  default = "changeit"
 }
 
 # The following variables will be used to tag resources that are created by this Terraform configuration
