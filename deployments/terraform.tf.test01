@@ -1,0 +1,8 @@
+terraform {
+  backend "s3" {
+    bucket         = "a2si-tf-state-dev"
+    key            = "test1"
+    dynamodb_table = "a2si-tf-state-dev"
+    region         = "eu-west-2"
+  }
+}
