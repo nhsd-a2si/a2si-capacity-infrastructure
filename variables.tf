@@ -168,6 +168,26 @@ variable "mysql_password" {
   default = "QuartzRoot"
 }
 
+#
+# Variables for the capacity Service PostgreSQL DB
+#
+
+variable "postgres_username" {
+  default = "postmanpat"
+}
+
+variable "postgres_db_instance" {
+  default = "capacity-service-db"
+}
+
+variable "postgres_password" {
+  default = "changeit"
+}
+
+variable "postgres_db_name" {
+  default = "CapacityService"
+}
+
 # The following variables will be used to tag resources that are created by this Terraform configuration
 variable "nhs_owner" {
   description = "Name of the person applying the changes"
