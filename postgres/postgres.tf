@@ -1,17 +1,20 @@
 # Create a postgres database server
-resource "aws_db_instance" "capacity_postgress" {
+resource "aws_db_instance" "capacity_postgres" {
   engine            = "postgres"
   engine_version    = "10.4"
-  instance_class    = "db.t2.micro"
-  identifier        = "${var.nhs_owner_shortcode}${var.postgres_db_instance}"
+  instance_class    = "db.t2.large"
+  identifier        = "${var.nhs_owner_shortcode}-${var.postgres_db_instance}"
   name              = "${replace(var.nhs_owner_shortcode, "-", "")}${var.postgres_db_name}"
   username          = "${var.postgres_username}"
   password          = "${var.postgres_password}"
-  port              = "3306"
+  port              = "5432"
   allocated_storage = 5
   storage_type      = "gp2"
   publicly_accessible = "false"
-  skip_final_snapshot = "true"
+  skip_final_snapshot = "false"
+  final_snapshot_identifier = "${var.nhs_owner_shortcode}-${var.postgres_db_instance}-${replace(replace(replace(timestamp(), ":", "-"), "T", "-"), "Z", "-FINAL")}"
+  backup_window = "00:00-00:30"
+  backup_retention_period = "7"
   db_subnet_group_name   = "${aws_db_subnet_group.capacity-service-postgres-subnet-group.name}"
   vpc_security_group_ids  = ["${aws_security_group.allow-postgres-client.id}"]
 
@@ -56,14 +59,15 @@ resource "aws_security_group" "postgres-client" {
 
 resource "aws_security_group" "allow-postgres-client" {
   name        = "${var.nhs_owner_shortcode}-allow-postgres-client"
-  description = "Allow connection by appointed postpres clients"
+  description = "Allow connection by appointed postgres clients"
   vpc_id      = "${aws_vpc.capacity.id}"
 
   ingress {
-    from_port       = 3306
-    to_port         = 3306
+    from_port       = 5432
+    to_port         = 5432
     protocol        = "tcp"
-    security_groups = ["${aws_security_group.postgres-client.id}"]
+    //security_groups = ["${aws_security_group.postgres-client.id}"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags {
