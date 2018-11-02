@@ -59,6 +59,7 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "SecurityGroups"
+    //value     = "${aws_security_group.cache-client.id}, ${data.aws_security_groups.postgres-client.ids.0}"
     value     = "${aws_security_group.cache-client.id}"
   }
 
@@ -224,6 +225,26 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   }
 
   setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SPRING_DATASOURCE_URL"
+    //value     = "jdbc:postgresql://${data.aws_db_instance.capacity_postgres.endpoint}/${data.aws_db_instance.capacity_postgres.db_name}"
+    value     = "jdbc:postgresql://${data.aws_db_instance.capacity_postgres.address}:${data.aws_db_instance.capacity_postgres.port}/${data.aws_db_instance.capacity_postgres.db_name}"
+    //value     = "jdbc:postgresql://${data.aws_instances.postgres.private_ips.0}:${data.aws_db_instance.capacity_postgres.port}/${data.aws_db_instance.capacity_postgres.db_name}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SPRING_DATASOURCE_USERNAME"
+    value     = "${var.postgres_username}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SPRING_DATASOURCE_PASSWORD"
+    value     = "${var.postgres_password}"
+  }
+
+  setting {
     namespace = "aws:elasticbeanstalk:healthreporting:system"
     name = "SystemType"
     value = "enhanced"
@@ -249,3 +270,4 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
 output "capacity-service-env" {
   value = "${aws_elastic_beanstalk_environment.capacity-service-env.name}"
 }
+
