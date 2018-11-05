@@ -43,6 +43,11 @@ variable "public_postgres_subnet_cidrs" {
   default = ["10.1.0.0/24", "10.1.1.0/24", "10.1.2.0/24"]
 }
 
+variable "capacity_public_subnet_rt" {
+  description = "Capacity Route Table"
+  type = "string"
+  default = "Capacity Public Subnet RT"
+}
 
 variable "environment" {
   description = "Short name to differentiate this environment from others"
