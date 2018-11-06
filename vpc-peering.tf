@@ -3,6 +3,14 @@ resource "aws_vpc_peering_connection" "vpc_peering" {
   vpc_id        = "${aws_vpc.capacity.id}"
   auto_accept   = true
 
+   accepter {
+     allow_remote_vpc_dns_resolution = true
+   }
+
+   requester {
+     allow_remote_vpc_dns_resolution = true
+   }
+
   tags {
     Environment = "${var.environment}"
     Name = "CS to Postgres VPC Peering Request"
