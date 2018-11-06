@@ -14,18 +14,18 @@ data "aws_security_groups" "postgres-client" {
   }
 }
 
-resource "aws_vpc_peering_connection" "root-to-postgres" {
-  peer_vpc_id   = "${data.aws_security_groups.postgres-client.vpc_ids.0}"
-  vpc_id        = "${aws_vpc.capacity.id}"
-  auto_accept = true
+//resource "aws_vpc_peering_connection" "root-to-postgres" {
+//  peer_vpc_id   = "${data.aws_security_groups.postgres-client.vpc_ids.0}"
+//  vpc_id        = "${aws_vpc.capacity.id}"
+//  auto_accept = true
 
 
-  accepter {
-    allow_remote_vpc_dns_resolution = true
-  }
+//  accepter {
+//    allow_remote_vpc_dns_resolution = true
+//  }
 
-  requester {
-    allow_remote_vpc_dns_resolution = true
-  }
-}
+//  requester {
+//    allow_remote_vpc_dns_resolution = true
+//  }
+//}
 
