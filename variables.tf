@@ -115,7 +115,12 @@ variable "capacity_service_api_password" {
 }
 
 variable "capacity_service_cache_ttl_seconds" {
-  default = "1800"  # Env var, sent as string
+  default = "604800"  # Time to live within Redis DB (1 week)
+  type = "string"
+}
+
+variable "capacity_service_duration_wait_time_valid_seconds" {
+  default = "1800"  # Time that a wait-time is valid for (30 mins)
   type = "string"
 }
 

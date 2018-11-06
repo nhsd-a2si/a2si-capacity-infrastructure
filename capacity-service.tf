@@ -226,10 +226,14 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "CAPACITY_SERVICE_DURATION_WAIT_TIME_VALID_SECONDS"
+    value     = "${var.capacity_service_duration_wait_time_valid_seconds}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
     name      = "SPRING_DATASOURCE_URL"
-    //value     = "jdbc:postgresql://${data.aws_db_instance.capacity_postgres.endpoint}/${data.aws_db_instance.capacity_postgres.db_name}"
     value     = "jdbc:postgresql://${data.aws_db_instance.capacity_postgres.address}:${data.aws_db_instance.capacity_postgres.port}/${data.aws_db_instance.capacity_postgres.db_name}"
-    //value     = "jdbc:postgresql://${data.aws_instances.postgres.private_ips.0}:${data.aws_db_instance.capacity_postgres.port}/${data.aws_db_instance.capacity_postgres.db_name}"
   }
 
   setting {
