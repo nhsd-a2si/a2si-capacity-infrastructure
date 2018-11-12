@@ -170,11 +170,11 @@ variable "mysql_password" {
 }
 
 #
-# Variables for the capacity Postgres DB
+# Variables for the capacity Service PostgreSQL DB
 #
 
 variable "postgres_db_instance" {
-  default = "capacity-data"
+  default = "capacity-service-db"
 }
 
 variable "postgres_db_name" {
@@ -182,7 +182,7 @@ variable "postgres_db_name" {
 }
 
 variable "postgres_username" {
-  default = "root"
+  default = "postmanpat"
 }
 
 variable "postgres_password" {
