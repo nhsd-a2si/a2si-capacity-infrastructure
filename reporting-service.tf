@@ -242,7 +242,7 @@ resource "aws_elastic_beanstalk_environment" "reporting-service-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "SPRING_DATASOURCE_URL"
-    value     = "jdbc:postgresql://${aws_db_instance.capacity_postgress.endpoint}/${var.postgres_db_name}"
+    value     = "jdbc:postgresql://${data.aws_db_instance.capacity_postgres.address}:${data.aws_db_instance.capacity_postgres.port}/${data.aws_db_instance.capacity_postgres.db_name}"
   }
 
   setting {
