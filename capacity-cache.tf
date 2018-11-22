@@ -12,6 +12,7 @@ resource "aws_elasticache_replication_group" "capacity-cache" {
   port                          = 6379
   subnet_group_name             = "${aws_elasticache_subnet_group.capacity-cache-subnet-group.name}"
   security_group_ids            = ["${aws_security_group.allow-cache-client.id}"]
+  engine_version                = "4.0.10"
 
   tags {
     Environment = "${var.environment}"
