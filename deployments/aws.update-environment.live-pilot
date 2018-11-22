@@ -65,3 +65,24 @@ aws elasticbeanstalk update-environment \
   --environment-name $OWNER_SHORTCODE-info-reader-env \
   --region eu-west-2 \
   --version-label $ZIP_FILE
+
+#-----------------------------------------------------------------------------------------------------------
+ZIP_FILE=a2si-capacity-reporting-service-0.0.1-SNAPSHOT.zip
+aws s3 cp \
+  $ZIP_LOCATION/$ZIP_FILE \
+  s3://$S3_ASSET_BUCKET/$ZIP_FILE
+
+aws elasticbeanstalk create-application-version \
+  --application-name $OWNER_SHORTCODE-reporting-service \
+  --version-label $ZIP_FILE \
+  --source-bundle S3Bucket=$S3_ASSET_BUCKET,S3Key=$ZIP_FILE
+####OOOOORRRRR####
+aws elasticbeanstalk update-application-version \
+  --application-name $OWNER_SHORTCODE-reporting-service \
+  --version-label $ZIP_FILE
+
+aws elasticbeanstalk update-environment \
+  --application-name $OWNER_SHORTCODE-reporting-service \
+  --environment-name $OWNER_SHORTCODE-reporting-service-env \
+  --region eu-west-2 \
+  --version-label $ZIP_FILE

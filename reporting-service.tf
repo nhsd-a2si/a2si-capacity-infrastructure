@@ -1,29 +1,29 @@
-resource "aws_elastic_beanstalk_application" "capacity-service" {
-  name        = "${var.nhs_owner_shortcode}-capacity-service"
-  description = "Capacity Service"
+resource "aws_elastic_beanstalk_application" "reporting-service" {
+  name        = "${var.nhs_owner_shortcode}-reporting-service"
+  description = "Reporting Service"
 }
 
-output "capacity-service-application" {
-  value = "${aws_elastic_beanstalk_application.capacity-service.name}"
+output "reporting-service-application" {
+  value = "${aws_elastic_beanstalk_application.reporting-service.name}"
 }
 
-resource "aws_elastic_beanstalk_configuration_template" "capacity-service-config-template" {
-  name                = "${var.nhs_owner_shortcode}-capacity-service-config-template"
-  application         = "${aws_elastic_beanstalk_application.capacity-service.name}"
+resource "aws_elastic_beanstalk_configuration_template" "reporting-service-config-template" {
+  name                = "${var.nhs_owner_shortcode}-reporting-service-config-template"
+  application         = "${aws_elastic_beanstalk_application.reporting-service.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 }
 
-resource "aws_elastic_beanstalk_application_version" "capacity-service-version" {
-  name        = "${var.s3_capacity_service_object}"
-  application = "${aws_elastic_beanstalk_application.capacity-service.name}"
-  description = "Capacity Service current version"
+resource "aws_elastic_beanstalk_application_version" "reporting-service-version" {
+  name        = "${var.s3_reporting_service_object}"
+  application = "${aws_elastic_beanstalk_application.reporting-service.name}"
+  description = "Reporting Service current version"
   bucket      = "${data.aws_s3_bucket.eb_zip_versions_bucket.id}"
-  key         = "${var.s3_capacity_service_object}"
+  key         = "${var.s3_reporting_service_object}"
 }
 
-resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
-  name                = "${var.nhs_owner_shortcode}-capacity-service-env"
-  application         = "${aws_elastic_beanstalk_application.capacity-service.name}"
+resource "aws_elastic_beanstalk_environment" "reporting-service-env" {
+  name                = "${var.nhs_owner_shortcode}-reporting-service-env"
+  application         = "${aws_elastic_beanstalk_application.reporting-service.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 
   setting {
@@ -167,7 +167,7 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:elb:listener:443"
     name = "SSLCertificateId"
-    value = "${aws_acm_certificate_validation.capacity-service-lb.certificate_arn}"
+    value = "${aws_acm_certificate_validation.reporting-service-lb.certificate_arn}"
   }
 
 #  For encrypting between Load Balancer and application
@@ -185,57 +185,6 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
 
 
   # ENV vars for the service
-
-#  For NOT encrypting between Load Balancer and application
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "SERVER_SSL_ENABLED"
-    value     = "true"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "SPRING_PROFILES_ACTIVE"
-    value     = "${var.capacity_service_spring_profiles_active}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "SPRING_REDIS_CLUSTER_NODES"
-    value     = "${aws_elasticache_replication_group.capacity-cache.configuration_endpoint_address}:6379"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "CAPACITY_SERVICE_CACHE_TIMETOLIVEINSECONDS"
-    value     = "${var.capacity_service_cache_ttl_seconds}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "CAPACITY_SERVICE_DURATION_WAIT_TIME_VALID_SECONDS"
-    value     = "${var.capacity_service_cache_ttl_seconds}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "REPORTING_SERVICE_API_BASE_URL"
-    value     = "https://${aws_route53_record.reporting-service-lb.fqdn}:7060"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "REPORTING_SERVICE_USERNAME"
-    value     = ""
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "REPORTING_SERVICE_PASSWORD"
-    value     = ""
-  }
-
-
   setting {
     namespace = "aws:elasticbeanstalk:healthreporting:system"
     name = "SystemType"
@@ -290,8 +239,28 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
     value     = "${var.amazon_aws_dynamo_secretkey}"
   }
 
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SPRING_DATASOURCE_URL"
+    value     = "jdbc:postgresql://${aws_db_instance.capacity_postgress.endpoint}/${var.postgres_db_name}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SPRING_DATASOURCE_USERNAME"
+    value     = "${var.postgres_username}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SPRING_DATASOURCE_PASSWORD"
+    value     = "${var.postgres_password}"
+  }
+
+
+
 }
 
-output "capacity-service-env" {
-  value = "${aws_elastic_beanstalk_environment.capacity-service-env.name}"
+output "reporting-service-env" {
+  value = "${aws_elastic_beanstalk_environment.reporting-service-env.name}"
 }
