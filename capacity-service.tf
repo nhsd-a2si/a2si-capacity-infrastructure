@@ -59,6 +59,7 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "SecurityGroups"
+    //value     = "${aws_security_group.cache-client.id}, ${data.aws_security_groups.postgres-client.ids.0}"
     value     = "${aws_security_group.cache-client.id}"
   }
 
@@ -231,10 +232,34 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
+<<<<<<< HEAD
     name      = "REPORTING_SERVICE_PASSWORD"
     value     = ""
   }
 
+=======
+    name      = "CAPACITY_SERVICE_DURATION_WAIT_TIME_VALID_SECONDS"
+    value     = "${var.capacity_service_duration_wait_time_valid_seconds}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SPRING_DATASOURCE_URL"
+    value     = "jdbc:postgresql://${data.aws_db_instance.capacity_postgres.address}:${data.aws_db_instance.capacity_postgres.port}/${data.aws_db_instance.capacity_postgres.db_name}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SPRING_DATASOURCE_USERNAME"
+    value     = "${var.postgres_username}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SPRING_DATASOURCE_PASSWORD"
+    value     = "${var.postgres_password}"
+  }
+>>>>>>> release/sprint_4_live_pilot
 
   setting {
     namespace = "aws:elasticbeanstalk:healthreporting:system"
@@ -295,3 +320,4 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
 output "capacity-service-env" {
   value = "${aws_elastic_beanstalk_environment.capacity-service-env.name}"
 }
+
