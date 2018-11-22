@@ -32,6 +32,23 @@ variable "public_subnet_cidrs" {
   default = ["10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24"]
 }
 
+variable "vpc_postgres_cidr" {
+  description = "IP range (CIDR) to use for the VPC"
+  default = "10.1.0.0/16"
+}
+
+# Note that these are subnets of the vpc_cidr range
+variable "public_postgres_subnet_cidrs" {
+  description = "IP ranges (CIDR ranges) to use for the public subnets"
+  type = "list"
+  default = ["10.1.0.0/24", "10.1.1.0/24", "10.1.2.0/24"]
+}
+
+variable "capacity_public_subnet_rt" {
+  description = "Capacity Route Table"
+  type = "string"
+  default = "Capacity Public Subnet RT"
+}
 
 variable "environment" {
   description = "Short name to differentiate this environment from others"
@@ -109,7 +126,12 @@ variable "capacity_service_password" {
 }
 
 variable "capacity_service_cache_ttl_seconds" {
-  default = "1800"  # Env var, sent as string
+  default = "604800"  # Time to live within Redis DB (1 week)
+  type = "string"
+}
+
+variable "capacity_service_duration_wait_time_valid_seconds" {
+  default = "1800"  # Time that a wait-time is valid for (30 mins)
   type = "string"
 }
 

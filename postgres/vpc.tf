@@ -1,6 +1,6 @@
 resource "aws_vpc" "capacity" {
-  cidr_block = "${var.vpc_cidr}"
-  enable_dns_hostnames = true
+  cidr_block = "${var.vpc_postgres_cidr}"
+  enable_dns_hostnames = "true"
 
   tags = {
     Environment = "${var.environment}"
@@ -15,7 +15,7 @@ resource "aws_vpc" "capacity" {
 resource "aws_subnet" "capacity-public-subnets" {
   vpc_id = "${aws_vpc.capacity.id}"
   count = 2
-  cidr_block = "${element(var.public_subnet_cidrs, count.index)}"
+  cidr_block = "${element(var.public_postgres_subnet_cidrs, count.index)}"
   availability_zone = "${element(var.aws_azs, count.index)}"
 
   tags {
