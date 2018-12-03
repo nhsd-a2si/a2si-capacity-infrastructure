@@ -70,6 +70,11 @@ variable "capacity_service_fq_domain_name" {
   default = "capacity-service"
 }
 
+variable "metrics_service_fq_domain_name" {
+  description = "Hostname to use for the metrics service - fully qualified. Must be 'within' the capacity_hosted_zone namespace"
+  default = "metrics-service"
+}
+
 variable "reporting_service_fq_domain_name" {
   description = "Hostname to use for the reporting service - fully qualified. Must be 'within' the reporting_hosted_zone namespace"
   default = "reporting-service"
@@ -92,6 +97,11 @@ variable "s3_app_versions_bucket" {
 
 variable "s3_capacity_service_object" {
   description = "Object name of ZIP file containing Capacity Service version for deployment"
+  type = "string"
+}
+
+variable "s3_metrics_service_object" {
+  description = "Object name of ZIP file containing Metrics Service version for deployment"
   type = "string"
 }
 
