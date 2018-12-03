@@ -4,7 +4,7 @@ resource "aws_vpc" "capacity" {
 
   tags = {
     Environment = "${var.environment}"
-    Name = "Capacity"
+    Name = "Postgres"
     Owner = "${var.nhs_owner}"
     Programme = "${var.nhs_programme_name}"
     Project = "${var.nhs_project_name}"
