@@ -290,6 +290,24 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
     value     = "${var.amazon_aws_dynamo_secretkey}"
   }
 
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "REPORTING_SERVICE_API_BASE_URL"
+    value     = "https://${aws_route53_record.reporting-service-lb.fqdn}:7060"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "REPORTING_SERVICE_USERNAME"
+    value     = ""
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "REPORTING_SERVICE_PASSWORD"
+    value     = ""
+  }
+
 }
 
 output "capacity-service-env" {
