@@ -1,8 +1,3 @@
-terraform {
-  backend "s3" {
-    bucket         = "a2si-cd-stage-tf-state"
-    key            = "stage"
-    dynamodb_table = "a2si-cd-stage-tf-state"
-    region         = "eu-west-2"
-  }
-}
+# Replace this file with an appropriate file from the /deployments directory
+# For example, if terraforming on staging environment, copy the /deployments/terraform.tf.stage
+# file here, and rename to terraform.tf
