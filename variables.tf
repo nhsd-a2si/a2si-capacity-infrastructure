@@ -80,11 +80,6 @@ variable "reporting_service_fq_domain_name" {
   default = "reporting-service"
 }
 
-variable "info_reader_fq_domain_name" {
-  description = "Hostname to use for the info reader - fully qualified. Must be 'within' the capacity_hosted_zone namespace"
-  default = "info-reader"
-}
-
 variable "dos_proxy_fq_domain_name" {
   description = "Hostname to use for the dos proxy service - fully qualified. Must be 'within' the capacity_hosted_zone namespace"
   default = "dos-proxy"
@@ -107,11 +102,6 @@ variable "s3_metrics_service_object" {
 
 variable "s3_reporting_service_object" {
   description = "Object name of ZIP file containing Reporting Service version for deployment"
-  type = "string"
-}
-
-variable "s3_info_reader_object" {
-  description = "Object name of ZIP file containing Info Reader version for deployment"
   type = "string"
 }
 
@@ -145,38 +135,6 @@ variable "capacity_service_duration_wait_time_valid_seconds" {
   type = "string"
 }
 
-# Info Reader
-variable "info_reader_spring_profiles_active" {
-  default = "capacity-info-reader-aws"
-}
-
-variable "info_reader_dhuftpjob_repeatinterval" {
-  default = "300000"
-}
-
-#variable "info_reader_dhuftpjob_ftpserver" {
-#  type = "}
-
-variable "info_reader_dhuftpjob_ftpport" {
-  default = "22"
-}
-
-variable "info_reader_dhuftpjob_ftpusername" {
-  type = "string"
-}
-
-variable "info_reader_dhuftpjob_privatekeyfile" {
-  type = "string"
-}
-
-variable "info_reader_ekhuftpaijob_repeatinterval" {
-  default = "300000"
-}
-
-variable "info_reader_ekhuftpaijob_apiurl" {
-  default = "Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-}
-
 # DoS Proxy
 variable "dos_service_domain" {
   description = "Endpoint Domain of the DoS"
@@ -189,26 +147,6 @@ locals {
 
 variable "dos_proxy_spring_profiles_active" {
   default = "doswrapper-aws-dos-soap-prod-cpsc-rest-aws"
-}
-
-#
-# Variables for the capacity reader MySQL DB
-#
-
-variable "mysql_db_instance" {
-  default = "quartz-instance"
-}
-
-variable "mysql_db_name" {
-  default = "QUARTZ_DB"
-}
-
-variable "mysql_username" {
-  default = "QuartzRoot"
-}
-
-variable "mysql_password" {
-  default = "QuartzRoot"
 }
 
 #
@@ -228,7 +166,7 @@ variable "postgres_username" {
 }
 
 variable "postgres_password" {
-  default = "changeit"
+  type = "string"
 }
 
 # The following variables will be used to tag resources that are created by this Terraform configuration
@@ -255,7 +193,7 @@ variable "healthcheck_url" {
 }
 
 variable "amazon_aws_dynamo_table" {
-  default = "a2si-cd-geha1-authentication"
+  type = "string"
 }
 
 variable "amazon_aws_dynamo_endpoint" {
@@ -267,9 +205,9 @@ variable "amazon_aws_dynamo_region" {
 }
 
 variable "amazon_aws_dynamo_accesskey" {
-  default = ""
+  type = "string"
 }
 
 variable "amazon_aws_dynamo_secretkey" {
-  default = ""
+  type = "string"
 }
