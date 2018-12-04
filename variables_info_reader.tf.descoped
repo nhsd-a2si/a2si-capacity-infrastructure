@@ -1,0 +1,61 @@
+variable "info_reader_fq_domain_name" {
+  description = "Hostname to use for the info reader - fully qualified. Must be 'within' the capacity_hosted_zone namespace"
+  default = "info-reader"
+}
+
+variable "s3_info_reader_object" {
+  description = "Object name of ZIP file containing Info Reader version for deployment"
+  type = "string"
+}
+
+# Info Reader
+#variable "info_reader_spring_profiles_active" {
+#  default = "capacity-info-reader-aws"
+#}
+
+#variable "info_reader_dhuftpjob_repeatinterval" {
+#  default = "300000"
+#}
+
+#variable "info_reader_dhuftpjob_ftpserver" {
+#  type = "}
+
+#variable "info_reader_dhuftpjob_ftpport" {
+#  default = "22"
+#}
+
+#variable "info_reader_dhuftpjob_ftpusername" {
+#  type = "string"
+#}
+
+#variable "info_reader_dhuftpjob_privatekeyfile" {
+#  type = "string"
+#}
+
+#variable "info_reader_ekhuftpaijob_repeatinterval" {
+#  default = "300000"
+#}
+
+#variable "info_reader_ekhuftpaijob_apiurl" {
+#  default = "Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+#}
+
+#
+# Variables for the capacity reader MySQL DB
+#
+
+#variable "mysql_db_instance" {
+#  default = "quartz-instance"
+#}
+
+#variable "mysql_db_name" {
+#  default = "QUARTZ_DB"
+#}
+
+#variable "mysql_username" {
+#  default = "QuartzRoot"
+#}
+
+#variable "mysql_password" {
+#  default = "QuartzRoot"
+#}
