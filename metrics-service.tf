@@ -56,13 +56,6 @@ resource "aws_elastic_beanstalk_environment" "metrics-service-env" {
     value = "t2.small"
   }
 
-//  setting {
-//    namespace = "aws:autoscaling:launchconfiguration"
-//    name      = "SecurityGroups"
-    //value     = "${aws_security_group.cache-client.id}, ${data.aws_security_groups.postgres-client.ids.0}"
-//    value     = "${aws_security_group.cache-client.id}"
-//  }
-
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "IamInstanceProfile"
@@ -144,7 +137,7 @@ resource "aws_elastic_beanstalk_environment" "metrics-service-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application"
     name      = "Application Healthcheck URL"
-    value     = "HTTPS:443/${var.healthcheck_url}"
+    value     = "/"
   }
 
   setting {
@@ -160,28 +153,28 @@ resource "aws_elastic_beanstalk_environment" "metrics-service-env" {
   }
 
   setting {
-    namespace = "aws:elb:listener:443"
+    namespace = "aws:elb:listener:80"
     name = "ListenerProtocol"
-    value = "HTTPS"
+    value = "HTTP"
   }
 
-  setting {
-    namespace = "aws:elb:listener:443"
-    name = "SSLCertificateId"
-    value = "${aws_acm_certificate_validation.metrics-service-lb.certificate_arn}"
-  }
+//  setting {
+//    namespace = "aws:elb:listener:80"
+//    name = "SSLCertificateId"
+//    value = "${aws_acm_certificate_validation.metrics-service-lb.certificate_arn}"
+//  }
 
 #  For encrypting between Load Balancer and application
   setting {
-    namespace = "aws:elb:listener:443"
+    namespace = "aws:elb:listener:80"
     name = "InstancePort"
-    value = "443"
+    value = "80"
   }
 
   setting {
-    namespace = "aws:elb:listener:443"
+    namespace = "aws:elb:listener:80"
     name = "InstanceProtocol"
-    value = "HTTPS"
+    value = "HTTP"
   }
 
 
@@ -191,7 +184,7 @@ resource "aws_elastic_beanstalk_environment" "metrics-service-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "SERVER_SSL_ENABLED"
-    value     = "true"
+    value     = "false"
   }
 
   setting {
