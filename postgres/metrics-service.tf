@@ -59,7 +59,7 @@ resource "aws_elastic_beanstalk_environment" "metrics-service-env" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "IamInstanceProfile"
-    value     = "${aws_iam_instance_profile.a2si-eb.name}"
+    value     = "${data.aws_iam_instance_profile.a2si-eb.name}"
   }
 
   setting {
@@ -125,13 +125,13 @@ resource "aws_elastic_beanstalk_environment" "metrics-service-env" {
   setting {
     namespace = "aws:autoscaling:asg"
     name = "MinSize"
-    value = "1"
+    value = "2"
   }
 
   setting {
     namespace = "aws:autoscaling:asg"
     name = "MaxSize"
-    value = "1"
+    value = "4"
   }
 
   setting {

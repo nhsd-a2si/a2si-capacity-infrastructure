@@ -10,7 +10,7 @@ resource "aws_db_instance" "capacity_postgres" {
   port              = "5432"
   allocated_storage = 5
   storage_type      = "gp2"
-  publicly_accessible = "false"
+  publicly_accessible = "true"
   skip_final_snapshot = "false"
   final_snapshot_identifier = "${var.nhs_owner_shortcode}-${var.postgres_db_instance}-${replace(replace(replace(timestamp(), ":", "-"), "T", "-"), "Z", "-FINAL")}"
   backup_window = "00:00-00:30"
