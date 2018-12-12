@@ -221,7 +221,7 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "REPORTING_SERVICE_API_BASE_URL"
-    value     = "https://${aws_route53_record.reporting-service-lb.fqdn}:7060"
+    value     = "https://${aws_route53_record.reporting-service-lb.fqdn}/api"
   }
 
   setting {
@@ -313,4 +313,3 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
 output "capacity-service-env" {
   value = "${aws_elastic_beanstalk_environment.capacity-service-env.name}"
 }
-
