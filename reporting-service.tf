@@ -59,7 +59,7 @@ resource "aws_elastic_beanstalk_environment" "reporting-service-env" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "SecurityGroups"
-    value     = "${aws_security_group.cache-client.id}"
+    value     = "${aws_security_group.postgres-client.id}"
   }
 
   setting {

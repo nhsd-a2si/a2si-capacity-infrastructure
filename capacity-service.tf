@@ -59,7 +59,6 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "SecurityGroups"
-    //value     = "${aws_security_group.cache-client.id}, ${data.aws_security_groups.postgres-client.ids.0}"
     value     = "${aws_security_group.cache-client.id}"
   }
 
