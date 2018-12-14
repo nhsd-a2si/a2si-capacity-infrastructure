@@ -10,7 +10,7 @@ resource "aws_db_instance" "capacity_postgres" {
   port              = "5432"
   allocated_storage = 5
   storage_type      = "gp2"
-  publicly_accessible = "true"
+  publicly_accessible = "false"
   skip_final_snapshot = "false"
   final_snapshot_identifier = "${var.nhs_owner_shortcode}-${var.postgres_db_instance}-${replace(replace(replace(timestamp(), ":", "-"), "T", "-"), "Z", "-FINAL")}"
   backup_window = "00:00-00:30"
@@ -66,7 +66,7 @@ resource "aws_security_group" "allow-postgres-client" {
     from_port       = 5432
     to_port         = 5432
     protocol        = "tcp"
-    //security_groups = ["${aws_security_group.postgres-client.id}"]
+    security_groups = ["${aws_security_group.postgres-client.id}"]
     cidr_blocks = ["0.0.0.0/0"]
   }
 
