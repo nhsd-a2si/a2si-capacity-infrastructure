@@ -29,19 +29,19 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:ec2:vpc"
     name      = "VPCId"
-    value     = "${aws_vpc.capacity.id}"
+    value     = "${data.aws_vpc.capacity.id}"
   }
 
   setting {
     namespace = "aws:ec2:vpc"
     name      = "Subnets"
-    value     = "${join(",", aws_subnet.capacity-public-subnets.*.id)}"
+    value     = "${join(",", data.aws_subnet.capacity-public-subnet.*.id)}"
   }
 
   setting {
     namespace = "aws:ec2:vpc"
     name      = "ELBSubnets"
-    value     = "${join(",", aws_subnet.capacity-public-subnets.*.id)}"
+    value     = "${join(",", data.aws_subnet.capacity-public-subnet.*.id)}"
   }
 
   setting {
@@ -59,13 +59,13 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "SecurityGroups"
-    value     = "${aws_security_group.cache-client.id}"
+    value     = "${data.aws_security_group.cache-client-sg.id}"
   }
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "IamInstanceProfile"
-    value     = "${aws_iam_instance_profile.a2si-eb.name}"
+    value     = "${data.aws_iam_instance_profile.a2si-eb.name}"
   }
 
   setting {
@@ -202,7 +202,7 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "SPRING_REDIS_CLUSTER_NODES"
-    value     = "${aws_elasticache_replication_group.capacity-cache.configuration_endpoint_address}:6379"
+    value     = "${data.aws_elasticache_replication_group.capacity-cache.configuration_endpoint_address}:6379"
   }
 
   setting {
@@ -217,11 +217,11 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
     value     = "${var.capacity_service_cache_ttl_seconds}"
   }
 
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "REPORTING_SERVICE_API_BASE_URL"
-    value     = "https://${aws_route53_record.reporting-service-lb.fqdn}/api"
-  }
+//  setting {
+//    namespace = "aws:elasticbeanstalk:application:environment"
+//    name      = "REPORTING_SERVICE_API_BASE_URL"
+//    value     = "https://${aws_route53_record.reporting-service-lb.fqdn}/api"
+//  }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -289,11 +289,11 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
     value     = "${var.amazon_aws_dynamo_secretkey}"
   }
 
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "REPORTING_SERVICE_API_BASE_URL"
-    value     = "https://${aws_route53_record.reporting-service-lb.fqdn}:7060"
-  }
+//  setting {
+//    namespace = "aws:elasticbeanstalk:application:environment"
+//    name      = "REPORTING_SERVICE_API_BASE_URL"
+//    value     = "https://${aws_route53_record.reporting-service-lb.fqdn}:7060"
+//  }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
