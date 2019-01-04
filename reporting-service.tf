@@ -56,11 +56,11 @@ resource "aws_elastic_beanstalk_environment" "reporting-service-env" {
     value = "t2.medium"
   }
 
-  setting {
-    namespace = "aws:autoscaling:launchconfiguration"
-    name      = "SecurityGroups"
-    value     = "${aws_security_group.postgres-client.id}"
-  }
+//  setting {
+//    namespace = "aws:autoscaling:launchconfiguration"
+//    name      = "SecurityGroups"
+//    value     = "${data.aws_security_groups.postgres-client.ids.0}"
+//  }
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
@@ -256,8 +256,6 @@ resource "aws_elastic_beanstalk_environment" "reporting-service-env" {
     name      = "SPRING_DATASOURCE_PASSWORD"
     value     = "${var.postgres_password}"
   }
-
-
 
 }
 

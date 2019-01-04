@@ -4,6 +4,7 @@ resource "aws_elasticache_replication_group" "capacity-cache" {
   replication_group_description = "Capacity Cache"
   node_type                     = "cache.t2.small"
   transit_encryption_enabled    = "true"
+  at_rest_encryption_enabled    = "true"
   cluster_mode {
     replicas_per_node_group     = 0
     num_node_groups             = 2

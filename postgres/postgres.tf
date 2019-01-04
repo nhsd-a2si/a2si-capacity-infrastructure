@@ -31,7 +31,7 @@ resource "aws_db_instance" "capacity_postgres" {
 resource "aws_db_subnet_group" "capacity-service-postgres-subnet-group" {
   name        = "${var.nhs_owner_shortcode}-capacity-service-postgres-subnet-group"
   description = "Subnet group for Capacity Service Postgres"
-  subnet_ids = ["${aws_subnet.capacity-public-subnets.*.id}"]
+  subnet_ids = ["${data.aws_subnet.reporting-public-subnet.*.id}"]
 
   tags {
     Environment = "${var.environment}"
@@ -45,7 +45,7 @@ resource "aws_db_subnet_group" "capacity-service-postgres-subnet-group" {
 resource "aws_security_group" "postgres-client" {
   name        = "${var.nhs_owner_shortcode}-postgres-client"
   description = "Instances which act as clients of postgres"
-  vpc_id      = "${aws_vpc.capacity.id}"
+  vpc_id      = "${data.aws_vpc.reporting.id}"
 
   tags {
     Environment = "${var.environment}"
@@ -60,7 +60,7 @@ resource "aws_security_group" "postgres-client" {
 resource "aws_security_group" "allow-postgres-client" {
   name        = "${var.nhs_owner_shortcode}-allow-postgres-client"
   description = "Allow connection by appointed postgres clients"
-  vpc_id      = "${aws_vpc.capacity.id}"
+  vpc_id      = "${data.aws_vpc.reporting.id}"
 
   ingress {
     from_port       = 5432
