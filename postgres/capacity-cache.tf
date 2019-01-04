@@ -28,13 +28,13 @@ resource "aws_elasticache_replication_group" "capacity-cache" {
 resource "aws_elasticache_subnet_group" "capacity-cache-subnet-group" {
     name = "${var.nhs_owner_shortcode}-capacity-cache-subnet"
     description = "Subnet group for Elasticache"
-    subnet_ids = ["${aws_subnet.capacity-public-subnets.*.id}"]
+    subnet_ids = ["${data.aws_subnet.capacity-public-subnet.*.id}"]
 }
 
 resource "aws_security_group" "cache-client" {
   name        = "${var.nhs_owner_shortcode}-cache-client"
   description = "Instances which act as clients of the cache"
-  vpc_id      = "${aws_vpc.capacity.id}"
+  vpc_id      = "${data.aws_vpc.capacity.id}"
 
   tags {
     Environment = "${var.environment}"
@@ -49,7 +49,7 @@ resource "aws_security_group" "cache-client" {
 resource "aws_security_group" "allow-cache-client" {
   name        = "${var.nhs_owner_shortcode}-allow-cache-client"
   description = "Allow connection by appointed cache clients"
-  vpc_id      = "${aws_vpc.capacity.id}"
+  vpc_id      = "${data.aws_vpc.capacity.id}"
 
   ingress {
     from_port       = 6379
