@@ -66,3 +66,24 @@ data "aws_iam_instance_profile" "a2si-eb" {
 data "aws_elasticache_replication_group" "capacity-cache" {
   replication_group_id = "${var.nhs_owner_shortcode}-cc-gp"
 }
+
+data "aws_security_groups" "postgres-client-sgs" {
+
+  filter {
+    name   = "vpc-id"
+    values = ["${data.aws_vpc.reporting.id}"]
+  }
+
+  filter {
+    name   = "tag:Name"
+    values = ["postgres-client Security Group"]
+    }
+}
+
+data "aws_security_group" "postgres-client-sg" {
+  id = "${data.aws_security_groups.postgres-client-sgs.ids[0]}"
+}
+
+data "aws_db_instance" "capacity_postgres" {
+  db_instance_identifier        = "${var.nhs_owner_shortcode}-${var.postgres_db_instance}"
+}
