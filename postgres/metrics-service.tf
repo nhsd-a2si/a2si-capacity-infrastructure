@@ -29,19 +29,19 @@ resource "aws_elastic_beanstalk_environment" "metrics-service-env" {
   setting {
     namespace = "aws:ec2:vpc"
     name      = "VPCId"
-    value     = "${aws_vpc.capacity.id}"
+    value     = "${data.aws_vpc.reporting.id}"
   }
 
   setting {
     namespace = "aws:ec2:vpc"
     name      = "Subnets"
-    value     = "${join(",", aws_subnet.capacity-public-subnets.*.id)}"
+    value     = "${join(",", data.aws_subnet.reporting-public-subnet.*.id)}"
   }
 
   setting {
     namespace = "aws:ec2:vpc"
     name      = "ELBSubnets"
-    value     = "${join(",", aws_subnet.capacity-public-subnets.*.id)}"
+    value     = "${join(",", data.aws_subnet.reporting-public-subnet.*.id)}"
   }
 
   setting {
