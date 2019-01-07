@@ -10,6 +10,7 @@ resource "aws_db_instance" "capacity_postgres" {
   port              = "5432"
   allocated_storage = 5
   storage_type      = "gp2"
+  storage_encrypted = "true"
   publicly_accessible = "false"
   skip_final_snapshot = "false"
   final_snapshot_identifier = "${var.nhs_owner_shortcode}-${var.postgres_db_instance}-${replace(replace(replace(timestamp(), ":", "-"), "T", "-"), "Z", "-FINAL")}"
@@ -31,7 +32,7 @@ resource "aws_db_instance" "capacity_postgres" {
 resource "aws_db_subnet_group" "capacity-service-postgres-subnet-group" {
   name        = "${var.nhs_owner_shortcode}-capacity-service-postgres-subnet-group"
   description = "Subnet group for Capacity Service Postgres"
-  subnet_ids = ["${data.aws_subnet.reporting-public-subnet.*.id}"]
+  subnet_ids = ["${data.aws_subnet.capacity-public-subnet.*.id}"]
 
   tags {
     Environment = "${var.environment}"
@@ -45,7 +46,7 @@ resource "aws_db_subnet_group" "capacity-service-postgres-subnet-group" {
 resource "aws_security_group" "postgres-client" {
   name        = "${var.nhs_owner_shortcode}-postgres-client"
   description = "Instances which act as clients of postgres"
-  vpc_id      = "${data.aws_vpc.reporting.id}"
+  vpc_id      = "${data.aws_vpc.capacity.id}"
 
   tags {
     Environment = "${var.environment}"
@@ -60,7 +61,7 @@ resource "aws_security_group" "postgres-client" {
 resource "aws_security_group" "allow-postgres-client" {
   name        = "${var.nhs_owner_shortcode}-allow-postgres-client"
   description = "Allow connection by appointed postgres clients"
-  vpc_id      = "${data.aws_vpc.reporting.id}"
+  vpc_id      = "${data.aws_vpc.capacity.id}"
 
   ingress {
     from_port       = 5432
@@ -72,7 +73,7 @@ resource "aws_security_group" "allow-postgres-client" {
 
   tags {
     Environment = "${var.environment}"
-    Name = "allow-postgres-client Security Group"
+    Name = "allow-postgres-client Security Group Definition"
     Owner = "${var.nhs_owner}"
     Programme = "${var.nhs_programme_name}"
     Project = "${var.nhs_project_name}"

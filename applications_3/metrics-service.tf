@@ -1,29 +1,29 @@
-resource "aws_elastic_beanstalk_application" "reporting-service" {
-  name        = "${var.nhs_owner_shortcode}-reporting-service"
-  description = "Reporting Service"
+resource "aws_elastic_beanstalk_application" "metrics-service" {
+  name        = "${var.nhs_owner_shortcode}-metrics-service"
+  description = "Metrics Service"
 }
 
-output "reporting-service-application" {
-  value = "${aws_elastic_beanstalk_application.reporting-service.name}"
+output "metrics-service-application" {
+  value = "${aws_elastic_beanstalk_application.metrics-service.name}"
 }
 
-resource "aws_elastic_beanstalk_configuration_template" "reporting-service-config-template" {
-  name                = "${var.nhs_owner_shortcode}-reporting-service-config-template"
-  application         = "${aws_elastic_beanstalk_application.reporting-service.name}"
+resource "aws_elastic_beanstalk_configuration_template" "metrics-service-config-template" {
+  name                = "${var.nhs_owner_shortcode}-metrics-service-config-template"
+  application         = "${aws_elastic_beanstalk_application.metrics-service.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 }
 
-resource "aws_elastic_beanstalk_application_version" "reporting-service-version" {
-  name        = "${var.s3_reporting_service_object}"
-  application = "${aws_elastic_beanstalk_application.reporting-service.name}"
-  description = "Reporting Service current version"
+resource "aws_elastic_beanstalk_application_version" "metrics-service-version" {
+  name        = "${var.s3_metrics_service_object}"
+  application = "${aws_elastic_beanstalk_application.metrics-service.name}"
+  description = "Metrics Service current version"
   bucket      = "${data.aws_s3_bucket.eb_zip_versions_bucket.id}"
-  key         = "${var.s3_reporting_service_object}"
+  key         = "${var.s3_metrics_service_object}"
 }
 
-resource "aws_elastic_beanstalk_environment" "reporting-service-env" {
-  name                = "${var.nhs_owner_shortcode}-reporting-service-env"
-  application         = "${aws_elastic_beanstalk_application.reporting-service.name}"
+resource "aws_elastic_beanstalk_environment" "metrics-service-env" {
+  name                = "${var.nhs_owner_shortcode}-metrics-service-env"
+  application         = "${aws_elastic_beanstalk_application.metrics-service.name}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.single_docker.name}"
 
   setting {
@@ -53,14 +53,8 @@ resource "aws_elastic_beanstalk_environment" "reporting-service-env" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name = "InstanceType"
-    value = "t2.medium"
+    value = "t2.small"
   }
-
-//  setting {
-//    namespace = "aws:autoscaling:launchconfiguration"
-//    name      = "SecurityGroups"
-//    value     = "${data.aws_security_group.postgres-client-sg.id}"
-//  }
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
@@ -143,7 +137,7 @@ resource "aws_elastic_beanstalk_environment" "reporting-service-env" {
   setting {
     namespace = "aws:elasticbeanstalk:application"
     name      = "Application Healthcheck URL"
-    value     = "HTTPS:443/${var.healthcheck_url}"
+    value     = "/"
   }
 
   setting {
@@ -159,32 +153,40 @@ resource "aws_elastic_beanstalk_environment" "reporting-service-env" {
   }
 
   setting {
-    namespace = "aws:elb:listener:443"
+    namespace = "aws:elb:listener:80"
     name = "ListenerProtocol"
-    value = "HTTPS"
+    value = "HTTP"
   }
 
   setting {
-    namespace = "aws:elb:listener:443"
+    namespace = "aws:elb:listener:80"
     name = "SSLCertificateId"
-    value = "${aws_acm_certificate_validation.reporting-service-lb.certificate_arn}"
+    value = "${aws_acm_certificate_validation.metrics-service-lb.certificate_arn}"
   }
 
 #  For encrypting between Load Balancer and application
   setting {
-    namespace = "aws:elb:listener:443"
+    namespace = "aws:elb:listener:80"
     name = "InstancePort"
-    value = "443"
+    value = "80"
   }
 
   setting {
-    namespace = "aws:elb:listener:443"
+    namespace = "aws:elb:listener:80"
     name = "InstanceProtocol"
-    value = "HTTPS"
+    value = "HTTP"
   }
 
 
   # ENV vars for the service
+
+#  For NOT encrypting between Load Balancer and application
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SERVER_SSL_ENABLED"
+    value     = "false"
+  }
+
   setting {
     namespace = "aws:elasticbeanstalk:healthreporting:system"
     name = "SystemType"
@@ -207,58 +209,9 @@ resource "aws_elastic_beanstalk_environment" "reporting-service-env" {
     Terraform = "true"
   }
 
-  # Basic Auth
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "AMAZON_AWS_DYNAMO_TABLE"
-    value     = "${var.amazon_aws_dynamo_table}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "AMAZON_AWS_DYNAMO_ENDPOINT"
-    value     = "${var.amazon_aws_dynamo_endpoint}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "AMAZON_AWS_DYNAMO_REGION"
-    value     = "${var.amazon_aws_dynamo_region}"
-  }
-
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "AMAZON_AWS_DYNAMO_ACCESSKEY"
-    value     = "${var.amazon_aws_dynamo_accesskey}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "AMAZON_AWS_DYNAMO_SECRETKEY"
-    value     = "${var.amazon_aws_dynamo_secretkey}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "SPRING_DATASOURCE_URL"
-    value     = "jdbc:postgresql://${data.aws_db_instance.capacity_postgres.address}:${data.aws_db_instance.capacity_postgres.port}/${data.aws_db_instance.capacity_postgres.db_name}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "SPRING_DATASOURCE_USERNAME"
-    value     = "${var.postgres_username}"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "SPRING_DATASOURCE_PASSWORD"
-    value     = "${var.postgres_password}"
-  }
 
 }
 
-output "reporting-service-env" {
-  value = "${aws_elastic_beanstalk_environment.reporting-service-env.name}"
+output "metrics-service-env" {
+  value = "${aws_elastic_beanstalk_environment.metrics-service-env.name}"
 }
