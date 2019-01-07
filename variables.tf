@@ -19,7 +19,6 @@ variable "aws_azs" {
   default = ["eu-west-2a", "eu-west-2b"]
 }
 
-
 variable "vpc_cidr" {
   description = "IP range (CIDR) to use for the VPC"
   default = "10.0.0.0/16"
@@ -30,18 +29,6 @@ variable "public_subnet_cidrs" {
   description = "IP ranges (CIDR ranges) to use for the public subnets"
   type = "list"
   default = ["10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24"]
-}
-
-variable "vpc_reporting_cidr" {
-  description = "IP range (CIDR) to use for the reporting VPC"
-  default = "10.1.0.0/16"
-}
-
-# Note that these are subnets of the vpc_cidr range
-variable "public_reporting_subnet_cidrs" {
-  description = "IP ranges (CIDR ranges) to use for the public subnets"
-  type = "list"
-  default = ["10.1.0.0/24", "10.1.1.0/24", "10.1.2.0/24"]
 }
 
 variable "capacity_public_subnet_rt" {
