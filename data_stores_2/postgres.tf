@@ -1,10 +1,13 @@
-# Create a postgres database server
+#
+# Terraform script for the postgres DB
+#
+
 resource "aws_db_instance" "capacity_postgres" {
   engine            = "postgres"
   engine_version    = "10.4"
-  instance_class    = "db.t2.large"
-  identifier        = "${var.nhs_owner_shortcode}-${var.postgres_db_instance}"
-  name              = "${replace(var.nhs_owner_shortcode, "-", "")}${var.postgres_db_name}"
+  instance_class    = "${var.postgres_instance_class}"
+  identifier        = "${var.environment}-${var.postgres_db_instance}"
+  name              = "${replace(var.environment, "-", "")}${var.postgres_db_name}"
   username          = "${var.postgres_username}"
   password          = "${var.postgres_password}"
   port              = "5432"
@@ -13,7 +16,7 @@ resource "aws_db_instance" "capacity_postgres" {
   storage_encrypted = "true"
   publicly_accessible = "false"
   skip_final_snapshot = "false"
-  final_snapshot_identifier = "${var.nhs_owner_shortcode}-${var.postgres_db_instance}-${replace(replace(replace(timestamp(), ":", "-"), "T", "-"), "Z", "-FINAL")}"
+  final_snapshot_identifier = "${var.environment}-${var.postgres_db_instance}-${replace(replace(replace(timestamp(), ":", "-"), "T", "-"), "Z", "-FINAL")}"
   backup_window = "00:00-00:30"
   backup_retention_period = "7"
   db_subnet_group_name   = "${aws_db_subnet_group.capacity-service-postgres-subnet-group.name}"
@@ -22,9 +25,9 @@ resource "aws_db_instance" "capacity_postgres" {
   tags {
     Environment = "${var.environment}"
     Name = "Capacity Service Postgres Instance"
-    Owner = "${var.nhs_owner}"
     Programme = "${var.nhs_programme_name}"
     Project = "${var.nhs_project_name}"
+    Version = "${var.deployment_version}"
     Terraform = "true"
   }
 }
@@ -36,9 +39,9 @@ resource "aws_db_subnet_group" "capacity-service-postgres-subnet-group" {
 
   tags {
     Environment = "${var.environment}"
-    Owner = "${var.nhs_owner}"
     Programme = "${var.nhs_programme_name}"
     Project = "${var.nhs_project_name}"
+    Version = "${var.deployment_version}"
     Terraform = "true"
   }
 }
@@ -51,9 +54,9 @@ resource "aws_security_group" "postgres-client" {
   tags {
     Environment = "${var.environment}"
     Name = "postgres-client Security Group"
-    Owner = "${var.nhs_owner}"
     Programme = "${var.nhs_programme_name}"
     Project = "${var.nhs_project_name}"
+    Version = "${var.deployment_version}"
     Terraform = "true"
   }
 }
@@ -74,9 +77,9 @@ resource "aws_security_group" "allow-postgres-client" {
   tags {
     Environment = "${var.environment}"
     Name = "allow-postgres-client Security Group Definition"
-    Owner = "${var.nhs_owner}"
     Programme = "${var.nhs_programme_name}"
     Project = "${var.nhs_project_name}"
+    Version = "${var.deployment_version}"
     Terraform = "true"
   }
 }
