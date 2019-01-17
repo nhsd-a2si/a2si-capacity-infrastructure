@@ -39,7 +39,7 @@ resource "aws_elasticache_subnet_group" "capacity-cache-subnet-group" {
 resource "aws_security_group" "cache-client" {
   name        = "${var.environment}-cache-client"
   description = "Instances which act as clients of the cache"
-  vpc_id      = "${data.aws_vpc.capacity.id}"
+  vpc_id      = "${var.capacity_vpc}"
 
   tags {
     Environment = "${var.environment}"
@@ -55,7 +55,7 @@ resource "aws_security_group" "cache-client" {
 resource "aws_security_group" "allow-cache-client" {
   name        = "${var.environment}-allow-cache-client"
   description = "Allow connection by appointed cache clients"
-  vpc_id      = "${data.aws_vpc.capacity.id}"
+  vpc_id      = "${var.capacity_vpc}"
 
   ingress {
     from_port       = 6379

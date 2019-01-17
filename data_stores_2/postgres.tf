@@ -1,5 +1,5 @@
 #
-# Terraform script for the postgres DB
+# Terraform script for the RDS Postgres DB
 #
 
 resource "aws_db_instance" "capacity_postgres" {
@@ -11,14 +11,16 @@ resource "aws_db_instance" "capacity_postgres" {
   username          = "${var.postgres_username}"
   password          = "${var.postgres_password}"
   port              = "5432"
-  allocated_storage = 5
+  deletion_protection = true
+  multi_az          = true
+  allocated_storage = "${var.postgres_allocated_storage}"
   storage_type      = "gp2"
   storage_encrypted = "true"
   publicly_accessible = "false"
   skip_final_snapshot = "false"
   final_snapshot_identifier = "${var.environment}-${var.postgres_db_instance}-${replace(replace(replace(timestamp(), ":", "-"), "T", "-"), "Z", "-FINAL")}"
-  backup_window = "00:00-00:30"
-  backup_retention_period = "7"
+  backup_window = "${var.postgres_backup_window}"
+  backup_retention_period = "${var.postgres_backup_retention_period}"
   db_subnet_group_name   = "${aws_db_subnet_group.capacity-service-postgres-subnet-group.name}"
   vpc_security_group_ids  = ["${aws_security_group.allow-postgres-client.id}"]
 
@@ -48,8 +50,8 @@ resource "aws_db_subnet_group" "capacity-service-postgres-subnet-group" {
 
 resource "aws_security_group" "postgres-client" {
   name        = "${var.nhs_owner_shortcode}-postgres-client"
-  description = "Instances which act as clients of postgres"
-  vpc_id      = "${data.aws_vpc.capacity.id}"
+  description = "Security groups which act as clients of postgres"
+  vpc_id      = "${data.capacity_vpc.id}"
 
   tags {
     Environment = "${var.environment}"
@@ -64,14 +66,14 @@ resource "aws_security_group" "postgres-client" {
 resource "aws_security_group" "allow-postgres-client" {
   name        = "${var.nhs_owner_shortcode}-allow-postgres-client"
   description = "Allow connection by appointed postgres clients"
-  vpc_id      = "${data.aws_vpc.capacity.id}"
+  vpc_id      = "${data.capacity_vpc.id}"
 
   ingress {
     from_port       = 5432
     to_port         = 5432
     protocol        = "tcp"
     security_groups = ["${aws_security_group.postgres-client.id}"]
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${data.capacity_vpc.cidr_block}"]
   }
 
   tags {
