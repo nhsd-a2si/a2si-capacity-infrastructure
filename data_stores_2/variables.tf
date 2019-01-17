@@ -3,13 +3,18 @@
 # a the test, stage and prod environments.
 
 #
-# VPC variables
+# VPC variables and availability zones
 #
 variable "capacity_vpc" {
   description = "The VPC that the capacity service will be hosted in"
   type = "string"
 }
 
+variable "aws_azs" {
+  description = "Availability zones within which the resources will be deployed"
+  type = "list"
+  default = ["eu-west-2a", "eu-west-2b"]
+}
 
 #
 # Variables for the Elasticache database

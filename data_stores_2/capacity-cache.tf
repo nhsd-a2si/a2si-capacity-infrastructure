@@ -3,12 +3,13 @@
 #
 
 resource "aws_elasticache_replication_group" "capacity-cache" {
-  automatic_failover_enabled    = true
   replication_group_id          = "${var.environment}-cc-gp"
   replication_group_description = "Capacity Cache"
   node_type                     = "${var.elasticache_node_type}"
   transit_encryption_enabled    = "true"
   at_rest_encryption_enabled    = "true"
+  availability_zones            = ["${var.aws_azs}"]
+  automatic_failover_enabled    = true
   cluster_mode {
     replicas_per_node_group     = "${var.elasticache_cluster_mode_replicas_per_node_group}"
     num_node_groups             = "${var.elasticache_cluster_mode_num_node_groups}"
@@ -22,7 +23,6 @@ resource "aws_elasticache_replication_group" "capacity-cache" {
   tags {
     Environment = "${var.environment}"
     Name = "Capacity Cache"
-    Owner = "${var.nhs_owner}"
     Programme = "${var.nhs_programme_name}"
     Project = "${var.nhs_project_name}"
     Version = "${var.deployment_version}"
@@ -39,12 +39,11 @@ resource "aws_elasticache_subnet_group" "capacity-cache-subnet-group" {
 resource "aws_security_group" "cache-client" {
   name        = "${var.environment}-cache-client"
   description = "Instances which act as clients of the cache"
-  vpc_id      = "${var.capacity_vpc}"
+  vpc_id      = "${data.capacity_vpc.id}"
 
   tags {
     Environment = "${var.environment}"
     Name = "cache-client Security Group"
-    Owner = "${var.nhs_owner}"
     Programme = "${var.nhs_programme_name}"
     Project = "${var.nhs_project_name}"
     Version = "${var.deployment_version}"
@@ -55,7 +54,7 @@ resource "aws_security_group" "cache-client" {
 resource "aws_security_group" "allow-cache-client" {
   name        = "${var.environment}-allow-cache-client"
   description = "Allow connection by appointed cache clients"
-  vpc_id      = "${var.capacity_vpc}"
+  vpc_id      = "${data.capacity_vpc.id}"
 
   ingress {
     from_port       = 6379

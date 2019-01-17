@@ -12,9 +12,9 @@ capacity_vpc = "<To be defined by Texas>"
 #
 # Sizing for Elasticache DB
 #
-elasticache_node_type = "cache.t2.small"
-elasticache_cluster_mode_replicas_per_node_group = 0
-elasticache_cluster_mode_num_node_groups = 2
+elasticache_node_type = "cache.t2.large"
+elasticache_cluster_mode_replicas_per_node_group = 2
+elasticache_cluster_mode_num_node_groups = 3
 
 #
 # Parameters for RDS Postgres DB
