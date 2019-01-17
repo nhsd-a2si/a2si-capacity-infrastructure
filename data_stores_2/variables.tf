@@ -10,6 +10,11 @@ variable "capacity_vpc" {
   type = "string"
 }
 
+variable "aws_region" {
+  description = "The region that the capacity service is hosted in"
+  default = "eu-west-2"
+}
+
 variable "aws_azs" {
   description = "Availability zones within which the resources will be deployed"
   type = "list"

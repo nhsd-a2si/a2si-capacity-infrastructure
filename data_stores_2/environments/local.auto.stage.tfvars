@@ -19,8 +19,8 @@ elasticache_cluster_mode_num_node_groups = 3
 #
 # Parameters for RDS Postgres DB
 #
-postgres_username = "postmanpat"
-postgres_password = "FWr2qN3WTdZJ"
+postgres_username = "<USERNAME>"
+postgres_password = "<PASSWORD>"
 postgres_instance_class = "db.t2.large"
 postgres_allocated_storage = 10
 postgres_backup_retention_period = 90
