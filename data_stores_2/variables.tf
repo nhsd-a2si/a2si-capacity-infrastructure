@@ -85,7 +85,7 @@ variable "postgres_backup_window" {
 #
 variable "authentication_db_read_capacity_units" {
   description = "One read capacity unit represents one strongly consistent read per second, or two eventually consistent reads per second, for items up to 4 KB in size. If you need to read an item that is larger than 4 KB, DynamoDB will need to consume additional read capacity units. The total number of read capacity units required depends on the item size, and whether you want an eventually consistent or strongly consistent read."
-  default = "10"
+  default = "5"
 }
 
 variable "authentication_db_write_capacity_units" {

@@ -1,7 +1,7 @@
 #
-# Environment variables for public beta (staging environment)
+# Environment variables for public beta (production environment)
 #
-environment = "a2si-cd-stage"
+environment = "a2si-cd-prod"
 deployment_version = "0.0.1"
 
 #
@@ -29,5 +29,5 @@ postgres_backup_window = "00:00-00:30"
 #
 # Parameters for Authentication Dynamo DB Table
 #
-authentication_db_read_capacity_units = 10
+authentication_db_read_capacity_units = 30
 authentication_db_write_capacity_units = 1
