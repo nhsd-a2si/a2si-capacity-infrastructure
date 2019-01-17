@@ -61,6 +61,7 @@ resource "aws_security_group" "allow-cache-client" {
     to_port         = 6379
     protocol        = "tcp"
     security_groups = ["${aws_security_group.cache-client.id}"]
+    cidr_blocks = ["${data.capacity_vpc.cidr_block}"]
   }
 
   tags {
