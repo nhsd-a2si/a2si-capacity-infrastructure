@@ -10,8 +10,9 @@ deployment_version = "0.0.1"
 capacity_vpc = "<To be defined by Texas>"
 
 #
-# Sizing for Elasticache DB
+# Parameters for Elasticache DB
 #
+elasticache_authorization_token = "Hyyu2eehlojhbs82-622ekPjaQui82GZ"
 elasticache_node_type = "cache.t2.small"
 elasticache_cluster_mode_replicas_per_node_group = 0
 elasticache_cluster_mode_num_node_groups = 2

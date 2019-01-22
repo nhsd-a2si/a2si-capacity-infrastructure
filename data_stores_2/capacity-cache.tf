@@ -8,6 +8,7 @@ resource "aws_elasticache_replication_group" "capacity-cache" {
   node_type                     = "${var.elasticache_node_type}"
   transit_encryption_enabled    = "true"
   at_rest_encryption_enabled    = "true"
+  auth_token                    = "${var.elasticache_authorization_token}"
   availability_zones            = ["${var.aws_azs}"]
   automatic_failover_enabled    = true
   cluster_mode {

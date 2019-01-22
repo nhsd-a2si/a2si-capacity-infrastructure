@@ -22,8 +22,13 @@ variable "aws_azs" {
 }
 
 #
-# Variables for the Elasticache database
+# Variables for the Elasticache / Redis database
 #
+variable "elasticache_authorization_token" {
+  description = "The authorization token to be allowed access to the Redis data store"
+  type = "string"
+}
+
 variable "elasticache_node_type" {
   description = "The size and capacity of the node"
   type = "string"
