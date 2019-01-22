@@ -207,6 +207,12 @@ resource "aws_elastic_beanstalk_environment" "capacity-service-env" {
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "REDIS_PASSWORD"
+    value     = "${var.elasticache_authorization_token}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
     name      = "CAPACITY_SERVICE_CACHE_TIMETOLIVEINSECONDS"
     value     = "${var.capacity_service_cache_ttl_seconds}"
   }
