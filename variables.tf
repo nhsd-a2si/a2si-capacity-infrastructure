@@ -1,6 +1,11 @@
 # Note - if you are using a different AWS CLI profile other than the default
 # "default", you will need to override this variable in your `local.auto.tfvars`
 # and name that same profile in the file `terraform.tf`.
+variable "deployment_version" {
+  description = "The version of the deployment so we can be sure that what has been deployed is the correct version"
+  type = "string"
+}
+
 variable "aws_profile" {
   description = "AWS credentials and config profile to use for acting user"
   default = "default"
@@ -39,17 +44,12 @@ variable "capacity_public_subnet_rt" {
 
 variable "environment" {
   description = "Short name to differentiate this environment from others"
-  default = "dev"
+  default = "a2si-cd-dev"
 }
 
 variable "capacity_hosted_zone" {
   description = "The domain name for the existing Route53 Hosted Zone into which services and certificates will be placed (no trailing dot)"
   type = "string"
-}
-
-variable "sftp_fq_domain_name" {
-  description = "Hostname to use for the sftp server - fully qualified. Must be 'within' the capacity_hosted_zone namespace"
-  default = "sftp"
 }
 
 variable "capacity_service_fq_domain_name" {
